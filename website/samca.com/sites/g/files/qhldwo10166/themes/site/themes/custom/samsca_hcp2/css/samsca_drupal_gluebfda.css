@@ -1,0 +1,801 @@
+/**
+ * @file
+ * provides Drupal theme-specific css to accommodate conflicts caused between legacy bootstrap/jquery mobile theme and drupal.
+ *
+ */
+.user-logged-in .ui-mobile [data-role=page],
+.user-logged-in .ui-mobile [data-role=dialog],
+.user-logged-in .ui-page {
+  position: relative;
+}
+
+.user-logged-in #toolbar-administration {
+  width: 100%;
+  background: #000;
+  position: relative;
+  display: block;
+  float: left;
+  z-index: 9999;
+}
+.user-logged-in #toolbar-administration li {
+  margin-bottom: 0;
+}
+
+#block-tabs {
+  display: inline-block;
+}
+#block-tabs li {
+  display: inline-block;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border: 1px solid;
+  background: #fff;
+}
+#block-tabs li a {
+  display: inline-block;
+  padding: 10px 20px;
+}
+#block-tabs ul,
+#block-tabs li {
+  margin: 0;
+}
+
+#block-samsca-hcp2-sitetargetaudiencedisclaimerheader,
+#inner-disclaimer-wrap .contextual-region {
+  display: inline;
+}
+#block-samsca-hcp2-sitetargetaudiencedisclaimerheader div,
+#block-samsca-hcp2-sitetargetaudiencedisclaimerheader p,
+#inner-disclaimer-wrap .contextual-region div,
+#inner-disclaimer-wrap .contextual-region p {
+  display: inline;
+}
+
+#inner-disclaimer-wrap #block-globalsiteheaderpiincludingboxedwarningheader,
+#inner-disclaimer-wrap #block-globalsiteheadermedicationguideheader {
+  display: inline;
+}
+#inner-disclaimer-wrap #block-globalsiteheaderpiincludingboxedwarningheader div,
+#inner-disclaimer-wrap #block-globalsiteheaderpiincludingboxedwarningheader p,
+#inner-disclaimer-wrap #block-globalsiteheadermedicationguideheader div,
+#inner-disclaimer-wrap #block-globalsiteheadermedicationguideheader p {
+  display: inline;
+}
+
+#inner-disclaimer-wrap .samsca-warning p {
+  font-size: 17px;
+  font-weight: bold;
+  font-style: normal;
+  text-transform: uppercase;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+@media only screen and (min-width: 0) and (max-width: 768px) {
+  #inner-disclaimer-wrap .samsca-warning p {
+    position: relative;
+    font-size: 13px;
+    font-weight: normal;
+    width: auto;
+    margin-bottom: 5px;
+} }
+@media only screen and (min-width: 769px) and (max-width: 1023px) {
+  #inner-disclaimer-wrap .samsca-warning p {
+    width: auto;
+} }
+
+#inner-disclaimer-wrap .samsca-warning .icon-warning-sign {
+  font-size: 17px;
+  line-height: 32px;
+  margin-right: 5px;
+  width: 22px;
+}
+@media only screen and (min-width: 0) and (max-width: 768px) {
+  #inner-disclaimer-wrap .samsca-warning .icon-warning-sign {
+    font-size: 12px;
+    line-height: 16px;
+    float: none;
+    margin-right: 1px;
+} }
+@media only screen and (min-width: 769px) and (max-width: 1023px) {
+  #inner-disclaimer-wrap .samsca-warning .icon-warning-sign {
+    float: none;
+    margin-right: 0px;
+} }
+
+#inner-disclaimer-wrap .samsca-warning .samsca-warning-mobile {
+  display: none;
+}
+@media only screen and (min-width: 0) and (max-width: 768px) {
+  #inner-disclaimer-wrap .samsca-warning .samsca-warning-mobile {
+    display: block;
+} }
+
+.samsca-header-nav .header-indication {
+  text-align: left;
+}
+
+.header-desktop-right {
+  margin-bottom: 14px;
+}
+
+.header-desktop-right .search-block-form {
+  display: inline-block;
+  width: 100%;
+  clear: both;
+  margin-bottom: 12px;
+}
+.header-desktop-right .search-block-form form {
+  width: auto;
+}
+.header-desktop-right .search-block-form .form-group,
+.header-desktop-right .search-block-form .form-item {
+  display: inline-block;
+  width: 95%;
+}
+@media only screen and (min-width: 0) and (max-width: 1023px) {
+  .header-desktop-right .search-block-form .form-group,
+  .header-desktop-right .search-block-form .form-item {
+    margin-left: 0 !important;
+    width: 90%;
+} }
+.header-desktop-right .search-block-form #block-samsca-hcp2-search {
+  display: block;
+  width: 100%;
+}
+.header-desktop-right .search-block-form button.btn-search {
+  display: inline-block;
+  text-indent: initial;
+}
+.header-desktop-right .search-block-form .logo {
+  width: 139px;
+  height: 140px;
+  position: absolute;
+  top: 39px;
+  left: -1px;
+  display: block;
+  background: url(images/Samsca/img_SamscaLogo.html);
+}
+.header-desktop-right .search-block-form #desktopSearchBtn {
+  cursor: pointer;
+  position: relative;
+  top: -2.75em;
+  left: 100%;
+}
+.header-desktop-right .search-block-form .mobile-search-form {
+  display: none;
+  margin-top: 20px;
+}
+.header-desktop-right .search-block-form .mobile-search-form input {
+  width: 100% !important;
+}
+@media only screen and (min-width: 0) and (max-width: 1023px) {
+  .header-desktop-right .search-block-form .mobile-search-form.visible {
+    display: block;
+} }
+
+.header-desktop-right .search-block-form #search,
+.header-desktop-right .search-block-form #edit-keys,
+#mobile-search .search-block-form #search,
+#mobile-search .search-block-form #edit-keys {
+  background-color: #eeeeee;
+  background-image: url("../images/Samsca/icon-search.png");
+  background-origin: border-box;
+  background-position: 98% center;
+  background-repeat: no-repeat;
+  background-size: 16px auto;
+  border-color: #cccccc;
+  display: inline-block;
+  height: 30px;
+  padding-bottom: 5px;
+  padding-right: 20px;
+  padding-top: 5px;
+  width: 250px;
+}
+@media only screen and (min-width: 0) and (max-width: 1200px) {
+  .header-desktop-right .search-block-form #search,
+  .header-desktop-right .search-block-form #edit-keys,
+  #mobile-search .search-block-form #search,
+  #mobile-search .search-block-form #edit-keys {
+    width: 100%;
+    max-width: 400px;
+} }
+
+.header-desktop-right .search-block-form #edit-keys::-webkit-input-placeholder,
+#mobile-search .search-block-form #edit-keys::-webkit-input-placeholder {
+  font-style: italic;
+  font-size: 14px;
+}
+
+.header-desktop-right .search-block-form #edit-keys:-ms-input-placeholder,
+#mobile-search .search-block-form #edit-keys:-ms-input-placeholder {
+  font-style: italic;
+  font-size: 14px;
+}
+
+.header-desktop-right .search-block-form #edit-keys::-ms-input-placeholder,
+#mobile-search .search-block-form #edit-keys::-ms-input-placeholder {
+  font-style: italic;
+  font-size: 14px;
+}
+
+.header-desktop-right .search-block-form #edit-keys::placeholder,
+#mobile-search .search-block-form #edit-keys::placeholder {
+  font-style: italic;
+  font-size: 14px;
+}
+
+.header-desktop-right .search-block-form input[type="submit"],
+#mobile-search .search-block-form input[type="submit"] {
+  display: none;
+}
+
+.header-desktop-right .search-block-form #search.form-control::-moz-placeholder,
+#mobile-search .search-block-form #search.form-control::-moz-placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.header-desktop-right .search-block-form #search.form-control:-moz-placeholder,
+#mobile-search .search-block-form #search.form-control:-moz-placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.header-desktop-right .search-block-form #search.form-control::-webkit-input-placeholder,
+#mobile-search .search-block-form #search.form-control::-webkit-input-placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.header-desktop-right .search-block-form #search.form-control:-ms-input-placeholder,
+#mobile-search .search-block-form #search.form-control:-ms-input-placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.page-node-type-samsca-homepage .callout-patient-cases .button-blue {
+  display: inline-block;
+}
+
+.page-node-type-samsca-homepage #home-ctas-group1 > div:first-child:after {
+  display: table;
+  content: "";
+  height: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  line-height: 20px;
+  position: relative;
+  width: 90%;
+}
+@media (min-width: 769px) {
+  .page-node-type-samsca-homepage #home-ctas-group1 > div:first-child:after {
+    border-bottom: none;
+} }
+
+@media (min-width: 769px) {
+  .page-node-type-samsca-homepage #cta-56:before {
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+    content: "";
+    float: left;
+    height: 80px;
+    left: -40px;
+    position: relative;
+} }
+
+@media only screen and (max-width: 799px) {
+  .page-node-type-samsca-homepage footer,
+  .page-node-type-samsca-homepage #article-footer-isi .homepageISI {
+    padding-top: 0;
+    margin-top: -8px !important;
+}
+  .page-node-type-samsca-homepage #article-footer-isi .homepageISI .isi-header {
+    padding-right: 15px;
+} }
+
+@media only screen and (min-width: 800px) {
+  .page-node-type-samsca-homepage footer,
+  .page-node-type-samsca-homepage #article-footer-isi .homepageISI {
+    padding-top: 55px;
+} }
+
+@media only screen and (min-width: 1024px) {
+  .page-node-type-samsca-homepage footer,
+  .page-node-type-samsca-homepage #article-footer-isi .homepageISI {
+    padding-top: 80px;
+} }
+
+@media (max-width: 799px) {
+  footer .isi p {
+    line-height: 17px;
+}
+  footer .isi p ul {
+    margin-left: 0;
+} }
+
+#block-samsca-hcp-main-menu .desktop-nav-container li.home a {
+  display: inline-block;
+  background: url("../images/Samsca/icon-home.png") no-repeat;
+  background-position: center center;
+  background-size: 24px 20px;
+  font-size: 0;
+  width: 100%;
+  height: 100%;
+}
+#block-samsca-hcp-main-menu .desktop-nav-container li.home a:hover {
+  background: url("../images/Samsca/icon-home-active.png") no-repeat;
+  background-position: center center;
+}
+
+#block-samsca-hcp-main-menu .desktop-nav-container li.home.active a {
+  background: url("../images/Samsca/icon-home-active.png") no-repeat;
+  background-position: center center;
+}
+
+#block-samsca-hcp-main-menu {
+  width: 100%;
+}
+
+#sidebar-left {
+  z-index: 99;
+}
+@media (min-width: 769px) {
+  #sidebar-left {
+    min-height: 100px;
+}
+  #sidebar-left.extended-height-long {
+    min-height: 600px;
+}
+  #sidebar-left.extended-height-short {
+    min-height: 450px;
+} }
+
+#node-isi-container {
+  clear: both;
+}
+#node-isi-container ul {
+  margin-left: 0;
+}
+#node-isi-container.row {
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0 !important;
+}
+
+.page-node-type-custom-moa-page #node-isi-container.row {
+  margin-top: 30px !important;
+}
+
+.page-node-type-custom-moa-page #video-poster-img img {
+  width: 100%;
+  height: auto;
+}
+
+.page-node-type-pharma-brand-basic-page footer {
+  padding-top: 30px;
+}
+.page-node-type-pharma-brand-basic-page footer.no-top-padding {
+  padding-top: 0;
+}
+
+.page-node-type-pharma-brand-basic-page .views-element-container header a,
+.page-node-type-pharma-brand-basic-page .views-element-container footer a {
+  text-decoration: none;
+}
+.page-node-type-pharma-brand-basic-page .views-element-container header a:hover,
+.page-node-type-pharma-brand-basic-page .views-element-container header a:focus,
+.page-node-type-pharma-brand-basic-page .views-element-container footer a:hover,
+.page-node-type-pharma-brand-basic-page .views-element-container footer a:focus {
+  text-decoration: underline;
+}
+
+.page-node-type-pharma-brand-basic-page .views-element-container footer {
+  padding-top: 0;
+  margin-top: 0 !important;
+}
+
+.page-node-type-pharma-brand-basic-page #block-views-block-page-video-resources-block-1 .views-element-container footer,
+.page-node-type-pharma-brand-basic-page #block-views-block-page-downloadable-resources-block-1 .views-element-container footer {
+  margin-top: 0 !important;
+}
+
+.page-node-type-pharma-brand-basic-page #block-views-block-block-downloadable-resources-block-1 {
+  margin-bottom: 40px;
+}
+
+.page-node-type-custom-moa-page footer {
+  padding-top: 40px;
+}
+@media (min-width: 769px) {
+  .page-node-type-custom-moa-page footer {
+    padding-top: 10px;
+} }
+
+footer#article-footer-isi {
+  margin-top: 0 !important;
+}
+
+.page-node-type-case-study footer#article-footer-isi {
+  padding-top: 30px !important;
+}
+
+.view-id-page_video_resources.row {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#node-citations-container.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#node-citations-container .field_component_references,
+#node-citations-container .field_reference_number {
+  color: #fff;
+}
+
+#node-citations-container .paragraph--type--component-item-reference {
+  display: block;
+}
+
+#node-citations-container .field_reference_number {
+  width: 18px;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: top;
+}
+#node-citations-container .field_reference_number::after {
+  content: '.';
+  display: inline;
+}
+
+#node-citations-container .field_reference_citation_node {
+  display: inline-block;
+  vertical-align: top;
+  width: 98%;
+}
+@media (max-width: 1200px) {
+  #node-citations-container .field_reference_citation_node {
+    width: 97%;
+} }
+@media (max-width: 1024px) {
+  #node-citations-container .field_reference_citation_node {
+    width: 96%;
+} }
+@media (max-width: 768px) {
+  #node-citations-container .field_reference_citation_node {
+    width: 95%;
+} }
+@media (max-width: 600px) {
+  #node-citations-container .field_reference_citation_node {
+    width: 93%;
+} }
+
+#referenceText ol li,
+#node-citations-container .paragraph--type--component-item-reference {
+  margin-bottom: 3px;
+  line-height: 19px;
+  font-size: 12px;
+}
+#referenceText ol li span,
+#node-citations-container .paragraph--type--component-item-reference span {
+  font-weight: normal;
+}
+
+.header-isi-mobile div,
+.header-isi-mobile p {
+  display: inline;
+}
+
+.header-isi-mobile .header-indication p {
+  display: block;
+}
+
+#header-desktop-nav {
+  clear: both;
+}
+
+.isi-action-link {
+  font-weight: bold;
+}
+
+.fancybox-opened {
+  z-index: 9999999;
+}
+
+.mobile-samsca-logo * {
+  display: inline-block;
+}
+
+.mobile-samsca-logo.ui-link {
+  text-decoration: none;
+}
+
+.mobile-samsca-logo p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.mobile-samsca-logo div#block-samscalogotextonlytablet,
+.mobile-samsca-logo div#block-samsca-hcp2-samscalogotextonlymobileheader,
+.mobile-samsca-logo div.body {
+  margin-right: 0;
+}
+
+#page-inner-wrapper {
+  min-height: auto;
+}
+
+.region_footer_nav .footer-nav {
+  padding-top: 20px;
+  padding-bottom: 19px;
+  display: inline-block;
+  height: auto;
+}
+.region_footer_nav .footer-nav #block-samsca-hcp2-footer > ul {
+  margin-top: 0.4em;
+  width: 100%;
+  text-align: center;
+}
+
+.region_footer_nav ul,
+.region_footer_nav ol,
+.region_footer_nav li {
+  margin-bottom: 0;
+}
+
+footer .copyright-row p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.field_pharma_accordion_item .collapsible * {
+  display: inline-block;
+  vertical-align: middle;
+  padding-top: 0;
+}
+
+.field_pharma_accordion_item .collapsible span {
+  height: 30px;
+  padding-top: 10px;
+}
+
+.collapsible.collapse-open span,
+.collapsible-default.collapse-open span,
+.case-study-wrapper-full .case-study-full .collapse-open.collapsible span {
+  background-position: center -4px;
+}
+
+.case-study-wrapper-full .case-study-full .collapse-open.collapsible span {
+  bottom: -6px;
+  position: relative;
+}
+
+.case-study-wrapper-full .case-study-full .field_pharma_accordion_item .content {
+  padding: 10px 0 10px 10px;
+}
+
+.case-study-wrapper-full .case-study-full .field_pharma_accordion_row_body {
+  padding: 0px 0px 0px 10px;
+}
+
+.field_pharma_accordion_row_icon {
+  width: 40px;
+  height: 50px;
+  padding-bottom: 10px;
+}
+@media (max-width: 768px) {
+  .field_pharma_accordion_row_icon {
+    position: relative;
+    top: 5px;
+    padding-bottom: 4px;
+} }
+.field_pharma_accordion_row_icon img {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.field_pharm_accordion_row_hdg p {
+  font-size: 18px;
+  color: #00a0e2;
+  min-height: auto;
+  border-bottom: none;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  clear: both;
+  width: 100%;
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.field_pharma_accordion_row_body {
+  padding: 10px 10px 10px 10px;
+}
+
+.field_moa_step_image img {
+  width: 100%;
+  height: auto;
+}
+
+.field_moa_step_number::after {
+  display: inline;
+  content: '.';
+}
+
+.hyponatremia-resource-hide {
+  display: none;
+  padding: 0 0 0 0;
+}
+
+#block-views-block-page-video-resources-block-1,
+#block-views-block-page-downloadable-resources-block-1 {
+  z-index: 99;
+}
+
+.webform-submission-contact-form .form-actions .ui-btn {
+  margin: inherit;
+  padding: inherit;
+  text-align: left;
+  font-size: 0;
+}
+
+.contact-us .field_pharma_main_body_container {
+  margin-left: 15px;
+  margin-right: 0;
+}
+
+.contact-us.page-node-126 .field_pharma_main_body_container {
+  margin-left: 0px;
+  margin-right: 0;
+}
+
+.contact-us label.form-required:after {
+  display: inline;
+  content: '*';
+  color: red;
+  font-weight: bold;
+  position: relative;
+  top: -2px;
+}
+
+.contact-us .webform-submission-contact-form .form-control.form-select {
+  height: 19px;
+  padding: 0 12px;
+  width: auto;
+  font-size: 12px;
+}
+
+.callout-title .field_cta_title p {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  margin: inherit;
+  padding: 0px 0px 10px 0px;
+}
+
+.main-content-no-callouts.download-resources .views-row:first-child .media {
+  margin-top: 0;
+}
+
+.desktop-only {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .desktop-only {
+    display: inline;
+} }
+
+.media .media-body ul li a p {
+  margin: 0;
+}
+
+.accordion-header {
+  display: inline-block;
+  width: 100%;
+  padding-top: 13px;
+  vertical-align: top;
+}
+
+.case-study-wrapper-full .case-study-full .field_pharma_accordion_item .collapsible {
+  padding-top: 0;
+  margin-bottom: -1px;
+}
+@media (min-width: 768px) {
+  .case-study-wrapper-full .case-study-full .field_pharma_accordion_item .collapsible .field_pharma_accordion_row_icon {
+    padding-top: 4px;
+    padding-bottom: 6px;
+} }
+@media (min-width: 1024px) {
+  .case-study-wrapper-full .case-study-full .field_pharma_accordion_item .collapsible .field_pharma_accordion_row_icon {
+    padding-top: 6px;
+    padding-bottom: 4px;
+} }
+.case-study-wrapper-full .case-study-full .field_pharma_accordion_item .collapsible .accordion-header {
+  display: inline-block;
+  width: calc(100% - 45px);
+  padding-top: 13px;
+  vertical-align: top;
+}
+.case-study-wrapper-full .case-study-full .field_pharma_accordion_item .collapsible span {
+  padding-top: 0;
+}
+.case-study-wrapper-full .case-study-full .field_pharma_accordion_item .collapsible.collapse-open span {
+  bottom: 1px;
+}
+
+.case-study-wrapper-full .case-study-full .field_pharma_accordion_item .field_pharma_accordion_row_body ul {
+  padding-left: 10px;
+}
+
+header .search-row div {
+  margin-right: 0;
+}
+
+@media (max-width: 1023px) {
+  header .mobile-search-form {
+    width: 100%;
+    max-width: 500px;
+    float: none !important;
+    margin: 20px auto 0;
+} }
+
+header .mobile-search-form #edit-actions {
+  display: none;
+}
+
+.callout-patient-cases.cta .button-blue {
+  font-size: 12px;
+}
+
+.not-desktop {
+  display: inline;
+}
+@media (min-width: 1024px) {
+  .not-desktop {
+    display: none;
+} }
+
+.samsca-header-nav.warning * {
+  display: inline;
+}
+
+.paragraph--type--case-study-teasers .case-study-detail-only {
+  display: none;
+}
+
+.page-node-type-case-study .case-study-teaser-only {
+  display: none;
+}
+
+#block-samsca-hcp2-content .field_pharma_main_body_container .paragraph:first-child .field_pharma_body_copy h1 {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.samsca-side-nav li.active a.hidden-sm.is-active {
+  display: block !important;
+}
+
+#block-videofilepathhiddendivformoavideolibrarypages {
+  display: none;
+}
+
+.page-node-type-custom-moa-page main#main {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.view-page-video-resources .video-library-only {
+  display: none;
+}
+
+#block-views-block-block-video-resources-block-1 .resource-landing-only {
+  display: none;
+}
+
+/*# sourceMappingURL=samsca_drupal_glue.css.map */
