@@ -18,17 +18,52 @@
   ],
   "models": [
     {
-      "id": "navigation",
+  "id": "navigation",
+  "fields": [
+    {
+      "component": "multi",
+      "name": "items",
+      "label": "Menu Items",
+      "valueType": "object",
+      "multi": true,
       "fields": [
         {
           "component": "text",
-          "name": "items",
-          "label": "Menu Items",
+          "name": "title",
+          "label": "Title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "link",
+          "label": "Link",
+          "valueType": "string"
+        },
+        {
+          "component": "multi",
+          "name": "children",
+          "label": "Sub‑items",
+          "valueType": "object",
           "multi": true,
-          "valueType": "object"
+          "fields": [
+            {
+              "component": "text",
+              "name": "title",
+              "label": "Sub‑title",
+              "valueType": "string"
+            },
+            {
+              "component": "text",
+              "name": "link",
+              "label": "Sub‑link",
+              "valueType": "string"
+            }
+          ]
         }
       ]
     }
-  ],
+  ]
+}
+
   "filters": []
 }
