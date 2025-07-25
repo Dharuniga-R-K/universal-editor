@@ -147,17 +147,16 @@
     responseText = responseText.replace(/[\n]+\s+/g, '\n');
 
     // We don't need readyState except for status == 0.
-    const readyStateText =
-      xmlhttp.status === 0
-        ? `\n${Drupal.t('ReadyState: !readyState', {
-            '!readyState': xmlhttp.readyState,
-          })}`
-        : '';
+    const readyStateText = xmlhttp.status === 0
+      ? `\n${Drupal.t('ReadyState: !readyState', {
+        '!readyState': xmlhttp.readyState,
+      })}`
+      : '';
 
     customMessage = customMessage
       ? `\n${Drupal.t('CustomMessage: !customMessage', {
-          '!customMessage': customMessage,
-        })}`
+        '!customMessage': customMessage,
+      })}`
       : '';
 
     /**
@@ -165,13 +164,12 @@
      *
      * @type {string}
      */
-    this.message =
-      statusCode +
-      pathText +
-      statusText +
-      customMessage +
-      responseText +
-      readyStateText;
+    this.message = statusCode
+      + pathText
+      + statusText
+      + customMessage
+      + responseText
+      + readyStateText;
 
     /**
      * Used by some browsers to display a more accurate stack trace.
@@ -289,10 +287,9 @@
    */
   Drupal.ajax.expired = function () {
     return Drupal.ajax.instances.filter(
-      (instance) =>
-        instance &&
-        instance.element !== false &&
-        !document.body.contains(instance.element),
+      (instance) => instance
+        && instance.element !== false
+        && !document.body.contains(instance.element),
     );
   };
 
@@ -548,8 +545,7 @@
         return ajax.beforeSend(xmlhttprequest, options);
       },
       success(response, status, xmlhttprequest) {
-        ajax.preCommandsFocusedElementSelector =
-          document.activeElement.getAttribute('data-drupal-selector');
+        ajax.preCommandsFocusedElementSelector = document.activeElement.getAttribute('data-drupal-selector');
 
         // Sanity check for browser support (object expected).
         // When using iFrame uploads, responses must be returned as a string.
@@ -634,8 +630,8 @@
     // Bind the ajaxSubmit function to the element event.
     $(ajax.element).on(elementSettings.event, function (event) {
       if (
-        !drupalSettings.ajaxTrustedUrl[ajax.url] &&
-        !Drupal.url.isLocal(ajax.url)
+        !drupalSettings.ajaxTrustedUrl[ajax.url]
+        && !Drupal.url.isLocal(ajax.url)
       ) {
         throw new Error(
           Drupal.t('The callback URL is not local and not trusted: !url', {
@@ -743,12 +739,12 @@
     // #ajax['keypress'] is TRUE. On a text-type widget a space should always
     // be a space.
     if (
-      event.which === 13 ||
-      (event.which === 32 &&
-        element.type !== 'text' &&
-        element.type !== 'textarea' &&
-        element.type !== 'tel' &&
-        element.type !== 'number')
+      event.which === 13
+      || (event.which === 32
+        && element.type !== 'text'
+        && element.type !== 'textarea'
+        && element.type !== 'tel'
+        && element.type !== 'number')
     ) {
       event.preventDefault();
       event.stopPropagation();
@@ -913,8 +909,8 @@
       .slice(0, 1)
       .toUpperCase()}${this.progress.type.slice(1).toLowerCase()}`;
     if (
-      progressIndicatorMethod in this &&
-      typeof this[progressIndicatorMethod] === 'function'
+      progressIndicatorMethod in this
+      && typeof this[progressIndicatorMethod] === 'function'
     ) {
       this[progressIndicatorMethod].call(this);
     }
@@ -930,10 +926,9 @@
    */
   Drupal.theme.ajaxProgressThrobber = (message) => {
     // Build markup without adding extra white space since it affects rendering.
-    const messageMarkup =
-      typeof message === 'string'
-        ? Drupal.theme('ajaxProgressMessage', message)
-        : '';
+    const messageMarkup = typeof message === 'string'
+      ? Drupal.theme('ajaxProgressMessage', message)
+      : '';
     const throbber = '<div class="throbber">&nbsp;</div>';
 
     return `<div class="ajax-progress ajax-progress-throbber">${throbber}${messageMarkup}</div>`;
@@ -945,8 +940,7 @@
    * @return {string}
    *   The HTML markup for the throbber.
    */
-  Drupal.theme.ajaxProgressIndicatorFullscreen = () =>
-    '<div class="ajax-progress ajax-progress-fullscreen">&nbsp;</div>';
+  Drupal.theme.ajaxProgressIndicatorFullscreen = () => '<div class="ajax-progress ajax-progress-fullscreen">&nbsp;</div>';
 
   /**
    * Formats text accompanying the AJAX progress throbber.
@@ -956,8 +950,7 @@
    * @return {string}
    *   The HTML markup for the throbber.
    */
-  Drupal.theme.ajaxProgressMessage = (message) =>
-    `<div class="message">${message}</div>`;
+  Drupal.theme.ajaxProgressMessage = (message) => `<div class="message">${message}</div>`;
 
   /**
    * Provide a wrapper for the AJAX progress bar element.
@@ -967,8 +960,7 @@
    * @return {string}
    *   The HTML markup for the progress bar.
    */
-  Drupal.theme.ajaxProgressBar = ($element) =>
-    $('<div class="ajax-progress ajax-progress-bar"></div>').append($element);
+  Drupal.theme.ajaxProgressBar = ($element) => $('<div class="ajax-progress ajax-progress-bar"></div>').append($element);
 
   /**
    * Sets the progress bar progress indicator.
@@ -1035,17 +1027,16 @@
     const ajaxCommands = this.commands;
     return Object.keys(response || {}).reduce(
       // Add all commands to a single execution queue.
-      (executionQueue, key) =>
-        executionQueue.then(() => {
-          const { command } = response[key];
-          if (command && ajaxCommands[command]) {
-            // When a command returns a promise, the remaining commands will not
-            // execute until that promise has been fulfilled. This is typically
-            // used to ensure JavaScript files added via the 'add_js' command
-            // have loaded before subsequent commands execute.
-            return ajaxCommands[command](this, response[key], status);
-          }
-        }),
+      (executionQueue, key) => executionQueue.then(() => {
+        const { command } = response[key];
+        if (command && ajaxCommands[command]) {
+          // When a command returns a promise, the remaining commands will not
+          // execute until that promise has been fulfilled. This is typically
+          // used to ensure JavaScript files added via the 'add_js' command
+          // have loaded before subsequent commands execute.
+          return ajaxCommands[command](this, response[key], status);
+        }
+      }),
       Promise.resolve(),
     );
   };
@@ -1085,9 +1076,9 @@
     const focusChanged = Object.keys(response || {}).some((key) => {
       const { command, method } = response[key];
       return (
-        command === 'focusFirst' ||
-        command === 'openDialog' ||
-        (command === 'invoke' && method === 'focus')
+        command === 'focusFirst'
+        || command === 'openDialog'
+        || (command === 'invoke' && method === 'focus')
       );
     });
 
@@ -1101,8 +1092,8 @@
             let target = false;
             if (this.element) {
               if (
-                $(this.element).data('refocus-blur') &&
-                this.preCommandsFocusedElementSelector
+                $(this.element).data('refocus-blur')
+                && this.preCommandsFocusedElementSelector
               ) {
                 target = document.querySelector(
                   `[data-drupal-selector="${this.preCommandsFocusedElementSelector}"]`,
@@ -1147,8 +1138,7 @@
                 '!error': error,
               },
             ),
-          ),
-        )
+          ))
     );
   };
 
@@ -1240,22 +1230,20 @@
    * @todo Add deprecation warning after it is possible. For more information
    *   see: https://www.drupal.org/project/drupal/issues/2973400
    */
-  Drupal.theme.ajaxWrapperNewContent = ($newContent, ajax, response) =>
-    (response.effect || ajax.effect) !== 'none' &&
-    $newContent.filter(
-      (i) =>
-        !(
-          // We can not consider HTML comments or whitespace text as separate
-          // roots, since they do not cause visual regression with effect.
-          (
-            $newContent[i].nodeName === '#comment' ||
-            ($newContent[i].nodeName === '#text' &&
-              /^(\s|\n|\r)*$/.test($newContent[i].textContent))
-          )
-        ),
+  Drupal.theme.ajaxWrapperNewContent = ($newContent, ajax, response) => ((response.effect || ajax.effect) !== 'none'
+    && $newContent.filter(
+      (i) => !(
+      // We can not consider HTML comments or whitespace text as separate
+      // roots, since they do not cause visual regression with effect.
+        (
+          $newContent[i].nodeName === '#comment'
+            || ($newContent[i].nodeName === '#text'
+              && /^(\s|\n|\r)*$/.test($newContent[i].textContent))
+        )
+      ),
     ).length > 1
-      ? Drupal.theme('ajaxWrapperMultipleRootElements', $newContent)
-      : $newContent;
+    ? Drupal.theme('ajaxWrapperMultipleRootElements', $newContent)
+    : $newContent);
 
   /**
    * Provide a wrapper for multiple root elements via Ajax.
@@ -1271,8 +1259,7 @@
    * @todo Add deprecation warning after it is possible. For more information
    *   see: https://www.drupal.org/project/drupal/issues/2973400
    */
-  Drupal.theme.ajaxWrapperMultipleRootElements = ($elements) =>
-    $('<div></div>').append($elements);
+  Drupal.theme.ajaxWrapperMultipleRootElements = ($elements) => $('<div></div>').append($elements);
 
   /**
    * @typedef {object} Drupal.AjaxCommands~commandDefinition
@@ -1393,11 +1380,11 @@
       // Attach behaviors to all element nodes.
       $newContent.each((index, element) => {
         if (
-          element.nodeType === Node.ELEMENT_NODE &&
+          element.nodeType === Node.ELEMENT_NODE
           // Attach all JavaScript behaviors to the new content, if it was
           // successfully added to the page, this condition allows
           // `#ajax['wrapper']` to be optional.
-          document.documentElement.contains(element)
+          && document.documentElement.contains(element)
         ) {
           Drupal.attachBehaviors(element, settings);
         }
@@ -1728,7 +1715,7 @@
         return;
       }
 
-      const allUniqueBundleIds = response.data.map(function (style) {
+      const allUniqueBundleIds = response.data.map((style) => {
         const uniqueBundleId = style.href;
         // Force file to load as a CSS stylesheet using 'css!' flag.
         if (!loadjs.isDefined(uniqueBundleId)) {
@@ -1755,7 +1742,7 @@
           },
           error(depsNotFound) {
             const message = Drupal.t(
-              `The following files could not be loaded: @dependencies`,
+              'The following files could not be loaded: @dependencies',
               { '@dependencies': depsNotFound.join(', ') },
             );
             reject(message);
@@ -1847,7 +1834,7 @@
           },
           error(depsNotFound) {
             const message = Drupal.t(
-              `The following files could not be loaded: @dependencies`,
+              'The following files could not be loaded: @dependencies',
               { '@dependencies': depsNotFound.join(', ') },
             );
             reject(message);
@@ -1897,18 +1884,16 @@
    * triggered until after the Promise that executes the command queue is
    * resolved.
    */
-  const stopEvent = (xhr, settings) => {
-    return (
-      // Only interfere with Drupal's Ajax responses.
-      xhr.getResponseHeader('X-Drupal-Ajax-Token') === '1' &&
+  const stopEvent = (xhr, settings) => (
+    // Only interfere with Drupal's Ajax responses.
+    xhr.getResponseHeader('X-Drupal-Ajax-Token') === '1'
       // The isInProgress() function might not be defined if the Ajax request
       // was initiated without Drupal.ajax() or new Drupal.Ajax().
-      settings.isInProgress &&
+      && settings.isInProgress
       // Until this is false, the Ajax request isn't completely done (the
       // response's commands might still be running).
-      settings.isInProgress()
-    );
-  };
+      && settings.isInProgress()
+  );
   $.extend(true, $.event.special, {
     ajaxSuccess: {
       trigger(event, xhr, settings) {
@@ -1932,4 +1917,4 @@
       },
     },
   });
-})(jQuery, window, Drupal, drupalSettings, loadjs, window.tabbable);
+}(jQuery, window, Drupal, drupalSettings, loadjs, window.tabbable));

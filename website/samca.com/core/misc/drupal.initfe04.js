@@ -31,4 +31,4 @@ document.documentElement.className += ' js';
   domReady(() => {
     Drupal.attachBehaviors(document, drupalSettings);
   });
-})(Drupal, window.drupalSettings);
+}(Drupal, window.drupalSettings));

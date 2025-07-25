@@ -114,4 +114,4 @@
     // at most this much time before the set of queued announcements is read.
     return debounce(announce, 200)();
   };
-})(Drupal, Drupal.debounce);
+}(Drupal, Drupal.debounce));

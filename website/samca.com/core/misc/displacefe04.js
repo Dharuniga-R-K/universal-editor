@@ -93,17 +93,17 @@
    */
   function getRawOffset(el, edge) {
     const $el = $(el);
-    const documentElement = document.documentElement;
+    const { documentElement } = document;
     let displacement = 0;
     const horizontal = edge === 'left' || edge === 'right';
     // Get the offset of the element itself.
     let placement = $el.offset()[horizontal ? 'left' : 'top'];
     // Subtract scroll distance from placement to get the distance
     // to the edge of the viewport.
-    placement -=
-      window[`scroll${horizontal ? 'X' : 'Y'}`] ||
-      document.documentElement[`scroll${horizontal ? 'Left' : 'Top'}`] ||
-      0;
+    placement
+      -= window[`scroll${horizontal ? 'X' : 'Y'}`]
+      || document.documentElement[`scroll${horizontal ? 'Left' : 'Top'}`]
+      || 0;
     // Find the displacement value according to the edge.
     switch (edge) {
       // Left and top elements displace as a sum of their own offset value
@@ -264,4 +264,4 @@
    * @ignore
    */
   Drupal.displace.calculateOffset = calculateOffset;
-})(jQuery, Drupal, Drupal.debounce);
+}(jQuery, Drupal, Drupal.debounce));

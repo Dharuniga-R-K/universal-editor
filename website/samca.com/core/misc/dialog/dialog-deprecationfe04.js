@@ -9,7 +9,7 @@
       handle($event) {
         const $element = $($event.target);
         const event = $event.originalEvent;
-        const dialog = event.dialog;
+        const { dialog } = event;
         const dialogArguments = [$event, dialog, $element, event?.settings];
         $event.handleObj.handler.apply(this, dialogArguments);
       },
@@ -37,4 +37,4 @@
       'dialog:afterclose',
     ].forEach((e) => window.addEventListener(e, listenDialogEvent));
   }
-})(jQuery, Drupal, once);
+}(jQuery, Drupal, once));

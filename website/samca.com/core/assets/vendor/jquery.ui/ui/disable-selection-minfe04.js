@@ -6,5 +6,9 @@
  * Released under the MIT license.
  * https://jquery.org/license
  */
-!function(e){"use strict";"function"==typeof define&&define.amd?define(["jquery","./version"],e):e(jQuery)}((function(e){"use strict";return e.fn.extend({disableSelection:(n="onselectstart"in document.createElement("div")?"selectstart":"mousedown",function(){return this.on(n+".ui-disableSelection",(function(e){e.preventDefault()}))}),enableSelection:function(){return this.off(".ui-disableSelection")}});var n}));
-//# sourceMappingURL=disable-selection-min.js.map
+!(function (e) {
+  typeof define === 'function' && define.amd ? define(['jquery', './version'], e) : e(jQuery);
+}(((e) => {
+  return e.fn.extend({ disableSelection: (n = 'onselectstart' in document.createElement('div') ? 'selectstart' : 'mousedown', function () { return this.on(`${n}.ui-disableSelection`, ((e) => { e.preventDefault(); })); }), enableSelection() { return this.off('.ui-disableSelection'); } }); let n;
+})));
+// # sourceMappingURL=disable-selection-min.js.map

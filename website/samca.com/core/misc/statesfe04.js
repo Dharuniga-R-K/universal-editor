@@ -488,7 +488,7 @@
       // Attach the event callback.
       this.element.on(
         event,
-        function (e) {
+        (e) => {
           const value = valueFn.call(this.element, e);
           // Only trigger the event if the value has actually changed.
           if (oldValue !== value) {
@@ -499,18 +499,18 @@
             });
             oldValue = value;
           }
-        }.bind(this),
+        },
       );
 
       states.postponed.push(
-        function () {
+        () => {
           // Trigger the event once for initialization purposes.
           this.element.trigger({
             type: `state:${this.state}`,
             value: oldValue,
             oldValue: null,
           });
-        }.bind(this),
+        },
       );
     },
   };
@@ -692,8 +692,7 @@
   $document.on('state:disabled', (e) => {
     // Only act when this change was triggered by a dependency and not by the
     // element monitoring itself.
-    const tagsSupportDisable =
-      'button, fieldset, optgroup, option, select, textarea, input';
+    const tagsSupportDisable = 'button, fieldset, optgroup, option, select, textarea, input';
     if (e.trigger) {
       $(e.target)
         .closest('.js-form-item, .js-form-submit, .js-form-wrapper')
@@ -766,4 +765,4 @@
       }
     }
   });
-})(jQuery, Drupal);
+}(jQuery, Drupal));

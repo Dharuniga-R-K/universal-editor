@@ -2,7 +2,7 @@ const dl = drupalSettings.gtm ? drupalSettings.gtm.settings.data_layer : 'dataLa
 window[dl] = window[dl] || [];
 
 (function (drupalSettings) {
-  if (!drupalSettings.gtm) {return;}
+  if (!drupalSettings.gtm) { return; }
   const config = drupalSettings.gtm;
 
   window[dl].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
@@ -20,7 +20,7 @@ window[dl] = window[dl] || [];
     const gtm_preview = gtmSettings.environment_id ?? '';
     gtm_environment = `&gtm_auth=${gtm_auth}&gtm_preview=${gtm_preview}&gtm_cookies_win=x`;
   }
-  config.tagIds.forEach(function (tagId) {
+  config.tagIds.forEach((tagId) => {
     const script = document.createElement('script');
     script.async = true;
     const dLink = dl != 'dataLayer' ? `&l=${dl}` : '';
@@ -28,4 +28,4 @@ window[dl] = window[dl] || [];
     script.type = 'text/javascript';
     document.getElementsByTagName('head')[0].appendChild(script);
   });
-})(drupalSettings);
+}(drupalSettings));

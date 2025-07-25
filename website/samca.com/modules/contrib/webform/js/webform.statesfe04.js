@@ -4,9 +4,6 @@
  */
 
 (function ($, Drupal, once) {
-
-  'use strict';
-
   Drupal.webform = Drupal.webform || {};
   Drupal.webform.states = Drupal.webform.states || {};
   Drupal.webform.states.slideDown = Drupal.webform.states.slideDown || {};
@@ -38,7 +35,7 @@
    *   TRUE if element is within the webform.
    */
   $.fn.isWebform = function () {
-    return $(this).closest('form.webform-submission-form, form[id^="webform"], form[data-is-webform]').length ? true : false;
+    return !!$(this).closest('form.webform-submission-form, form[id^="webform"], form[data-is-webform]').length;
   };
 
   /**
@@ -48,7 +45,7 @@
    *   TRUE if element is to be treated as a webform element.
    */
   $.fn.isWebformElement = function () {
-    return ($(this).isWebform() || $(this).closest('[data-is-webform-element]').length) ? true : false;
+    return !!(($(this).isWebform() || $(this).closest('[data-is-webform-element]').length));
   };
 
   /* ************************************************************************ */
@@ -75,11 +72,11 @@
   //
   // This issue causes pattern, less than, and greater than support to break.
   // @see https://www.drupal.org/project/webform/issues/2981724
-  var states = Drupal.states;
+  const { states } = Drupal;
   Drupal.states.Dependent.prototype.compare = function compare(reference, selector, state) {
-    var value = this.values[selector][state.name];
+    const value = this.values[selector][state.name];
 
-    var name = reference.constructor.name;
+    let { name } = reference.constructor;
     if (!name) {
       name = $.type(reference);
 
@@ -107,51 +104,50 @@
   // @see http://drupalsun.com/julia-evans/2012/03/09/extending-form-api-states-regular-expressions
   Drupal.states.Dependent.comparisons.Object = function (reference, value) {
     if ('pattern' in reference) {
-      return (new RegExp(reference['pattern'])).test(value);
+      return (new RegExp(reference.pattern)).test(value);
     }
-    else if ('!pattern' in reference) {
+    if ('!pattern' in reference) {
       return !((new RegExp(reference['!pattern'])).test(value));
     }
-    else if ('less' in reference) {
-      return (value !== '' && parseFloat(reference['less']) > parseFloat(value));
+    if ('less' in reference) {
+      return (value !== '' && parseFloat(reference.less) > parseFloat(value));
     }
-    else if ('less_equal' in reference) {
-      return (value !== '' && parseFloat(reference['less_equal']) >= parseFloat(value));
+    if ('less_equal' in reference) {
+      return (value !== '' && parseFloat(reference.less_equal) >= parseFloat(value));
     }
-    else if ('greater' in reference) {
-      return (value !== '' && parseFloat(reference['greater']) < parseFloat(value));
+    if ('greater' in reference) {
+      return (value !== '' && parseFloat(reference.greater) < parseFloat(value));
     }
-    else if ('greater_equal' in reference) {
-      return (value !== '' && parseFloat(reference['greater_equal']) <= parseFloat(value));
+    if ('greater_equal' in reference) {
+      return (value !== '' && parseFloat(reference.greater_equal) <= parseFloat(value));
     }
-    else if ('between' in reference || '!between' in reference) {
+    if ('between' in reference || '!between' in reference) {
       if (value === '') {
         return false;
       }
 
-      var between = reference['between'] || reference['!between'];
-      var betweenParts = between.split(':');
-      var greater = betweenParts[0];
-      var less = (typeof betweenParts[1] !== 'undefined') ? betweenParts[1] : null;
-      var isGreaterThan = (greater === null || greater === '' || parseFloat(value) >= parseFloat(greater));
-      var isLessThan = (less === null || less === '' || parseFloat(value) <= parseFloat(less));
-      var result = (isGreaterThan && isLessThan);
+      const between = reference.between || reference['!between'];
+      const betweenParts = between.split(':');
+      const greater = betweenParts[0];
+      const less = (typeof betweenParts[1] !== 'undefined') ? betweenParts[1] : null;
+      const isGreaterThan = (greater === null || greater === '' || parseFloat(value) >= parseFloat(greater));
+      const isLessThan = (less === null || less === '' || parseFloat(value) <= parseFloat(less));
+      const result = (isGreaterThan && isLessThan);
       return (reference['!between']) ? !result : result;
     }
-    else {
-      return reference.indexOf(value) !== false;
-    }
+
+    return reference.indexOf(value) !== false;
   };
 
   /* ************************************************************************ */
   // States events.
   /* ************************************************************************ */
 
-  var $document = $(document);
+  const $document = $(document);
 
-  $document.on('state:required', function (e) {
+  $document.on('state:required', (e) => {
     if (e.trigger && $(e.target).isWebformElement()) {
-      var $target = $(e.target);
+      const $target = $(e.target);
       // Fix #required file upload.
       // @see Issue #2860529: Conditional required File upload field don't work.
       toggleRequired($target.find('input[type="file"]'), e.value);
@@ -174,8 +170,7 @@
           $checkboxes.on('click', statesCheckboxesRequiredEventHandler);
           // Initialize and add required attribute.
           checkboxesRequired($target);
-        }
-        else {
+        } else {
           // Remove event handler.
           $checkboxes.off('click', statesCheckboxesRequiredEventHandler);
           // Remove required attribute.
@@ -187,24 +182,22 @@
       // @see Issue #3212581: Table select does not trigger client side validation
       if ($target.is('.js-webform-tableselect')) {
         $target.toggleClass('required', e.value);
-        var isMultiple = $target.is('[multiple]');
+        const isMultiple = $target.is('[multiple]');
         if (isMultiple) {
           // Checkboxes.
-          var $tbody = $target.find('tbody');
+          const $tbody = $target.find('tbody');
           var $checkboxes = $tbody.find('input[type="checkbox"]');
           copyRequireMessage($target, $checkboxes);
           if (e.value) {
             $checkboxes.on('click change', statesCheckboxesRequiredEventHandler);
             checkboxesRequired($tbody);
-          }
-          else {
+          } else {
             $checkboxes.off('click change ', statesCheckboxesRequiredEventHandler);
             toggleRequired($tbody, false);
           }
-        }
-        else {
+        } else {
           // Radios.
-          var $radios = $target.find('input[type="radio"]');
+          const $radios = $target.find('input[type="radio"]');
           copyRequireMessage($target, $radios);
           toggleRequired($radios, e.value);
         }
@@ -213,7 +206,7 @@
       // Fix required label for elements without the for attribute.
       // @see Issue #3145300: Conditional Visible Select Other not working.
       if ($target.is('.js-form-type-webform-select-other, .js-webform-type-webform-select-other')) {
-        var $select = $target.find('select');
+        const $select = $target.find('select');
         toggleRequired($select, e.value);
         copyRequireMessage($target, $select);
       }
@@ -238,15 +231,17 @@
     }
   });
 
-  $document.on('state:checked', function (e) {
+  $document.on('state:checked', (e) => {
     if (e.trigger) {
       $(e.target).trigger('change');
     }
   });
 
-  $document.on('state:readonly', function (e) {
+  $document.on('state:readonly', (e) => {
     if (e.trigger && $(e.target).isWebformElement()) {
-      $(e.target).prop('readonly', e.value).closest('.js-form-item, .js-form-wrapper').toggleClass('webform-readonly', e.value).find('input, textarea').prop('readonly', e.value);
+      $(e.target).prop('readonly', e.value).closest('.js-form-item, .js-form-wrapper').toggleClass('webform-readonly', e.value)
+        .find('input, textarea')
+        .prop('readonly', e.value);
 
       // Trigger webform:readonly.
       $(e.target).trigger('webform:readonly')
@@ -254,15 +249,14 @@
     }
   });
 
-  $document.on('state:visible state:visible-slide', function (e) {
+  $document.on('state:visible state:visible-slide', (e) => {
     if (e.trigger && $(e.target).isWebformElement()) {
       if (e.value) {
         $(':input', e.target).addBack().each(function () {
           restoreValueAndRequired(this);
           triggerEventHandlers(this);
         });
-      }
-      else {
+      } else {
         // @see https://www.sitepoint.com/jquery-function-clear-form-data/
         $(':input', e.target).addBack().each(function () {
           backupValueAndRequired(this);
@@ -273,27 +267,28 @@
     }
   });
 
-  $document.on('state:visible-slide', function (e) {
+  $document.on('state:visible-slide', (e) => {
     if (e.trigger && $(e.target).isWebformElement()) {
-      var effect = e.value ? 'slideDown' : 'slideUp';
-      var duration = Drupal.webform.states[effect].duration;
+      const effect = e.value ? 'slideDown' : 'slideUp';
+      const { duration } = Drupal.webform.states[effect];
       $(e.target).closest('.js-form-item, .js-form-submit, .js-form-wrapper')[effect](duration);
     }
   });
   Drupal.states.State.aliases['invisible-slide'] = '!visible-slide';
 
-  $document.on('state:disabled', function (e) {
+  $document.on('state:disabled', (e) => {
     if (e.trigger && $(e.target).isWebformElement()) {
       // Make sure disabled property is set before triggering webform:disabled.
       // Copied from: core/misc/states.js
       $(e.target)
         .prop('disabled', e.value)
         .closest('.js-form-item, .js-form-submit, .js-form-wrapper').toggleClass('form-disabled', e.value)
-        .find('select, input, textarea, button').prop('disabled', e.value);
+        .find('select, input, textarea, button')
+        .prop('disabled', e.value);
 
       // Never disable hidden file[fids] because the existing values will
       // be completely lost when the webform is submitted.
-      var fileElements = $(e.target)
+      const fileElements = $(e.target)
         .find(':input[type="hidden"][name$="[fids]"]');
       if (fileElements.length) {
         // Remove 'disabled' attribute from fieldset which will block
@@ -322,14 +317,14 @@
    * @see https://www.drupal.org/project/webform/issues/3068998
    */
   Drupal.behaviors.webformCheckboxesRequired = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-checkboxes-required', '.js-form-type-checkboxes.required, .webform-term-checkboxes.required, .js-form-type-webform-checkboxes-other.required, .js-webform-type-checkboxes.required, .js-webform-type-webform-checkboxes-other.required, .js-webform-type-webform-radios-other.checkboxes', context))
         .each(function () {
-          var $element = $(this);
+          const $element = $(this);
           $element.find('input[type="checkbox"]').on('click', statesCheckboxesRequiredEventHandler);
-          setTimeout(function () {checkboxesRequired($element);});
+          setTimeout(() => { checkboxesRequired($element); });
         });
-    }
+    },
   };
 
   /**
@@ -340,16 +335,16 @@
    * @see https://www.drupal.org/project/webform/issues/2856795
    */
   Drupal.behaviors.webformRadiosRequired = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-radios-required', '.js-form-type-radios, .js-form-type-webform-radios-other, .js-webform-type-radios, .js-webform-type-webform-radios-other, .js-webform-type-webform-entity-radios, .js-webform-type-webform-scale', context))
         .each(function () {
-          var $element = $(this);
-          setTimeout(function () {radiosRequired($element);});
+          const $element = $(this);
+          setTimeout(() => { radiosRequired($element); });
         });
-    }
+    },
   };
 
- /**
+  /**
    * Adds HTML5 validation to required table select.
    *
    * @type {Drupal~behavior}
@@ -357,27 +352,27 @@
    * @see https://www.drupal.org/project/webform/issues/2856795
    */
   Drupal.behaviors.webformTableSelectRequired = {
-    attach: function (context) {
-      $(once('webform-tableselect-required','.js-webform-tableselect.required', context))
+    attach(context) {
+      $(once('webform-tableselect-required', '.js-webform-tableselect.required', context))
         .each(function () {
-          var $element = $(this);
-          var $tbody = $element.find('tbody');
-          var isMultiple = $element.is('[multiple]');
+          const $element = $(this);
+          const $tbody = $element.find('tbody');
+          const isMultiple = $element.is('[multiple]');
 
           if (isMultiple) {
             // Check all checkbox triggers checkbox 'change' event on
             // select and deselect all.
             // @see Drupal.tableSelect
-            $tbody.find('input[type="checkbox"]').on('click change', function () {
+            $tbody.find('input[type="checkbox"]').on('click change', () => {
               checkboxesRequired($tbody);
             });
           }
 
-          setTimeout(function () {
+          setTimeout(() => {
             isMultiple ? checkboxesRequired($tbody) : radiosRequired($element);
           });
         });
-    }
+    },
   };
 
   /**
@@ -389,8 +384,8 @@
    * @see https://stackoverflow.com/a/37825072/145846
    */
   function checkboxesRequired($element) {
-    var $firstCheckbox = $element.find('input[type="checkbox"]').first();
-    var isChecked = $element.find('input[type="checkbox"]').is(':checked');
+    const $firstCheckbox = $element.find('input[type="checkbox"]').first();
+    const isChecked = $element.find('input[type="checkbox"]').is(':checked');
     toggleRequired($firstCheckbox, !isChecked);
     copyRequireMessage($element, $firstCheckbox);
   }
@@ -404,8 +399,8 @@
    * @see https://www.drupal.org/project/webform/issues/2856795
    */
   function radiosRequired($element) {
-    var $radios = $element.find('input[type="radio"]');
-    var isRequired = $element.hasClass('required');
+    const $radios = $element.find('input[type="radio"]');
+    const isRequired = $element.hasClass('required');
     toggleRequired($radios, isRequired);
     copyRequireMessage($element, $radios);
   }
@@ -420,7 +415,7 @@
    * @see https://stackoverflow.com/a/37825072/145846
    */
   function statesCheckboxesRequiredEventHandler() {
-    var $element = $(this).closest('.js-webform-type-checkboxes, .js-webform-type-webform-checkboxes-other, .js-webform-type-webform-term-checkboxes, .js-webform-tableselect tbody');
+    const $element = $(this).closest('.js-webform-type-checkboxes, .js-webform-type-webform-checkboxes-other, .js-webform-type-webform-term-checkboxes, .js-webform-tableselect tbody');
     checkboxesRequired($element);
   }
 
@@ -431,25 +426,24 @@
    *   An input.
    */
   function triggerEventHandlers(input) {
-    var $input = $(input);
-    var type = input.type;
-    var tag = input.tagName.toLowerCase();
+    const $input = $(input);
+    const { type } = input;
+    const tag = input.tagName.toLowerCase();
     // Add 'webform.states' as extra parameter to event handlers.
     // @see Drupal.behaviors.webformUnsaved
-    var extraParameters = ['webform.states'];
+    const extraParameters = ['webform.states'];
     if (type === 'checkbox' || type === 'radio') {
       $input
         .trigger('change', extraParameters)
         .trigger('blur', extraParameters);
-    }
-    else if (tag === 'select') {
+    } else if (tag === 'select') {
       // Do not trigger the onchange event for Address element's country code
       // when it is initialized.
       // @see \Drupal\address\Element\Country
       if ($input.closest('.webform-type-address').length) {
         if (!$input.data('webform-states-address-initialized')
           && $input.attr('autocomplete') === 'country'
-          && $input.val() === $input.find("option[selected]").attr('value')) {
+          && $input.val() === $input.find('option[selected]').attr('value')) {
           return;
         }
         $input.data('webform-states-address-initialized', true);
@@ -458,12 +452,11 @@
       $input
         .trigger('change', extraParameters)
         .trigger('blur', extraParameters);
-    }
-    else if (type !== 'submit' && type !== 'button' && type !== 'file') {
+    } else if (type !== 'submit' && type !== 'button' && type !== 'file') {
       // Make sure input mask is removed and then reset when value is restored.
       // @see https://www.drupal.org/project/webform/issues/3124155
       // @see https://www.drupal.org/project/webform/issues/3202795
-      var hasInputMask = ($.fn.inputmask && $input.hasClass('js-webform-input-mask'));
+      const hasInputMask = ($.fn.inputmask && $input.hasClass('js-webform-input-mask'));
       hasInputMask && $input.inputmask('remove');
 
       $input
@@ -488,9 +481,9 @@
    *   An input.
    */
   function backupValueAndRequired(input) {
-    var $input = $(input);
-    var type = input.type;
-    var tag = input.tagName.toLowerCase(); // Normalize case.
+    const $input = $(input);
+    const { type } = input;
+    const tag = input.tagName.toLowerCase(); // Normalize case.
 
     // Backup required.
     if ($input.prop('required') && !$input.hasData('webform-required')) {
@@ -501,15 +494,13 @@
     if (!$input.hasData('webform-value')) {
       if (type === 'checkbox' || type === 'radio') {
         $input.data('webform-value', $input.prop('checked'));
-      }
-      else if (tag === 'select') {
-        var values = [];
-        $input.find('option:selected').each(function (i, option) {
+      } else if (tag === 'select') {
+        const values = [];
+        $input.find('option:selected').each((i, option) => {
           values[i] = option.value;
         });
         $input.data('webform-value', values);
-      }
-      else if (type !== 'submit' && type !== 'button') {
+      } else if (type !== 'submit' && type !== 'button') {
         $input.data('webform-value', input.value);
       }
     }
@@ -522,34 +513,32 @@
    *   An input.
    */
   function restoreValueAndRequired(input) {
-    var $input = $(input);
+    const $input = $(input);
 
     // Restore value.
-    var value = $input.data('webform-value');
+    const value = $input.data('webform-value');
     if (typeof value !== 'undefined') {
-      var type = input.type;
-      var tag = input.tagName.toLowerCase(); // Normalize case.
+      const { type } = input;
+      const tag = input.tagName.toLowerCase(); // Normalize case.
 
       if (type === 'checkbox' || type === 'radio') {
         $input.prop('checked', value);
-      }
-      else if (tag === 'select') {
-        $.each(value, function (i, option_value) {
+      } else if (tag === 'select') {
+        $.each(value, (i, option_value) => {
           // Prevent "Syntax error, unrecognized expression" error by
           // escaping single quotes.
           // @see https://forum.jquery.com/topic/escape-characters-prior-to-using-selector
           option_value = option_value.replace(/'/g, "\\\'");
-          $input.find("option[value='" + option_value + "']").prop('selected', true);
+          $input.find(`option[value='${option_value}']`).prop('selected', true);
         });
-      }
-      else if (type !== 'submit' && type !== 'button') {
+      } else if (type !== 'submit' && type !== 'button') {
         input.value = value;
       }
       $input.removeData('webform-value');
     }
 
     // Restore required.
-    var required = $input.data('webform-required');
+    const required = $input.data('webform-required');
     if (typeof required !== 'undefined') {
       if (required) {
         $input.prop('required', true);
@@ -565,7 +554,7 @@
    *   An input.
    */
   function clearValueAndRequired(input) {
-    var $input = $(input);
+    const $input = $(input);
 
     // Check for #states no clear attribute.
     // @see https://css-tricks.com/snippets/jquery/make-an-jquery-hasattr/
@@ -574,20 +563,17 @@
     }
 
     // Clear value.
-    var type = input.type;
-    var tag = input.tagName.toLowerCase(); // Normalize case.
+    const { type } = input;
+    const tag = input.tagName.toLowerCase(); // Normalize case.
     if (type === 'checkbox' || type === 'radio') {
       $input.prop('checked', false);
-    }
-    else if (tag === 'select') {
+    } else if (tag === 'select') {
       if ($input.find('option[value=""]').length) {
         $input.val('');
-      }
-      else {
+      } else {
         input.selectedIndex = -1;
       }
-    }
-    else if (type !== 'submit' && type !== 'button') {
+    } else if (type !== 'submit' && type !== 'button') {
       input.value = (type === 'color') ? '#000000' : '';
     }
 
@@ -608,25 +594,22 @@
    *   Is input required.
    */
   function toggleRequired($input, required) {
-    var isCheckboxOrRadio = ($input.attr('type') === 'radio' || $input.attr('type') === 'checkbox');
+    const isCheckboxOrRadio = ($input.attr('type') === 'radio' || $input.attr('type') === 'checkbox');
     if (required) {
       if (isCheckboxOrRadio) {
-        $input.attr({'required': 'required'});
+        $input.attr({ required: 'required' });
+      } else {
+        $input.attr({ required: 'required', 'aria-required': 'true' });
       }
-      else {
-        $input.attr({'required': 'required', 'aria-required': 'true'});
-      }
-    }
-    else {
+    } else {
       if (isCheckboxOrRadio) {
         $input.removeAttr('required');
-      }
-      else {
+      } else {
         $input.removeAttr('required aria-required');
       }
       // Clear the validation state for the input.
       // @see Drupal.behaviors.webformRequiredError
-      $input.each(function () {this.setCustomValidity && this.setCustomValidity('')});
+      $input.each(function () { this.setCustomValidity && this.setCustomValidity(''); });
     }
   }
 
@@ -643,5 +626,4 @@
       $destination.attr('data-msg-required', $source.attr('data-msg-required'));
     }
   }
-
-})(jQuery, Drupal, once);
+}(jQuery, Drupal, once));

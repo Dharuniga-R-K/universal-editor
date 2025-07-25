@@ -28,7 +28,7 @@
    *   Altered options object.
    */
   function resetPosition(options) {
-    const offsets = displace.offsets;
+    const { offsets } = displace;
     const left = offsets.left - offsets.right;
     const top = offsets.top - offsets.bottom;
 
@@ -83,9 +83,9 @@
       if (optionValue) {
         // jQuery UI does not support percentages on heights, convert to pixels.
         if (
-          typeof optionValue === 'string' &&
-          optionValue.endsWith('%') &&
-          /height/i.test(option)
+          typeof optionValue === 'string'
+          && optionValue.endsWith('%')
+          && /height/i.test(option)
         ) {
           // Take offsets in account.
           windowHeight -= displace.offsets.top + displace.offsets.bottom;
@@ -95,9 +95,9 @@
           );
           // Don't force the dialog to be bigger vertically than needed.
           if (
-            option === 'height' &&
-            Math.round(event.data.$element.parent().outerHeight()) <
-              adjustedValue
+            option === 'height'
+            && Math.round(event.data.$element.parent().outerHeight())
+              < adjustedValue
           ) {
             adjustedValue = 'auto';
           }
@@ -144,4 +144,4 @@
     $(window).off('.dialogResize');
     $(document).off('.dialogResize');
   });
-})(jQuery, Drupal, drupalSettings, Drupal.debounce, Drupal.displace);
+}(jQuery, Drupal, drupalSettings, Drupal.debounce, Drupal.displace));

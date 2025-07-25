@@ -14,4 +14,4 @@
   Drupal.AjaxCommands.prototype.gtagEvent = function (ajax, response) {
     gtag('event', response.event_name, response.data);
   };
-})(Drupal);
+}(Drupal));

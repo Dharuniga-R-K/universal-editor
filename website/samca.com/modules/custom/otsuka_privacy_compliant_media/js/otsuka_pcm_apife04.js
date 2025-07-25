@@ -2,16 +2,16 @@ const OtsukaPCM = Object.create({
   /**
    * Cookie consent management platform.
    */
-  cmpPlatform: "onetrust",
+  cmpPlatform: 'onetrust',
 
   /**
    * Enumeration of service providers.
    */
   providers: {
-    VIMEO: "vimeo",
-    YOUTUBE: "youtube",
-    BUZZSPROUT: "buzzsprout",
-    ORBITA: "orbita",
+    VIMEO: 'vimeo',
+    YOUTUBE: 'youtube',
+    BUZZSPROUT: 'buzzsprout',
+    ORBITA: 'orbita',
   },
 
   /**
@@ -25,7 +25,7 @@ const OtsukaPCM = Object.create({
    * @returns {object|null} The settings for the supplied provider, if found,
    *   otherwise null.
    */
-  getProviderSettings: function (provider) {
+  getProviderSettings(provider) {
     switch (provider) {
       case this.providers.VIMEO:
         return this.settings.vimeo;
@@ -39,21 +39,21 @@ const OtsukaPCM = Object.create({
         return null;
     }
   },
-  overlayImageClassname: "otsuka-pcm-img-overlay",
-  videoThumbnailClassname: "otsuka-pcm-video-thumbnail",
-  thumbnailOverlayClassname: "otsuka-pcm-img-overlay__transparent",
-  thumbnailOverlayDefaultClassname: "with-default-video-overlay",
-  thumbnailOverlayCustomClassname: "with-custom-video-overlay",
-  buzzsproutPlaceholderDefaultClassname: "with-default-buzzsprout-placeholder",
-  buzzsproutPlaceholderCustomClassname: "with-custom-buzzsprout-placeholder",
-  overlayClassname: "otsuka-pcm-consent-overlay",
-  modalClassname: "otsuka-pcm-consent-modal",
+  overlayImageClassname: 'otsuka-pcm-img-overlay',
+  videoThumbnailClassname: 'otsuka-pcm-video-thumbnail',
+  thumbnailOverlayClassname: 'otsuka-pcm-img-overlay__transparent',
+  thumbnailOverlayDefaultClassname: 'with-default-video-overlay',
+  thumbnailOverlayCustomClassname: 'with-custom-video-overlay',
+  buzzsproutPlaceholderDefaultClassname: 'with-default-buzzsprout-placeholder',
+  buzzsproutPlaceholderCustomClassname: 'with-custom-buzzsprout-placeholder',
+  overlayClassname: 'otsuka-pcm-consent-overlay',
+  modalClassname: 'otsuka-pcm-consent-modal',
 
   /**
    * Handle error messages by printing to console.
    * @param {string} message The error message text.
    */
-  printError: function (message) {
+  printError(message) {
     console.error(this.formatErrorMessage(message));
   },
 
@@ -61,7 +61,7 @@ const OtsukaPCM = Object.create({
    * Handle error messages by printing to console.
    * @param {string} message The error message text.
    */
-  throwError: function (message) {
+  throwError(message) {
     throw new Error(this.formatErrorMessage(message));
   },
 
@@ -70,7 +70,7 @@ const OtsukaPCM = Object.create({
    * @param {string} message The error message text.
    * @returns {string} The formatted error message.
    */
-  formatErrorMessage: function (message) {
+  formatErrorMessage(message) {
     return `OtsukaPCM: ${message}`;
   },
 
@@ -82,9 +82,9 @@ const OtsukaPCM = Object.create({
    *   returned value.
    * @returns {Element} The generated DOM Element.
    */
-  createElementFromText: function (text, tagName = "div", strip = true) {
-    let element = document.createElement(tagName);
-    element.innerHTML = text ?? "";
+  createElementFromText(text, tagName = 'div', strip = true) {
+    const element = document.createElement(tagName);
+    element.innerHTML = text ?? '';
     return strip ? element.firstChild : element;
   },
 
@@ -93,16 +93,16 @@ const OtsukaPCM = Object.create({
    * @returns {Promise} A Promise that resolves when OneTrust is found, or
    *   rejects after a preset amount of time.
    */
-  awaitOneTrust: function () {
-    return new Promise(function (resolve, reject) {
-      if (typeof OneTrust === "object") {
+  awaitOneTrust() {
+    return new Promise((resolve, reject) => {
+      if (typeof OneTrust === 'object') {
         resolve(OneTrust);
       }
 
       let attempt = 0;
       const maxAttempts = 50;
       const interval = setInterval(() => {
-        if (typeof OneTrust === "object") {
+        if (typeof OneTrust === 'object') {
           clearInterval(interval);
           resolve(OneTrust);
         }
@@ -111,8 +111,8 @@ const OtsukaPCM = Object.create({
           clearInterval(interval);
           reject(
             OtsukaPCM.formatErrorMessage(
-              "awaitOneTrust: OneTrust not found within allotted time"
-            )
+              'awaitOneTrust: OneTrust not found within allotted time',
+            ),
           );
         }
       }, 100);
@@ -124,9 +124,9 @@ const OtsukaPCM = Object.create({
    * @returns {Promise} A Promise that resolves when the CMP is found, or
    *   rejects after a preset amount of time.
    */
-  awaitCMP: function () {
+  awaitCMP() {
     switch (this.cmpPlatform) {
-      case "onetrust":
+      case 'onetrust':
         return this.awaitOneTrust();
       default:
         return Promise.reject();
@@ -139,12 +139,12 @@ const OtsukaPCM = Object.create({
    * @returns {Promise} A Promise that resolves when the chatbot is found, or
    *   rejects after a preset amount of time.
    */
-  awaitOrbitaChatbot: function () {
+  awaitOrbitaChatbot() {
     return new Promise(function (resolve, reject) {
       if (
-        typeof OrbitaChatBotV3 === "object" &&
-        Object.hasOwn(OrbitaChatBotV3, "botLoaded") &&
-        OrbitaChatBotV3.botLoaded()
+        typeof OrbitaChatBotV3 === 'object'
+        && Object.hasOwn(OrbitaChatBotV3, 'botLoaded')
+        && OrbitaChatBotV3.botLoaded()
       ) {
         resolve(OrbitaChatBotV3);
       }
@@ -153,9 +153,9 @@ const OtsukaPCM = Object.create({
       const maxAttempts = 50;
       const interval = setInterval(() => {
         if (
-          typeof OrbitaChatBotV3 === "object" &&
-          Object.hasOwn(OrbitaChatBotV3, "botLoaded") &&
-          OrbitaChatBotV3.botLoaded()
+          typeof OrbitaChatBotV3 === 'object'
+          && Object.hasOwn(OrbitaChatBotV3, 'botLoaded')
+          && OrbitaChatBotV3.botLoaded()
         ) {
           clearInterval(interval);
           resolve(OrbitaChatBotV3);
@@ -164,7 +164,7 @@ const OtsukaPCM = Object.create({
         if (attempt >= maxAttempts) {
           clearInterval(interval);
           this.throwError(
-            "awaitOrbitaChatbot: Orbita Chatbot not found within allotted time"
+            'awaitOrbitaChatbot: Orbita Chatbot not found within allotted time',
           );
           reject();
         }
@@ -177,7 +177,7 @@ const OtsukaPCM = Object.create({
    * @returns {Promise} A Promise that resolves when the chat button is found,
    *   or rejects after a preset amount of time.
    */
-  awaitOrbitaChatButton: function (selector = 'button[aria-label="Show Chatbot"]') {
+  awaitOrbitaChatButton(selector = 'button[aria-label="Show Chatbot"]') {
     return new Promise(function (resolve, reject) {
       const orbitaButton = document.querySelector(selector);
       if (orbitaButton) {
@@ -196,7 +196,7 @@ const OtsukaPCM = Object.create({
         if (attempt >= maxAttempts) {
           clearInterval(interval);
           this.throwError(
-            "awaitOrbitaChatButton: Orbita chat button not found within allotted time"
+            'awaitOrbitaChatButton: Orbita chat button not found within allotted time',
           );
           reject();
         }
@@ -211,7 +211,7 @@ const OtsukaPCM = Object.create({
    * @returns {boolean} Whether the visitor is consented to the specified
    *   cookie category.
    */
-  isConsentedToCategoryOneTrust: async function (category_id) {
+  async isConsentedToCategoryOneTrust(category_id) {
     // Wait for CMP object.
     try {
       await this.awaitOneTrust();
@@ -219,7 +219,7 @@ const OtsukaPCM = Object.create({
       throw e;
     }
 
-    return OnetrustActiveGroups?.split(",").includes(category_id);
+    return OnetrustActiveGroups?.split(',').includes(category_id);
   },
 
   /**
@@ -228,12 +228,12 @@ const OtsukaPCM = Object.create({
    * @returns {boolean} Whether the visitor is consented to the specified
    *   cookie category.
    */
-  isConsentedToCategory: async function (category_id) {
+  async isConsentedToCategory(category_id) {
     switch (this.cmpPlatform) {
-      case "onetrust":
+      case 'onetrust':
         try {
           const isConsented = await this.isConsentedToCategoryOneTrust(
-            category_id
+            category_id,
           );
           return isConsented;
         } catch (e) {
@@ -249,18 +249,18 @@ const OtsukaPCM = Object.create({
    * @param {string} category_id The category to consent/opt-in to.
    * @returns {boolean} Whether the action succeeded or not.
    */
-  consentToCategoryOneTrust: async function (category_id) {
+  async consentToCategoryOneTrust(category_id) {
     // Wait for CMP object.
     try {
       await this.awaitOneTrust();
     } catch (e) {
       this.throwError(
-        "consentToCategoryOneTrust: Error consenting to OneTrust category"
+        'consentToCategoryOneTrust: Error consenting to OneTrust category',
       );
       return false;
     }
 
-    OneTrust.UpdateConsent("Category", `${category_id}:1`);
+    OneTrust.UpdateConsent('Category', `${category_id}:1`);
     return true;
   },
 
@@ -268,10 +268,10 @@ const OtsukaPCM = Object.create({
    * Consents/opts-in the visitor to the specified cookie category.
    * @param {string} category_id The category to consent/opt-in to.
    */
-  consentToCategory: async function (category_id) {
+  async consentToCategory(category_id) {
     let result = false;
     switch (this.cmpPlatform) {
-      case "onetrust":
+      case 'onetrust':
         result = await this.consentToCategoryOneTrust(category_id);
         break;
     }
@@ -283,8 +283,8 @@ const OtsukaPCM = Object.create({
    * attribute.
    * @param {Element} script The script Element to operate on.
    */
-  insertScript: function (script) {
-    script.src = script.getAttribute("data-src");
+  insertScript(script) {
+    script.src = script.getAttribute('data-src');
   },
 
   /**
@@ -293,7 +293,7 @@ const OtsukaPCM = Object.create({
    * @param {object} param0 The set of parameters to pass to the InsertScript
    *   function.
    */
-  insertScriptIfConsented: async function ({
+  async insertScriptIfConsented({
     url,
     selector,
     callback = null,
@@ -305,7 +305,7 @@ const OtsukaPCM = Object.create({
     try {
       await this.awaitOneTrust();
     } catch (e) {
-      this.throwError("insertScriptIfConsented: Error inserting script");
+      this.throwError('insertScriptIfConsented: Error inserting script');
       return false;
     }
 
@@ -320,7 +320,7 @@ const OtsukaPCM = Object.create({
    * @returns {string|null} The category ID for the specified provider, if
    *   found, otherwise null.
    */
-  getConsentCategoryForProvider: function (provider) {
+  getConsentCategoryForProvider(provider) {
     return this.getProviderSettings(provider)?.cat_id;
   },
 
@@ -329,10 +329,10 @@ const OtsukaPCM = Object.create({
    * @param {string} p A prefix to prepend to the generated ID.
    * @returns {string} The generated ID.
    */
-  genUID: function (p) {
-    var c = 0,
-      i;
-    p = typeof p === "string" ? p : "";
+  genUID(p) {
+    let c = 0;
+    let i;
+    p = typeof p === 'string' ? p : '';
     do {
       i = p + c++;
     } while (document.getElementById(i) !== null);
@@ -345,8 +345,8 @@ const OtsukaPCM = Object.create({
    * @returns {boolean} Whether or not the specified URL contains a query
    *   string.
    */
-  hasQueryString: function (url) {
-    return url.indexOf("?") != -1;
+  hasQueryString(url) {
+    return url.indexOf('?') != -1;
   },
 
   /**
@@ -357,16 +357,16 @@ const OtsukaPCM = Object.create({
    * @returns {Promise} A Promise that resolves if the specified Element ID
    *   already exists, or when the new script Element is loaded by the browser.
    */
-  loadScript: function (src, id) {
-    return new Promise(function (resolve, reject) {
+  loadScript(src, id) {
+    return new Promise((resolve, reject) => {
       if (document.getElementById(id)) {
         resolve();
       } else {
-        const script = document.createElement("script");
+        const script = document.createElement('script');
         script.onload = resolve;
         script.id = id;
         script.src = src;
-        const firstScriptTag = document.getElementsByTagName("script")[0];
+        const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
       }
     });
@@ -377,28 +377,28 @@ const OtsukaPCM = Object.create({
    * @returns {Promise} A Promise that resolves when the YoutTube API is found,
    *   or rejects after a preset amount of time.
    */
-  loadYouTubeAPI: function () {
+  loadYouTubeAPI() {
     function apiExists() {
-      return "undefined" !== typeof YT && YT.loaded;
+      return typeof YT !== 'undefined' && YT.loaded;
     }
     if (apiExists()) {
       return;
     }
     const promises = [];
     promises.push(
-      this.loadScript("https://www.youtube.com/iframe_api", "youtube-api")
+      this.loadScript('https://www.youtube.com/iframe_api', 'youtube-api'),
     );
     promises.push(
-      new Promise(function (resolve, reject) {
+      new Promise((resolve, reject) => {
         // Set an interval to keep checking.
-        const intervalId = setInterval(function () {
+        const intervalId = setInterval(() => {
           if (apiExists()) {
             // API now exists, clear interval and resolve.
             clearInterval(intervalId);
             resolve();
           }
         }, 100);
-      })
+      }),
     );
     return Promise.all(promises);
   },
@@ -408,28 +408,28 @@ const OtsukaPCM = Object.create({
    * @returns {Promise} A Promise that resolves when the Vimeo SDK is found, or
    *   rejects after a preset amount of time.
    */
-  loadVimeoAPI: function () {
+  loadVimeoAPI() {
     function apiExists() {
-      return "undefined" !== typeof Vimeo;
+      return typeof Vimeo !== 'undefined';
     }
     if (apiExists()) {
       return;
     }
     const promises = [];
     promises.push(
-      this.loadScript("https://player.vimeo.com/api/player.js", "vimeo-api")
+      this.loadScript('https://player.vimeo.com/api/player.js', 'vimeo-api'),
     );
     promises.push(
-      new Promise(function (resolve, reject) {
+      new Promise((resolve, reject) => {
         // Set an interval to keep checking.
-        const intervalId = setInterval(function () {
+        const intervalId = setInterval(() => {
           if (apiExists()) {
             // API now exists, clear interval and resolve.
             clearInterval(intervalId);
             resolve();
           }
         }, 100);
-      })
+      }),
     );
     return Promise.all(promises);
   },
@@ -440,7 +440,7 @@ const OtsukaPCM = Object.create({
    * @returns {Promise} A Promise that resolves when the specified provider's
    *   API is found, or rejects after a preset amount of time.
    */
-  loadPlayerAPI: function (provider) {
+  loadPlayerAPI(provider) {
     switch (provider) {
       case this.providers.VIMEO:
         return this.loadVimeoAPI();
@@ -461,26 +461,24 @@ const OtsukaPCM = Object.create({
    * @param {Element} iframe The iframe element to load and begin playback.
    * @returns {void}
    */
-  playIframeVideo: function (iframe) {
-    const dataSrc = iframe.getAttribute("data-src");
+  playIframeVideo(iframe) {
+    const dataSrc = iframe.getAttribute('data-src');
     const { provider, video_id } = this.isManagedSrc(dataSrc);
     const matcher = /(\/media\/oembed\?url=)([^&]+)(.+)/;
     const isOembed = dataSrc.match(matcher);
 
-    iframe.style.display = "block";
+    iframe.style.display = 'block';
 
-    const dependent_cat_id =
-      this.getProviderSettings(provider).dependent_cat_id;
-    const privacy_enhanced =
-      dependent_cat_id && !this.isConsentedToCategory(dependent_cat_id);
+    const { dependent_cat_id } = this.getProviderSettings(provider);
+    const privacy_enhanced = dependent_cat_id && !this.isConsentedToCategory(dependent_cat_id);
 
     let iframeSrc = dataSrc;
 
     // oEmbed
     if (isOembed) {
       if (privacy_enhanced) {
-        iframeSrc +=
-          (this.hasQueryString(iframeSrc) ? "&" : "?") + "privacy_enhanced=1";
+        iframeSrc
+          += `${this.hasQueryString(iframeSrc) ? '&' : '?'}privacy_enhanced=1`;
       }
       iframe.src = iframeSrc;
       // @todo Fix for Safari autoplay.
@@ -491,18 +489,18 @@ const OtsukaPCM = Object.create({
     switch (provider) {
       case this.providers.VIMEO:
         if (privacy_enhanced) {
-          iframeSrc += (this.hasQueryString(iframeSrc) ? "&" : "?") + "dnt=1";
+          iframeSrc += `${this.hasQueryString(iframeSrc) ? '&' : '?'}dnt=1`;
         }
         iframe.src = iframeSrc;
         const player = new Vimeo.Player(iframe.id);
         player
           .play()
-          .then(function () {})
-          .catch(function (e) {
+          .then(() => {})
+          .catch((e) => {
             switch (e.name) {
-              case "NotAllowedError":
+              case 'NotAllowedError':
                 // Reload player so initial frame is shown, otherwise it can appear blank.
-                player.unload().then(function () {
+                player.unload().then(() => {
                   loadVideo(video_id);
                 });
                 break;
@@ -513,15 +511,15 @@ const OtsukaPCM = Object.create({
         if (privacy_enhanced) {
           iframeSrc = iframeSrc.replace(
             /(youtu\.be|youtube\.com)\//,
-            "youtube-nocookie.com/"
+            'youtube-nocookie.com/',
           );
         }
-        iframeSrc +=
-          (this.hasQueryString(dataSrc) ? "&" : "?") + "enablejsapi=1";
+        iframeSrc
+          += `${this.hasQueryString(dataSrc) ? '&' : '?'}enablejsapi=1`;
         iframe.src = iframeSrc;
         new YT.Player(iframe.id, {
           events: {
-            onReady: function (event) {
+            onReady(event) {
               event.target.playVideo();
             },
           },
@@ -530,7 +528,7 @@ const OtsukaPCM = Object.create({
     }
 
     // Fix for Safari.
-    iframe.querySelector(`video`)?.play();
+    iframe.querySelector('video')?.play();
   },
 
   /**
@@ -541,9 +539,8 @@ const OtsukaPCM = Object.create({
    *   module, returns an object with information about the supplied URL,
    *   otherwise returns false.
    */
-  isManagedSrc: function (src) {
-    let matcher =
-      /(youtu\.be|youtube\.com|youtube-nocookie\.com)\/(embed\/|watch\?v=)?([^?&]+)/;
+  isManagedSrc(src) {
+    let matcher = /(youtu\.be|youtube\.com|youtube-nocookie\.com)\/(embed\/|watch\?v=)?([^?&]+)/;
     let match = src?.match(matcher);
     if (match && match[3]) {
       return {
@@ -588,8 +585,8 @@ const OtsukaPCM = Object.create({
    * @returns {object|false} The result of calling `isManagedSrc()` on the
    *   iframe's `data-src` attribute, otherwise false.
    */
-  isManagedIframe: function (iframe) {
-    return iframe && this.isManagedSrc(iframe.getAttribute("data-src"));
+  isManagedIframe(iframe) {
+    return iframe && this.isManagedSrc(iframe.getAttribute('data-src'));
   },
 
   /**
@@ -598,7 +595,7 @@ const OtsukaPCM = Object.create({
    * @param {Element} iframe The iframe to get the provider for.
    * @returns {string|false} The provider name, if found, otherwise false.
    */
-  getProviderByIframe: function (iframe) {
+  getProviderByIframe(iframe) {
     const { provider } = this.isManagedIframe(iframe);
     return provider;
   },
@@ -609,18 +606,18 @@ const OtsukaPCM = Object.create({
    * @returns {string|false} The provider name for the supplied domain name, if
    *   found, otherwise false.
    */
-  getProviderByDomain: function (domain) {
+  getProviderByDomain(domain) {
     switch (domain) {
-      case "vimeo.com":
+      case 'vimeo.com':
         return this.providers.VIMEO;
-      case "youtube.com":
-      case "youtu.be":
-      case "youtube-nocookie.com":
+      case 'youtube.com':
+      case 'youtu.be':
+      case 'youtube-nocookie.com':
         return this.providers.YOUTUBE;
-      case "buzzsprout.com":
+      case 'buzzsprout.com':
         return this.providers.BUZZSPROUT;
-      case "orbita.com":
-      case "orbita.cloud":
+      case 'orbita.com':
+      case 'orbita.cloud':
         return this.providers.ORBITA;
     }
     return false;
@@ -633,7 +630,7 @@ const OtsukaPCM = Object.create({
    * @returns {boolean} Returns true if the specified provider is found and
    *   enabled, otherwise false.
    */
-  isProviderEnabled: function (provider) {
+  isProviderEnabled(provider) {
     return this.getProviderSettings(provider)?.enabled || false;
   },
 
@@ -644,8 +641,8 @@ const OtsukaPCM = Object.create({
    * @returns {Element|null} The consent overlay DOM Element, if found,
    *   otherwise null.
    */
-  getConsentOverlay: function (target) {
-    const id = target.getAttribute("id");
+  getConsentOverlay(target) {
+    const id = target.getAttribute('id');
     return id
       ? document.querySelector(`#${id} > .${this.overlayClassname}`)
       : null;
@@ -656,7 +653,7 @@ const OtsukaPCM = Object.create({
    * target Element.
    * @param {Element} target The DOM Element to search inside of.
    */
-  removeConsentOverlay: function (target) {
+  removeConsentOverlay(target) {
     this.getConsentOverlay(target)?.remove();
   },
 
@@ -669,10 +666,10 @@ const OtsukaPCM = Object.create({
     for (const entry of entries) {
       if (entry.borderBoxSize[0].inlineSize > 600) {
         // Ensure our effect occurs after ResizeObserver completes.
-        setTimeout(() => entry.target.classList.add("wide"), 0);
+        setTimeout(() => entry.target.classList.add('wide'), 0);
       } else {
         // Ensure our effect occurs after ResizeObserver completes.
-        setTimeout(() => entry.target.classList.remove("wide"), 0);
+        setTimeout(() => entry.target.classList.remove('wide'), 0);
       }
     }
   }),
@@ -685,9 +682,9 @@ const OtsukaPCM = Object.create({
   videoOverlayResizeObserver: new ResizeObserver((entries) => {
     for (const entry of entries) {
       if (entry.borderBoxSize[0].inlineSize > 600) {
-        entry.target.classList.add("wide");
+        entry.target.classList.add('wide');
       } else {
-        entry.target.classList.remove("wide");
+        entry.target.classList.remove('wide');
       }
     }
   }),
@@ -697,7 +694,7 @@ const OtsukaPCM = Object.create({
    * @param {object} param0 The options for the generated consent modal.
    * @returns {Element} The generated consent modal.
    */
-  getConsentModal: function ({
+  getConsentModal({
     target,
     provider,
     consentCallback = null,
@@ -706,66 +703,66 @@ const OtsukaPCM = Object.create({
   }) {
     const consent_category = this.getConsentCategoryForProvider(provider);
     const providerSettings = this.getProviderSettings(provider);
-    const dialogTitleId = this.genUID("otsuka-pcm-dialogTitle-id-");
-    const dialogDescId = this.genUID("otsuka-pcm-dialogDesc-id-");
+    const dialogTitleId = this.genUID('otsuka-pcm-dialogTitle-id-');
+    const dialogDescId = this.genUID('otsuka-pcm-dialogDesc-id-');
 
-    const modal = document.createElement("div");
-    modal.setAttribute("role", "dialog");
-    modal.setAttribute("aria-labelledby", dialogTitleId);
-    modal.setAttribute("aria-describedby", dialogDescId);
+    const modal = document.createElement('div');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-labelledby', dialogTitleId);
+    modal.setAttribute('aria-describedby', dialogDescId);
     modal.classList.add(this.modalClassname);
     modal.classList.add(provider);
 
-    modal.addEventListener("click", function (e) {
+    modal.addEventListener('click', (e) => {
       e.stopPropagation();
     });
 
     let closeButton;
 
     if (withCloseButton) {
-      closeButton = document.createElement("div");
-      closeButton.className = "otsuka-pcm-consent-close";
-      closeButton.innerHTML = "&#10005;";
-      closeButton.setAttribute("role", "button");
-      closeButton.setAttribute("aria-label", "Close");
-      closeButton.setAttribute("tabindex", "0");
-      closeButton.addEventListener("click", () => {
+      closeButton = document.createElement('div');
+      closeButton.className = 'otsuka-pcm-consent-close';
+      closeButton.innerHTML = '&#10005;';
+      closeButton.setAttribute('role', 'button');
+      closeButton.setAttribute('aria-label', 'Close');
+      closeButton.setAttribute('tabindex', '0');
+      closeButton.addEventListener('click', () => {
         this.removeConsentOverlay(target);
         cancelCallback && cancelCallback();
       });
       // Listen for keyboard events.
-      closeButton.addEventListener("keydown", (e) => {
-        if ("Enter" === e.key) {
+      closeButton.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
           e.target.click();
         }
       });
     }
 
-    const dialogTitle = document.createElement("h2");
-    dialogTitle.setAttribute("id", dialogTitleId);
-    dialogTitle.setAttribute("hidden", "hidden");
-    dialogTitle.setAttribute("aria-hidden", true);
-    dialogTitle.innerHTML = "Consent request";
+    const dialogTitle = document.createElement('h2');
+    dialogTitle.setAttribute('id', dialogTitleId);
+    dialogTitle.setAttribute('hidden', 'hidden');
+    dialogTitle.setAttribute('aria-hidden', true);
+    dialogTitle.innerHTML = 'Consent request';
 
-    const content = document.createElement("div");
-    content.setAttribute("id", dialogDescId);
-    content.className = "otsuka-pcm-consent-content";
+    const content = document.createElement('div');
+    content.setAttribute('id', dialogDescId);
+    content.className = 'otsuka-pcm-consent-content';
     content.innerHTML = providerSettings.modal.description;
 
     // Add an "I agree" button, which when clicked removes the overlay
     // and executes the consentCallback.
-    const consentButton = document.createElement("button");
-    consentButton.className = "otsuka-pcm-consent-button";
+    const consentButton = document.createElement('button');
+    consentButton.className = 'otsuka-pcm-consent-button';
     consentButton.innerHTML = providerSettings.modal.consent_label;
-    consentButton.addEventListener("click", async () => {
-      consentButton.setAttribute("disabled", "");
-      //Enables consent for the current consent category
+    consentButton.addEventListener('click', async () => {
+      consentButton.setAttribute('disabled', '');
+      // Enables consent for the current consent category
       if (await this.consentToCategory(consent_category)) {
         // Remove the overlay and load the video player.
         modal.parentNode.remove();
         consentCallback && consentCallback();
       }
-      consentButton.removeAttribute("disabled");
+      consentButton.removeAttribute('disabled');
     });
 
     let moreLink;
@@ -773,12 +770,12 @@ const OtsukaPCM = Object.create({
     const moreLinkUrl = providerSettings.modal.morelink_url;
 
     if (moreLinkLabel && moreLinkUrl) {
-      moreLink = document.createElement("a");
-      moreLink.className = "otsuka-pcm-consent-link";
+      moreLink = document.createElement('a');
+      moreLink.className = 'otsuka-pcm-consent-link';
       moreLink.href = moreLinkUrl;
       moreLink.innerHTML = moreLinkLabel;
-      moreLink.setAttribute("role", "button");
-      moreLink.setAttribute("aria-label", moreLinkLabel);
+      moreLink.setAttribute('role', 'button');
+      moreLink.setAttribute('aria-label', moreLinkLabel);
     }
 
     // Add the elements to the modal.
@@ -801,47 +798,47 @@ const OtsukaPCM = Object.create({
    * @param {object} param0 The options for the generated error modal.
    * @returns {Element} The generated error modal.
    */
-  getErrorModal: function ({
+  getErrorModal({
     target,
     cancelCallback = null,
     withCloseButton = true,
   }) {
-    const dialogTitleId = this.genUID("otsuka-pcm-dialogTitle-id-");
-    const dialogDescId = this.genUID("otsuka-pcm-dialogDesc-id-");
+    const dialogTitleId = this.genUID('otsuka-pcm-dialogTitle-id-');
+    const dialogDescId = this.genUID('otsuka-pcm-dialogDesc-id-');
 
-    const modal = document.createElement("div");
-    modal.setAttribute("role", "dialog");
-    modal.setAttribute("aria-labelledby", dialogTitleId);
-    modal.setAttribute("aria-describedby", dialogDescId);
+    const modal = document.createElement('div');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-labelledby', dialogTitleId);
+    modal.setAttribute('aria-describedby', dialogDescId);
     modal.classList.add(this.modalClassname);
 
-    modal.addEventListener("click", function (e) {
+    modal.addEventListener('click', (e) => {
       e.stopPropagation();
     });
 
     let closeButton;
 
     if (withCloseButton) {
-      closeButton = document.createElement("div");
-      closeButton.className = "otsuka-pcm-consent-close";
-      closeButton.innerHTML = "&#10005;";
-      closeButton.setAttribute("role", "button");
-      closeButton.setAttribute("aria-label", "Close");
-      closeButton.addEventListener("click", () => {
+      closeButton = document.createElement('div');
+      closeButton.className = 'otsuka-pcm-consent-close';
+      closeButton.innerHTML = '&#10005;';
+      closeButton.setAttribute('role', 'button');
+      closeButton.setAttribute('aria-label', 'Close');
+      closeButton.addEventListener('click', () => {
         this.removeConsentOverlay(target);
         cancelCallback && cancelCallback();
       });
     }
 
-    const dialogTitle = document.createElement("h2");
-    dialogTitle.setAttribute("id", dialogTitleId);
-    dialogTitle.setAttribute("hidden", "hidden");
-    dialogTitle.setAttribute("aria-hidden", true);
-    dialogTitle.innerHTML = "Error message";
+    const dialogTitle = document.createElement('h2');
+    dialogTitle.setAttribute('id', dialogTitleId);
+    dialogTitle.setAttribute('hidden', 'hidden');
+    dialogTitle.setAttribute('aria-hidden', true);
+    dialogTitle.innerHTML = 'Error message';
 
-    const content = document.createElement("div");
-    content.setAttribute("id", dialogDescId);
-    content.className = "otsuka-pcm-error-content";
+    const content = document.createElement('div');
+    content.setAttribute('id', dialogDescId);
+    content.className = 'otsuka-pcm-error-content';
     content.innerHTML = this.settings.general.error_cmp_not_found;
 
     // Add the elements to the modal.
@@ -862,27 +859,27 @@ const OtsukaPCM = Object.create({
    * @param {object} param0 The options for the generated consent modal.
    * @returns {Element} The generated consent overlay Element.
    */
-  createConsentOverlay: function ({
+  createConsentOverlay({
     target,
     provider,
     consentCallback = null,
     cancelCallback = null,
     withCloseButton = true,
   }) {
-    const overlay = document.createElement("div");
+    const overlay = document.createElement('div');
     overlay.classList.add(this.overlayClassname);
-    overlay.addEventListener("click", function (e) {
+    overlay.addEventListener('click', (e) => {
       e.stopPropagation();
     });
 
-    const providerSettings = this.getProviderSettings(provider)
+    const providerSettings = this.getProviderSettings(provider);
     if (providerSettings.modal.description !== '') {
       const modal = this.getConsentModal({
-        target: target,
-        provider: provider,
-        consentCallback: consentCallback,
-        cancelCallback: cancelCallback,
-        withCloseButton: withCloseButton,
+        target,
+        provider,
+        consentCallback,
+        cancelCallback,
+        withCloseButton,
       });
       overlay.append(modal);
     }
@@ -895,21 +892,21 @@ const OtsukaPCM = Object.create({
    * @param {object} param0 The options for the generated error modal.
    * @returns {Element} The generated error overlay Element.
    */
-  createErrorOverlay: function ({
+  createErrorOverlay({
     target,
     cancelCallback = null,
     withCloseButton = true,
   }) {
-    const overlay = document.createElement("div");
+    const overlay = document.createElement('div');
     overlay.classList.add(this.overlayClassname);
-    overlay.addEventListener("click", function (e) {
+    overlay.addEventListener('click', (e) => {
       e.stopPropagation();
     });
 
     const modal = this.getErrorModal({
-      target: target,
-      cancelCallback: cancelCallback,
-      withCloseButton: withCloseButton,
+      target,
+      cancelCallback,
+      withCloseButton,
     });
     overlay.append(modal);
     return overlay;
@@ -922,7 +919,7 @@ const OtsukaPCM = Object.create({
    * @returns {string} The URL of the thumbnail image, if found, otherwise
    *   false.
    */
-  getVimeoThumbnailUrl: async function (video_id) {
+  async getVimeoThumbnailUrl(video_id) {
     try {
       const url = `https://vimeo.com/api/v2/video/${video_id}.json`;
       const response = await fetch(url);
@@ -939,8 +936,8 @@ const OtsukaPCM = Object.create({
       return data.thumbnail_url;
     } catch (error) {
       this.throwError(
-        "getVimeoThumbnailUrl: Error fetching Vimeo thumbnail: ",
-        error
+        'getVimeoThumbnailUrl: Error fetching Vimeo thumbnail: ',
+        error,
       );
     }
     return false;
@@ -951,7 +948,7 @@ const OtsukaPCM = Object.create({
    * @param {string} video_id The ID of the video to get the thumbnail for.
    * @returns {string} The URL of the thumbnail image.
    */
-  getYoutubeThumbnailUrl: function (video_id) {
+  getYoutubeThumbnailUrl(video_id) {
     return `https://img.youtube.com/vi/${video_id}/maxresdefault.jpg`;
   },
 
@@ -963,7 +960,7 @@ const OtsukaPCM = Object.create({
    * @returns {string|false} The URL of the thumbnail image, if found,
    *   otherwise false.
    */
-  getThumbnailUrl: async function (provider, video_id) {
+  async getThumbnailUrl(provider, video_id) {
     switch (provider) {
       case this.providers.VIMEO:
         return await this.getVimeoThumbnailUrl(video_id);
@@ -981,8 +978,8 @@ const OtsukaPCM = Object.create({
    *   for.
    * @returns {Element} The generated `img` Element for the thumbnail.
    */
-  getThumbnailImgForVideo: async function (provider, video_id) {
-    const img = document.createElement("img");
+  async getThumbnailImgForVideo(provider, video_id) {
+    const img = document.createElement('img');
     img.classList.add(this.videoThumbnailClassname);
     img.src = await this.getThumbnailUrl(provider, video_id);
     return img;
@@ -994,7 +991,7 @@ const OtsukaPCM = Object.create({
    * @param {Element} iframe The iframe Element to get the thumbnail image for.
    * @returns The result of calling `getThumbnailImgForVideo()` for the
    */
-  getThumbnailImgForIframe: async function (iframe) {
+  async getThumbnailImgForIframe(iframe) {
     const { video_id, provider } = this.isManagedIframe(iframe);
     return this.getThumbnailImgForVideo(provider, video_id);
   },
@@ -1006,7 +1003,7 @@ const OtsukaPCM = Object.create({
    * @returns {string} The URL of the custom overlay image, if found, otherwise
    *   false.
    */
-  getOverlayImageSrc: function (provider) {
+  getOverlayImageSrc(provider) {
     return this.getProviderSettings(provider)?.overlay_image || false;
   },
 
@@ -1016,16 +1013,16 @@ const OtsukaPCM = Object.create({
    * @returns {Element|false} The custom overlay image Element, if found,
    *   otherwise false.
    */
-  getOverlayImage: function (provider) {
+  getOverlayImage(provider) {
     const imgOverlaySrc = this.getOverlayImageSrc(provider);
 
     if (!imgOverlaySrc) {
       return false;
     }
 
-    const imgOverlay = document.createElement("img");
+    const imgOverlay = document.createElement('img');
     imgOverlay.src = imgOverlaySrc;
-    imgOverlay.setAttribute("class", this.overlayImageClassname);
+    imgOverlay.setAttribute('class', this.overlayImageClassname);
     return imgOverlay;
   },
 
@@ -1034,15 +1031,15 @@ const OtsukaPCM = Object.create({
    * 16:9 responsive aspect ratio.
    * @param {Element} iframe The iframe Element to operate on.
    */
-  makeResponsiveIframe: function (iframe) {
+  makeResponsiveIframe(iframe) {
     // Make the video frame responsive, based on 16:9 ratio.
     iframe.parentNode.setAttribute(
-      "style",
-      "width:100%; height:0; position:relative; padding-bottom:56.25%"
+      'style',
+      'width:100%; height:0; position:relative; padding-bottom:56.25%',
     );
     iframe.setAttribute(
-      "style",
-      "width:100%; height:100%; position:absolute; left:0; top:0"
+      'style',
+      'width:100%; height:100%; position:absolute; left:0; top:0',
     );
   },
 
@@ -1051,7 +1048,7 @@ const OtsukaPCM = Object.create({
    * @param {object} param0 An object containing additional options.
    * @returns {void}
    */
-  doErrorModal: function ({
+  doErrorModal({
     target,
     cancelCallback = null,
     withCloseButton = true,
@@ -1062,16 +1059,16 @@ const OtsukaPCM = Object.create({
       return;
     }
 
-    if (!target.getAttribute("id")) {
+    if (!target.getAttribute('id')) {
       // Add an id attribute for use by `getConsentOverlay()`.
-      const id = this.genUID("otsuka-pcm-overlay-id-");
-      target.setAttribute("id", id);
+      const id = this.genUID('otsuka-pcm-overlay-id-');
+      target.setAttribute('id', id);
     }
 
     const overlay = this.createErrorOverlay({
-      target: target,
-      cancelCallback: cancelCallback,
-      withCloseButton: withCloseButton,
+      target,
+      cancelCallback,
+      withCloseButton,
     });
 
     target.append(overlay);
@@ -1084,7 +1081,7 @@ const OtsukaPCM = Object.create({
    * @param {object} param0 An object containing additional options.
    * @returns {void}
    */
-  doConsentModal: async function ({
+  async doConsentModal({
     target,
     provider,
     consentCallback = null,
@@ -1102,7 +1099,7 @@ const OtsukaPCM = Object.create({
 
     const consent_category = this.getConsentCategoryForProvider(provider);
     const hasOverlay = this.getConsentOverlay(target);
-    const providerSettings = this.getProviderSettings(provider)
+    const providerSettings = this.getProviderSettings(provider);
     let isConsented = false;
 
     try {
@@ -1114,7 +1111,6 @@ const OtsukaPCM = Object.create({
     if (isConsented) {
       try {
         this.doConsentCallback(consentCallback, provider, target);
-        return;
       } catch (e) {
         throw e;
       }
@@ -1124,10 +1120,10 @@ const OtsukaPCM = Object.create({
         return;
       }
 
-      if (!target.getAttribute("id")) {
+      if (!target.getAttribute('id')) {
         // Add an id attribute for use by `getConsentOverlay()`.
-        const id = this.genUID("otsuka-pcm-overlay-id-");
-        target.setAttribute("id", id);
+        const id = this.genUID('otsuka-pcm-overlay-id-');
+        target.setAttribute('id', id);
       }
 
       const overlayConsentCallback = () => {
@@ -1135,15 +1131,15 @@ const OtsukaPCM = Object.create({
       };
 
       const overlay = this.createConsentOverlay({
-        target: target,
-        provider: provider,
+        target,
+        provider,
         consentCallback: overlayConsentCallback,
-        cancelCallback: cancelCallback,
-        withCloseButton: withCloseButton,
+        cancelCallback,
+        withCloseButton,
       });
 
       // Remove all previously open modal before open new.
-      const previousOverlay = document.querySelector(".otsuka-pcm-consent-overlay")
+      const previousOverlay = document.querySelector('.otsuka-pcm-consent-overlay');
       if (previousOverlay) {
         previousOverlay.remove();
       }
@@ -1154,18 +1150,17 @@ const OtsukaPCM = Object.create({
       // Load content if user accept it from OneTrust banner.
       const overlayClass = this.overlayClassname;
       // Copy scope of the current execution.
-      let _this = this;
+      const _this = this;
       _this.callback = consentCallback;
       _this.provider = provider;
       _this.target = target;
-      OneTrust.OnConsentChanged(function () {
-        let isConsentedPromise = OtsukaPCM.isConsentedToCategory(consent_category);
-        isConsentedPromise.then(isConsentedResult => {
+      OneTrust.OnConsentChanged(() => {
+        const isConsentedPromise = OtsukaPCM.isConsentedToCategory(consent_category);
+        isConsentedPromise.then((isConsentedResult) => {
           const hasOverlay = OtsukaPCM.getConsentOverlay(_this.target);
           if (isConsentedResult && hasOverlay) {
             try {
               OtsukaPCM.doConsentCallback(_this.callback, _this.provider, _this.target);
-              return;
             } catch (e) {
               throw e;
             }
@@ -1179,8 +1174,8 @@ const OtsukaPCM = Object.create({
           if (!Drupal.behaviors.externalLinkPopup) return;
           const domain = Drupal.behaviors.externalLinkPopup.getDomain(link.getAttribute('href'));
           if (!domain) return;
-          link.addEventListener('click', function (e) {
-            for (var i = 0; i < drupalSettings.external_link_popup.popups.length; i++) {
+          link.addEventListener('click', (e) => {
+            for (let i = 0; i < drupalSettings.external_link_popup.popups.length; i++) {
               popup = drupalSettings.external_link_popup.popups[i];
               if (popup.domains !== '*' && !Drupal.behaviors.externalLinkPopup.inDomain(domain, popup.domains.split(/\s*,\s*|\s+/))) {
                 continue;
@@ -1189,7 +1184,7 @@ const OtsukaPCM = Object.create({
               return Drupal.behaviors.externalLinkPopup.openDialog(
                 link,
                 popup,
-                domain
+                domain,
               );
             }
           });
@@ -1206,7 +1201,7 @@ const OtsukaPCM = Object.create({
    * @param {string} provider
    * @param {Element} target
    */
-  doConsentCallback: async function (consentCallback, provider, target) {
+  async doConsentCallback(consentCallback, provider, target) {
     try {
       // Ensure the player API is available.
       await this.loadPlayerAPI(provider);
@@ -1226,7 +1221,7 @@ const OtsukaPCM = Object.create({
    * @param {object} passedOptions An object containing additional options.
    * @returns {void}
    */
-  initIframe: async function (iframe, passedOptions = {}) {
+  async initIframe(iframe, passedOptions = {}) {
     const options = {
       showModal: false,
       withCloseButton: true,
@@ -1244,11 +1239,11 @@ const OtsukaPCM = Object.create({
     }
 
     if (!iframe.id) {
-      iframe.id = this.genUID("otsk-player-");
+      iframe.id = this.genUID('otsk-player-');
     }
 
     // Hide the iframe.
-    iframe.style.display = "none";
+    iframe.style.display = 'none';
 
     // Make the video frame responsive, based on 16:9 ratio.
     this.makeResponsiveIframe(iframe);
@@ -1277,27 +1272,27 @@ const OtsukaPCM = Object.create({
         const consentCallback = async () => {
           target.classList.remove(
             this.thumbnailOverlayCustomClassname,
-            this.thumbnailOverlayDefaultClassname
+            this.thumbnailOverlayDefaultClassname,
           );
           imgOverlay && imgOverlay.remove();
           img.remove();
           this.playIframeVideo(iframe);
           // Dispatch loadPlayer event for react_player.
-          const e = new Event("loadPlayer");
-          e.id = target.getAttribute("id");
+          const e = new Event('loadPlayer');
+          e.id = target.getAttribute('id');
           document.dispatchEvent(e);
         };
         await this.doConsentModal({
-          target: target,
-          provider: provider,
-          consentCallback: consentCallback,
+          target,
+          provider,
+          consentCallback,
           ...options,
         });
       } catch (e) {
         this.printError(`initIframe: caught error: ${e}`);
         if (options.displayErrorModal) {
           this.doErrorModal({
-            target: target,
+            target,
             ...options,
           });
         }
@@ -1306,15 +1301,15 @@ const OtsukaPCM = Object.create({
 
     // Listen for keyboard events.
     const imgKeyupListener = async (e) => {
-      if ("Enter" === e.key) {
+      if (e.key === 'Enter') {
         e.target.click();
       }
     };
 
-    img.addEventListener("click", imgClickListener);
-    img.addEventListener("keydown", imgKeyupListener);
-    img.setAttribute("role", "button");
-    img.setAttribute("tabindex", "0");
+    img.addEventListener('click', imgClickListener);
+    img.addEventListener('keydown', imgKeyupListener);
+    img.setAttribute('role', 'button');
+    img.setAttribute('tabindex', '0');
 
     if (options.showModal) {
       img.click();
@@ -1330,7 +1325,7 @@ const OtsukaPCM = Object.create({
    * @param {object} passedOptions An object containing additional options.
    * @returns {void}
    */
-  initReactPlayer: async function (reactPlayerWrapper, passedOptions = {}) {
+  async initReactPlayer(reactPlayerWrapper, passedOptions = {}) {
     const options = {
       showModal: false,
       withCloseButton: true,
@@ -1343,7 +1338,7 @@ const OtsukaPCM = Object.create({
     const video = drupalSettings.react_videos?.videos_list[playerId];
 
     // If a player already exists, do nothing.
-    const player = reactPlayerWrapper.querySelector(".react-player");
+    const player = reactPlayerWrapper.querySelector('.react-player');
     if (player) {
       return;
     }
@@ -1359,7 +1354,7 @@ const OtsukaPCM = Object.create({
       return;
     }
 
-    const preview = reactPlayerWrapper.querySelector(".react-player-preview");
+    const preview = reactPlayerWrapper.querySelector('.react-player-preview');
 
     // Get custom thumbnail overlay image set in the module settings.
     const imgOverlay = this.getOverlayImage(provider);
@@ -1380,26 +1375,26 @@ const OtsukaPCM = Object.create({
         const consentCallback = () => {
           target.classList.remove(
             this.thumbnailOverlayCustomClassname,
-            this.thumbnailOverlayDefaultClassname
+            this.thumbnailOverlayDefaultClassname,
           );
           imgOverlay && imgOverlay.remove();
 
           // Dispatch loadPlayer event for react_player.
-          const e = new Event("loadPlayer");
-          e.id = target.getAttribute("id");
+          const e = new Event('loadPlayer');
+          e.id = target.getAttribute('id');
           document.dispatchEvent(e);
         };
         await this.doConsentModal({
-          target: target,
-          provider: provider,
-          consentCallback: consentCallback,
+          target,
+          provider,
+          consentCallback,
           ...options,
         });
       } catch (e) {
         this.printError(`initReactPlayer: caught error: ${e}`);
         if (options.displayErrorModal) {
           this.doErrorModal({
-            target: target,
+            target,
             ...options,
           });
         }
@@ -1408,15 +1403,15 @@ const OtsukaPCM = Object.create({
 
     // Listen for keyboard events.
     const previewKeyupListener = async (e) => {
-      if ("Enter" === e.key) {
+      if (e.key === 'Enter') {
         e.target.click();
       }
     };
 
-    preview.addEventListener("click", previewClickListener);
-    preview.addEventListener("keydown", previewKeyupListener);
-    preview.setAttribute("role", "button");
-    preview.setAttribute("tabindex", "0");
+    preview.addEventListener('click', previewClickListener);
+    preview.addEventListener('keydown', previewKeyupListener);
+    preview.setAttribute('role', 'button');
+    preview.setAttribute('tabindex', '0');
 
     if (options.showModal) {
       preview.click();
@@ -1433,7 +1428,7 @@ const OtsukaPCM = Object.create({
    *   the Element referred to by this script's `container_id` query parameter.
    * @param {object} passedOptions An object containing additional options.
    */
-  initBuzzsproutScript: async function (script, passedOptions = {}) {
+  async initBuzzsproutScript(script, passedOptions = {}) {
     const options = {
       showModal: true,
       withCloseButton: true,
@@ -1441,12 +1436,12 @@ const OtsukaPCM = Object.create({
       displayErrorModal: true,
       ...passedOptions,
     };
-    const dataSrc = script.getAttribute("data-src");
+    const dataSrc = script.getAttribute('data-src');
     const { provider } = this.isManagedSrc(dataSrc);
 
     // If it's not a Buzzsprout script, do nothing.
     if (provider !== this.providers.BUZZSPROUT) {
-      this.throwError("initBuzzsproutScript: invalid script element");
+      this.throwError('initBuzzsproutScript: invalid script element');
       return;
     }
 
@@ -1462,7 +1457,7 @@ const OtsukaPCM = Object.create({
     // Get target element (container_id) from script params.
     // e.g. container_id=buzzsprout-large-player
     const url = new URL(dataSrc);
-    const container_id = url.searchParams.get("container_id");
+    const container_id = url.searchParams.get('container_id');
     const buzzsproutWrapper = document.getElementById(container_id);
 
     // If the user is already consented, insert the script and return.
@@ -1471,8 +1466,8 @@ const OtsukaPCM = Object.create({
 
       // Dispatch loadPlayerBP event for Buzzsprout.
       const target = buzzsproutWrapper;
-      const e = new Event("loadPlayerBP");
-      e.id = target.getAttribute("id");
+      const e = new Event('loadPlayerBP');
+      e.id = target.getAttribute('id');
       document.dispatchEvent(e);
 
       return;
@@ -1483,14 +1478,14 @@ const OtsukaPCM = Object.create({
     if (imgOverlay) {
       // Display custom thumbnail overlay image.
       buzzsproutWrapper.classList.add(
-        this.buzzsproutPlaceholderCustomClassname
+        this.buzzsproutPlaceholderCustomClassname,
       );
       buzzsproutWrapper.append(imgOverlay);
     } else if (options.withDefaultOverlay) {
       // Display default thumbnail overlay image.
       // buzzsproutWrapper.style.position = "relative";
       buzzsproutWrapper.classList.add(
-        this.buzzsproutPlaceholderDefaultClassname
+        this.buzzsproutPlaceholderDefaultClassname,
       );
     }
 
@@ -1500,27 +1495,27 @@ const OtsukaPCM = Object.create({
         const consentCallback = () => {
           target.classList.remove(
             this.buzzsproutPlaceholderCustomClassname,
-            this.buzzsproutPlaceholderDefaultClassname
+            this.buzzsproutPlaceholderDefaultClassname,
           );
           imgOverlay && imgOverlay.remove();
           this.insertScript(script);
 
           // Dispatch loadPlayerBP event for Buzzsprout.
-          const e = new Event("loadPlayerBP");
-          e.id = target.getAttribute("id");
+          const e = new Event('loadPlayerBP');
+          e.id = target.getAttribute('id');
           document.dispatchEvent(e);
         };
         await this.doConsentModal({
-          target: target,
-          provider: provider,
-          consentCallback: consentCallback,
+          target,
+          provider,
+          consentCallback,
           ...options,
         });
       } catch (e) {
         this.printError(`initBuzzsproutScript: caught error: ${e}`);
         if (options.displayErrorModal) {
           this.doErrorModal({
-            target: target,
+            target,
             ...options,
           });
         }
@@ -1529,16 +1524,16 @@ const OtsukaPCM = Object.create({
 
     // Listen for keyboard events.
     const wrapperKeyupListener = async (e) => {
-      if ("Enter" === e.key) {
+      if (e.key === 'Enter') {
         e.target.click();
       }
     };
 
     // Open consent modal in target of script
-    buzzsproutWrapper.addEventListener("click", wrapperClickListener);
-    buzzsproutWrapper.addEventListener("keydown", wrapperKeyupListener);
-    buzzsproutWrapper.setAttribute("role", "button");
-    buzzsproutWrapper.setAttribute("tabindex", "0");
+    buzzsproutWrapper.addEventListener('click', wrapperClickListener);
+    buzzsproutWrapper.addEventListener('keydown', wrapperKeyupListener);
+    buzzsproutWrapper.setAttribute('role', 'button');
+    buzzsproutWrapper.setAttribute('tabindex', '0');
 
     if (options.showModal) {
       buzzsproutWrapper.click();
@@ -1552,21 +1547,21 @@ const OtsukaPCM = Object.create({
    *   that is being consent-managed. The consent overlay will be removed from
    *   the Element referred to by this script's `container_id` query parameter.
    */
-  deinitBuzzsproutScript: function (script) {
-    const dataSrc = script.getAttribute("data-src");
+  deinitBuzzsproutScript(script) {
+    const dataSrc = script.getAttribute('data-src');
     const { provider } = this.isManagedSrc(dataSrc);
 
     // If it's not a Buzzsprout script, do nothing.
     if (provider !== this.providers.BUZZSPROUT) {
-      this.throwError("deinitBuzzsproutScript: invalid script element");
+      this.throwError('deinitBuzzsproutScript: invalid script element');
       return;
     }
 
     const url = new URL(dataSrc);
-    const container_id = url.searchParams.get("container_id");
+    const container_id = url.searchParams.get('container_id');
     const buzzsproutWrapper = document.getElementById(container_id);
     const imgOverlay = buzzsproutWrapper.querySelector(
-      ".otsuka-pcm-img-overlay"
+      '.otsuka-pcm-img-overlay',
     );
     imgOverlay && imgOverlay.remove();
     buzzsproutWrapper.classList.remove(this.buzzsproutOverlayDefaultClassname);
@@ -1583,18 +1578,18 @@ const OtsukaPCM = Object.create({
    *   this element’s parent element.
    * @param {object} passedOptions An object containing additional options.
    */
-  initOrbitaScript: async function (script, passedOptions = {}) {
+  async initOrbitaScript(script, passedOptions = {}) {
     const options = {
       displayErrorModal: false,
       ...passedOptions,
       withCloseButton: true,
     };
-    const dataSrc = script.getAttribute("data-src");
+    const dataSrc = script.getAttribute('data-src');
     const { provider } = this.isManagedSrc(dataSrc);
 
     // If it's not an Orbita script, do nothing.
     if (provider !== this.providers.ORBITA) {
-      this.throwError("initOrbitaScript: invalid script element");
+      this.throwError('initOrbitaScript: invalid script element');
       return;
     }
 
@@ -1621,11 +1616,11 @@ const OtsukaPCM = Object.create({
     const widget = this.createElementFromText(orbitaSettings.widget.html);
     const styles = this.createElementFromText(
       orbitaSettings.widget.css,
-      "style",
-      false
+      'style',
+      false,
     );
     const chatbotWrapper = document.getElementById(
-      orbitaSettings.widget.wrapper_id
+      orbitaSettings.widget.wrapper_id,
     );
     chatbotWrapper.appendChild(widget);
     chatbotWrapper.appendChild(styles);
@@ -1642,16 +1637,16 @@ const OtsukaPCM = Object.create({
           orbitaButton.click();
         };
         await this.doConsentModal({
-          target: target,
-          provider: provider,
-          consentCallback: consentCallback,
+          target,
+          provider,
+          consentCallback,
           ...options,
         });
       } catch (e) {
         this.printError(`initOrbitaScript: caught error: ${e}`);
         if (options.displayErrorModal) {
           this.doErrorModal({
-            target: target,
+            target,
             ...options,
           });
         }
@@ -1660,15 +1655,15 @@ const OtsukaPCM = Object.create({
 
     // Listen for keyboard events.
     const widgetKeyupListener = async (e) => {
-      if ("Enter" === e.key) {
+      if (e.key === 'Enter') {
         e.target.click();
       }
     };
 
-    widget.addEventListener("click", widgetClickListener);
-    widget.addEventListener("keydown", widgetKeyupListener);
-    widget.setAttribute("role", "button");
-    widget.setAttribute("tabindex", "0");
+    widget.addEventListener('click', widgetClickListener);
+    widget.addEventListener('keydown', widgetKeyupListener);
+    widget.setAttribute('role', 'button');
+    widget.setAttribute('tabindex', '0');
   },
 
   /**
@@ -1678,13 +1673,13 @@ const OtsukaPCM = Object.create({
    * @param {object} passedOptions An object containing additional options.
    * @returns {void}
    */
-  initScript: async function (script, passedOptions = {}) {
+  async initScript(script, passedOptions = {}) {
     const options = {
       showModal: true,
       withCloseButton: true,
       ...passedOptions,
     };
-    const { provider } = this.isManagedSrc(script.getAttribute("data-src"));
+    const { provider } = this.isManagedSrc(script.getAttribute('data-src'));
 
     if (!provider) {
       // Do nothing. Don't throw or print errors since this function may be

@@ -16,8 +16,8 @@
       const il = opts.buttons.length;
       for (index = 0; index < il; index++) {
         if (
-          opts.buttons[index].primary &&
-          opts.buttons[index].primary === true
+          opts.buttons[index].primary
+          && opts.buttons[index].primary === true
         ) {
           primaryIndex = index;
           delete opts.buttons[index].primary;
@@ -72,4 +72,4 @@
       $(hasFocus).eq(0).trigger('focus');
     },
   });
-})(jQuery, window.tabbable);
+}(jQuery, window.tabbable));

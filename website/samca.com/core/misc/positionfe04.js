@@ -33,12 +33,12 @@
 
   function getOffsets(offsets, width, height) {
     return [
-      parseFloat(offsets[0]) *
-        (typeof offsets[0] === 'string' && offsets[0].endsWith('%')
+      parseFloat(offsets[0])
+        * (typeof offsets[0] === 'string' && offsets[0].endsWith('%')
           ? width / 100
           : 1),
-      parseFloat(offsets[1]) *
-        (typeof offsets[1] === 'string' && offsets[1].endsWith('%')
+      parseFloat(offsets[1])
+        * (typeof offsets[1] === 'string' && offsets[1].endsWith('%')
           ? height / 100
           : 1),
     ];
@@ -86,23 +86,20 @@
           ? within.scrollLeft
           : within.offset.left;
         const outerWidth = within.width;
-        const collisionPosLeft =
-          position.left - data.collisionPosition.marginLeft;
+        const collisionPosLeft = position.left - data.collisionPosition.marginLeft;
         const overLeft = withinOffset - collisionPosLeft;
-        const overRight =
-          collisionPosLeft + data.collisionWidth - outerWidth - withinOffset;
+        const overRight = collisionPosLeft + data.collisionWidth - outerWidth - withinOffset;
         let newOverRight;
 
         // Element is wider than within
         if (data.collisionWidth > outerWidth) {
           // Element is initially over the left side of within
           if (overLeft > 0 && overRight <= 0) {
-            newOverRight =
-              position.left +
-              overLeft +
-              data.collisionWidth -
-              outerWidth -
-              withinOffset;
+            newOverRight = position.left
+              + overLeft
+              + data.collisionWidth
+              - outerWidth
+              - withinOffset;
             position.left += overLeft - newOverRight;
 
             // Element is initially over right side of within
@@ -137,20 +134,18 @@
         const outerHeight = data.within.height;
         const collisionPosTop = position.top - data.collisionPosition.marginTop;
         const overTop = withinOffset - collisionPosTop;
-        const overBottom =
-          collisionPosTop + data.collisionHeight - outerHeight - withinOffset;
+        const overBottom = collisionPosTop + data.collisionHeight - outerHeight - withinOffset;
         let newOverBottom;
 
         // Element is taller than within
         if (data.collisionHeight > outerHeight) {
           // Element is initially over the top of within
           if (overTop > 0 && overBottom <= 0) {
-            newOverBottom =
-              position.top +
-              overTop +
-              data.collisionHeight -
-              outerHeight -
-              withinOffset;
+            newOverBottom = position.top
+              + overTop
+              + data.collisionHeight
+              - outerHeight
+              - withinOffset;
             position.top += overTop - newOverBottom;
 
             // Element is initially over bottom of within
@@ -186,11 +181,9 @@
         const offsetLeft = within.isWindow
           ? within.scrollLeft
           : within.offset.left;
-        const collisionPosLeft =
-          position.left - data.collisionPosition.marginLeft;
+        const collisionPosLeft = position.left - data.collisionPosition.marginLeft;
         const overLeft = collisionPosLeft - offsetLeft;
-        const overRight =
-          collisionPosLeft + data.collisionWidth - outerWidth - offsetLeft;
+        const overRight = collisionPosLeft + data.collisionWidth - outerWidth - offsetLeft;
         const myOffset =
           // eslint-disable-next-line no-nested-ternary
           data.my[0] === 'left'
@@ -210,25 +203,23 @@
         let newOverLeft;
 
         if (overLeft < 0) {
-          newOverRight =
-            position.left +
-            myOffset +
-            atOffset +
-            offset +
-            data.collisionWidth -
-            outerWidth -
-            withinOffset;
+          newOverRight = position.left
+            + myOffset
+            + atOffset
+            + offset
+            + data.collisionWidth
+            - outerWidth
+            - withinOffset;
           if (newOverRight < 0 || newOverRight < abs(overLeft)) {
             position.left += myOffset + atOffset + offset;
           }
         } else if (overRight > 0) {
-          newOverLeft =
-            position.left -
-            data.collisionPosition.marginLeft +
-            myOffset +
-            atOffset +
-            offset -
-            offsetLeft;
+          newOverLeft = position.left
+            - data.collisionPosition.marginLeft
+            + myOffset
+            + atOffset
+            + offset
+            - offsetLeft;
           if (newOverLeft > 0 || abs(newOverLeft) < overRight) {
             position.left += myOffset + atOffset + offset;
           }
@@ -243,8 +234,7 @@
           : within.offset.top;
         const collisionPosTop = position.top - data.collisionPosition.marginTop;
         const overTop = collisionPosTop - offsetTop;
-        const overBottom =
-          collisionPosTop + data.collisionHeight - outerHeight - offsetTop;
+        const overBottom = collisionPosTop + data.collisionHeight - outerHeight - offsetTop;
         const top = data.my[1] === 'top';
         // eslint-disable-next-line no-nested-ternary
         const myOffset = top
@@ -263,25 +253,23 @@
         let newOverTop;
         let newOverBottom;
         if (overTop < 0) {
-          newOverBottom =
-            position.top +
-            myOffset +
-            atOffset +
-            offset +
-            data.collisionHeight -
-            outerHeight -
-            withinOffset;
+          newOverBottom = position.top
+            + myOffset
+            + atOffset
+            + offset
+            + data.collisionHeight
+            - outerHeight
+            - withinOffset;
           if (newOverBottom < 0 || newOverBottom < abs(overTop)) {
             position.top += myOffset + atOffset + offset;
           }
         } else if (overBottom > 0) {
-          newOverTop =
-            position.top -
-            data.collisionPosition.marginTop +
-            myOffset +
-            atOffset +
-            offset -
-            offsetTop;
+          newOverTop = position.top
+            - data.collisionPosition.marginTop
+            + myOffset
+            + atOffset
+            + offset
+            - offsetTop;
           if (newOverTop > 0 || abs(newOverTop) < overBottom) {
             position.top += myOffset + atOffset + offset;
           }
@@ -306,9 +294,9 @@
         return cachedScrollbarWidth;
       }
       const div = $(
-        '<div ' +
-          "style='display:block;position:absolute;width:50px;height:50px;overflow:hidden;'>" +
-          "<div style='height:100px;width:auto;'></div></div>",
+        '<div '
+          + "style='display:block;position:absolute;width:50px;height:50px;overflow:hidden;'>"
+          + "<div style='height:100px;width:auto;'></div></div>",
       );
       const innerDiv = div.children()[0];
 
@@ -327,21 +315,17 @@
       return cachedScrollbarWidth;
     },
     getScrollInfo(within) {
-      const overflowX =
-        within.isWindow || within.isDocument
-          ? ''
-          : window.getComputedStyle(within.element[0])['overflow-x'];
-      const overflowY =
-        within.isWindow || within.isDocument
-          ? ''
-          : window.getComputedStyle(within.element[0])['overflow-y'];
-      const hasOverflowX =
-        overflowX === 'scroll' ||
-        (overflowX === 'auto' && within.width < within.element[0].scrollWidth);
-      const hasOverflowY =
-        overflowY === 'scroll' ||
-        (overflowY === 'auto' &&
-          within.height < within.element[0].scrollHeight);
+      const overflowX = within.isWindow || within.isDocument
+        ? ''
+        : window.getComputedStyle(within.element[0])['overflow-x'];
+      const overflowY = within.isWindow || within.isDocument
+        ? ''
+        : window.getComputedStyle(within.element[0])['overflow-y'];
+      const hasOverflowX = overflowX === 'scroll'
+        || (overflowX === 'auto' && within.width < within.element[0].scrollWidth);
+      const hasOverflowY = overflowY === 'scroll'
+        || (overflowY === 'auto'
+          && within.height < within.element[0].scrollHeight);
       return {
         width: hasOverflowY ? $.position.scrollbarWidth() : 0,
         height: hasOverflowX ? $.position.scrollbarWidth() : 0,
@@ -349,8 +333,7 @@
     },
     getWithinInfo(element) {
       const withinElement = $(element || window);
-      const isWindow =
-        !!withinElement[0] && withinElement[0] === withinElement[0].window;
+      const isWindow = !!withinElement[0] && withinElement[0] === withinElement[0].window;
       const isDocument = !!withinElement[0] && withinElement[0].nodeType === 9;
       const hasOffset = !isWindow && !isDocument;
       return {
@@ -438,10 +421,9 @@
     const offsets = {};
 
     // Make sure string options are treated as CSS selectors
-    const target =
-      typeof options.of === 'string'
-        ? $(document).find(options.of)
-        : $(options.of);
+    const target = typeof options.of === 'string'
+      ? $(document).find(options.of)
+      : $(options.of);
     const dimensions = getDimensions(target);
     const targetWidth = dimensions.width;
     const targetHeight = dimensions.height;
@@ -517,16 +499,14 @@
       const elemHeight = elem.outerHeight();
       const marginLeft = parseCss(this, 'marginLeft');
       const marginTop = parseCss(this, 'marginTop');
-      const collisionWidth =
-        elemWidth +
-        marginLeft +
-        parseCss(this, 'marginRight') +
-        scrollInfo.width;
-      const collisionHeight =
-        elemHeight +
-        marginTop +
-        parseCss(this, 'marginBottom') +
-        scrollInfo.height;
+      const collisionWidth = elemWidth
+        + marginLeft
+        + parseCss(this, 'marginRight')
+        + scrollInfo.width;
+      const collisionHeight = elemHeight
+        + marginTop
+        + parseCss(this, 'marginBottom')
+        + scrollInfo.height;
       const position = $.extend({}, basePosition);
       const myOffset = getOffsets(
         offsets.my,
@@ -555,7 +535,7 @@
       };
 
       // eslint-disable-next-line func-names
-      $.each(['left', 'top'], function (i, dir) {
+      $.each(['left', 'top'], (i, dir) => {
         if (collisions[collision[i]]) {
           collisions[collision[i]][dir](position, {
             targetWidth,

@@ -39,9 +39,8 @@
     static defaultWrapper() {
       // Search for the element with '[data-drupal-messages]' selector.
       // If not found then only try to search for fallback element.
-      let wrapper =
-        document.querySelector('[data-drupal-messages]') ||
-        document.querySelector('[data-drupal-messages-fallback]');
+      let wrapper = document.querySelector('[data-drupal-messages]')
+        || document.querySelector('[data-drupal-messages-fallback]');
       if (!wrapper) {
         // If no status messages element is found, a fallback element is created to prevent
         // execution-breaking JS errors when attempting to report a problem.
@@ -199,8 +198,8 @@
      */
     static announce(message, options) {
       if (
-        !options.priority &&
-        (options.type === 'warning' || options.type === 'error')
+        !options.priority
+        && (options.type === 'warning' || options.type === 'error')
       ) {
         options.priority = 'assertive';
       }

@@ -16,12 +16,12 @@
   Drupal.theme.progressBar = function (id) {
     const escapedId = Drupal.checkPlain(id);
     return (
-      `<div id="${escapedId}" class="progress" aria-live="polite">` +
-      '<div class="progress__label">&nbsp;</div>' +
-      '<div class="progress__track"><div class="progress__bar"></div></div>' +
-      '<div class="progress__percentage"></div>' +
-      '<div class="progress__description">&nbsp;</div>' +
-      '</div>'
+      `<div id="${escapedId}" class="progress" aria-live="polite">`
+      + '<div class="progress__label">&nbsp;</div>'
+      + '<div class="progress__track"><div class="progress__bar"></div></div>'
+      + '<div class="progress__percentage"></div>'
+      + '<div class="progress__description">&nbsp;</div>'
+      + '</div>'
     );
   };
 
@@ -125,7 +125,7 @@
           const pb = this;
           // When doing a post request, you need non-null data. Otherwise a
           // HTTP 411 or HTTP 406 (with Apache mod_security) error may result.
-          let uri = this.uri;
+          let { uri } = this;
           if (!uri.includes('?')) {
             uri += '?';
           } else {
@@ -180,4 +180,4 @@
       },
     },
   );
-})(jQuery, Drupal);
+}(jQuery, Drupal));

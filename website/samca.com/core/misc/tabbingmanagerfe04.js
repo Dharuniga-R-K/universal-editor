@@ -220,7 +220,7 @@
        */
       activate(tabbingContext) {
         const $set = tabbingContext.$tabbableElements;
-        const level = tabbingContext.level;
+        const { level } = tabbingContext;
         // Determine which elements are reachable via tabbing by default.
         const $disabledSet = $(tabbable(document.body))
           // Exclude elements of the active tabbing set.
@@ -275,7 +275,7 @@
        */
       deactivate(tabbingContext) {
         const $set = tabbingContext.$disabledElements;
-        const level = tabbingContext.level;
+        const { level } = tabbingContext;
         const il = $set.length;
 
         tabbingContext.$tabbableElements.first().off('keydown.focus-trap');
@@ -409,4 +409,4 @@
    * @type {Drupal~TabbingManager}
    */
   Drupal.tabbingManager = new TabbingManager();
-})(jQuery, Drupal, window.tabbable);
+}(jQuery, Drupal, window.tabbable));

@@ -6,7 +6,7 @@ gtag('js', new Date());
 gtag('set', 'developer_id.dMDhkMT', true);
 
 (function (drupalSettings) {
-  if (!drupalSettings.gtag) {return;}
+  if (!drupalSettings.gtag) { return; }
   const config = drupalSettings.gtag;
 
   if (config.consentMode === true) {
@@ -39,4 +39,4 @@ gtag('set', 'developer_id.dMDhkMT', true);
 
   const events = config.events || [];
   events.forEach((event) => gtag('event', event.name, event.data));
-})(drupalSettings);
+}(drupalSettings));

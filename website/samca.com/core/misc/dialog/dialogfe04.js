@@ -120,4 +120,4 @@ class DrupalDialogEvent extends Event {
 
     return dialog;
   };
-})(jQuery, Drupal, drupalSettings, bodyScrollLock);
+}(jQuery, Drupal, drupalSettings, bodyScrollLock));

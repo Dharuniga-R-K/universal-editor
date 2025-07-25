@@ -157,7 +157,7 @@ window.Drupal = { behaviors: {}, locale: {} };
   Drupal.attachBehaviors = function (context, settings) {
     context = context || document;
     settings = settings || drupalSettings;
-    const behaviors = Drupal.behaviors;
+    const { behaviors } = Drupal;
     // Execute all of them.
     Object.keys(behaviors || {}).forEach((i) => {
       if (typeof behaviors[i].attach === 'function') {
@@ -216,7 +216,7 @@ window.Drupal = { behaviors: {}, locale: {} };
     context = context || document;
     settings = settings || drupalSettings;
     trigger = trigger || 'unload';
-    const behaviors = Drupal.behaviors;
+    const { behaviors } = Drupal;
     // Execute all of them.
     Object.keys(behaviors || {}).forEach((i) => {
       if (typeof behaviors[i].detach === 'function') {
@@ -371,10 +371,10 @@ window.Drupal = { behaviors: {}, locale: {} };
 
     // Fetch the localized version of the string.
     if (
-      typeof drupalTranslations !== 'undefined' &&
-      drupalTranslations.strings &&
-      drupalTranslations.strings[options.context] &&
-      drupalTranslations.strings[options.context][str]
+      typeof drupalTranslations !== 'undefined'
+      && drupalTranslations.strings
+      && drupalTranslations.strings[options.context]
+      && drupalTranslations.strings[options.context][str]
     ) {
       str = drupalTranslations.strings[options.context][str];
     }
@@ -509,7 +509,7 @@ window.Drupal = { behaviors: {}, locale: {} };
     args = args || {};
     args['@count'] = count;
 
-    const pluralDelimiter = drupalSettings.pluralDelimiter;
+    const { pluralDelimiter } = drupalSettings;
     const translations = Drupal.t(
       singular + pluralDelimiter + plural,
       args,
@@ -519,13 +519,12 @@ window.Drupal = { behaviors: {}, locale: {} };
 
     // Determine the index of the plural form.
     if (
-      typeof drupalTranslations !== 'undefined' &&
-      drupalTranslations.pluralFormula
+      typeof drupalTranslations !== 'undefined'
+      && drupalTranslations.pluralFormula
     ) {
-      index =
-        count in drupalTranslations.pluralFormula
-          ? drupalTranslations.pluralFormula[count]
-          : drupalTranslations.pluralFormula.default;
+      index = count in drupalTranslations.pluralFormula
+        ? drupalTranslations.pluralFormula[count]
+        : drupalTranslations.pluralFormula.default;
     } else if (args['@count'] !== 1) {
       index = 1;
     }
@@ -563,9 +562,9 @@ window.Drupal = { behaviors: {}, locale: {} };
    */
   Drupal.deprecationError = ({ message }) => {
     if (
-      drupalSettings.suppressDeprecationErrors === false &&
-      typeof console !== 'undefined' &&
-      console.warn
+      drupalSettings.suppressDeprecationErrors === false
+      && typeof console !== 'undefined'
+      && console.warn
     ) {
       console.warn(`[Deprecation] ${message}`);
     }
@@ -657,9 +656,9 @@ window.Drupal = { behaviors: {}, locale: {} };
    */
   Drupal.elementIsVisible = function (elem) {
     return !!(
-      elem.offsetWidth ||
-      elem.offsetHeight ||
-      elem.getClientRects().length
+      elem.offsetWidth
+      || elem.offsetHeight
+      || elem.getClientRects().length
     );
   };
 
@@ -675,11 +674,11 @@ window.Drupal = { behaviors: {}, locale: {} };
   Drupal.elementIsHidden = function (elem) {
     return !Drupal.elementIsVisible(elem);
   };
-})(
+}(
   Drupal,
   window.drupalSettings,
   window.drupalTranslations,
   window.console,
   window.Proxy,
   window.Reflect,
-);
+));

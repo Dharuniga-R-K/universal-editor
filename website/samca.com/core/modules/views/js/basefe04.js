@@ -30,8 +30,7 @@
       // Ignore the 'q' path argument, if present.
       if (pair[0] !== 'q') {
         if (pair[1]) {
-          args[decodeURIComponent(pair[0].replace(/\+/g, ' '))] =
-            decodeURIComponent(pair[1].replace(/\+/g, ' '));
+          args[decodeURIComponent(pair[0].replace(/\+/g, ' '))] = decodeURIComponent(pair[1].replace(/\+/g, ' '));
         } else {
           args[decodeURIComponent(pair[0].replace(/\+/g, ' '))] = '';
         }
@@ -79,7 +78,7 @@
    */
   Drupal.Views.pathPortion = function (href) {
     // Remove e.g. http://example.com if present.
-    const protocol = window.location.protocol;
+    const { protocol } = window.location;
     if (href.startsWith(protocol)) {
       // 2 is the length of the '//' that normally follows the protocol.
       href = href.substring(href.indexOf('/', protocol.length + 2));
@@ -111,4 +110,4 @@
     }
     return href;
   };
-})(jQuery, Drupal, drupalSettings);
+}(jQuery, Drupal, drupalSettings));

@@ -258,10 +258,9 @@
             return;
           }
           const emptyValue = $element[0].value === '';
-          const defaultValue =
-            $element.attr('data-drupal-default-value') === $element[0].value;
+          const defaultValue = $element.attr('data-drupal-default-value') === $element[0].value;
           if (browserData && (emptyValue || defaultValue)) {
-            $element.each(function (index, item) {
+            $element.each((index, item) => {
               item.value = browserData;
             });
           }
@@ -331,4 +330,4 @@
     'a[href*="#"]',
     debouncedHandleFragmentLinkClickOrHashChange,
   );
-})(jQuery, Drupal, Drupal.debounce);
+}(jQuery, Drupal, Drupal.debounce));

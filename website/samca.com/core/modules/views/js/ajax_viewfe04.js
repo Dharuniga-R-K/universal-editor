@@ -226,4 +226,4 @@
   Drupal.AjaxCommands.prototype.viewsScrollTop = function (ajax, response) {
     Drupal.AjaxCommands.prototype.scrollTop(ajax, response);
   };
-})(jQuery, Drupal, drupalSettings);
+}(jQuery, Drupal, drupalSettings));

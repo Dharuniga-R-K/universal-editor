@@ -8,8 +8,8 @@
     attach(context) {
       $('.g-recaptcha', context).each(function () {
         if (
-          typeof grecaptcha === 'undefined' ||
-          typeof grecaptcha.render !== 'function'
+          typeof grecaptcha === 'undefined'
+          || typeof grecaptcha.render !== 'function'
         ) {
           return;
         }
@@ -33,4 +33,4 @@
       }
     });
   };
-})(jQuery, Drupal);
+}(jQuery, Drupal));
