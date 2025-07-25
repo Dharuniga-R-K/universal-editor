@@ -1,0 +1,9 @@
+.nav-block { display: flex; }
+.nav-item { position: relative; margin: 0 1rem; }
+.nav-item .dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+}
+.nav-item:hover .dropdown { display: block; }
