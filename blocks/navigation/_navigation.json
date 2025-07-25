@@ -21,7 +21,7 @@
       "id": "navigation",
       "fields": [
         {
-          "component": "json",
+          "component": "text",
           "name": "items",
           "label": "Menu Items",
           "multi": true,
