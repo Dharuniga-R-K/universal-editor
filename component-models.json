@@ -214,5 +214,17 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "navigation",
+    "fields": [
+      {
+        "component": "json",
+        "name": "items",
+        "label": "Menu Items",
+        "multi": true,
+        "valueType": "object"
+      }
+    ]
   }
 ]
