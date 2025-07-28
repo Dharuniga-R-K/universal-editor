@@ -220,34 +220,35 @@
     "fields": [
       {
         "component": "container",
-        "label": "Navigation Tabs",
         "name": "navigationTabs",
-        "valueType": "string",
-        "collapsible": true,
+        "label": "Navigation Tabs",
+        "valueType": "object",
         "multi": true,
+        "collapsible": true,
         "fields": [
           {
             "component": "text",
-            "label": "Tab Name",
             "name": "tabName",
+            "label": "Tab Name",
             "valueType": "string"
           },
           {
             "component": "container",
             "name": "items",
-            "multi": true,
             "label": "Dropdown Items",
+            "valueType": "object",
+            "multi": true,
             "fields": [
               {
                 "component": "text",
-                "label": "Name",
                 "name": "name",
+                "label": "Name",
                 "valueType": "string"
               },
               {
                 "component": "text",
-                "label": "Link",
                 "name": "link",
+                "label": "Link URL",
                 "valueType": "string"
               }
             ]

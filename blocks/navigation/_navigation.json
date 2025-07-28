@@ -18,46 +18,47 @@
   ],
   "models": [
     {
-        "id": "navigation",
-        "fields": [
+      "id": "navigation",
+      "fields": [
+        {
+          "component": "container",
+          "name": "navigationTabs",
+          "label": "Navigation Tabs",
+          "valueType": "object",
+          "multi": true,
+          "collapsible": true,
+          "fields": [
             {
-                "component": "container",
-                "label": "Navigation Tabs",
-                "name": "navigationTabs",
-                "valueType": "string",
-                "collapsible": true,
-                "multi": true,
-                "fields": [
-                    {
-                        "component": "text",
-                        "label": "Tab Name",
-                        "name": "tabName",
-                        "valueType": "string"
-                    },
-                    {
-                          "component": "container",
-                          "name": "items",
-                          "multi": true,
-                          "label": "Dropdown Items",
-                          "fields": [
-                      {
-                        "component": "text",
-                        "label": "Name",
-                        "name": "name",
-                        "valueType": "string"
-                    },
-                    {
-                        "component": "text",
-                        "label": "Link",
-                        "name": "link",
-                        "valueType": "string"
-                    }
-                  ]
-                  }
-                ]
+              "component": "text",
+              "name": "tabName",
+              "label": "Tab Name",
+              "valueType": "string"
+            },
+            {
+              "component": "container",
+              "name": "items",
+              "label": "Dropdown Items",
+              "valueType": "object",
+              "multi": true,
+              "fields": [
+                {
+                  "component": "text",
+                  "name": "name",
+                  "label": "Name",
+                  "valueType": "string"
+                },
+                {
+                  "component": "text",
+                  "name": "link",
+                  "label": "Link URL",
+                  "valueType": "string"
                 }
-                ]
+              ]
             }
+          ]
+        }
+      ]
+    }
         ],
   "filters": []
 }
