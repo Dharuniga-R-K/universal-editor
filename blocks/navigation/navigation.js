@@ -1,58 +1,41 @@
+import { moveInstrumentation } from '../../scripts/scripts.js'; // import if available
+
 export default function decorate(block) {
-    // Get model data from Universal Editor
-    const modelData = block.dataset.aueModelNavigation;
-    if (!modelData) return;
-  
-    let parsed;
-    try {
-      parsed = JSON.parse(modelData);
-    } catch (e) {
-      console.error('Failed to parse navigation model data:', e);
-      return;
+  // Create wrapper list element
+  const ul = document.createElement('ul');
+  ul.classList.add('cards-list');
+
+  // Iterate through rows/elements originally in the block
+  Array.from(block.children).forEach(row => {
+    const li = document.createElement('li');
+    li.classList.add('cards-item');
+
+    // Move any block-level instrumentation into the <li>
+    if (typeof moveInstrumentation === 'function') {
+      moveInstrumentation(row, li);
     }
-  
-    const { navigationTabs } = parsed;
-    if (!Array.isArray(navigationTabs)) return;
-  
-    // Create navigation container
-    const nav = document.createElement('nav');
-    nav.classList.add('navigation');
-  
-    navigationTabs.forEach((tab) => {
-      const tabWrapper = document.createElement('div');
-      tabWrapper.classList.add('nav-tab');
-  
-      // Main tab label
-      const tabLabel = document.createElement('button');
-      tabLabel.classList.add('tab-name');
-      tabLabel.textContent = tab.tabName;
-      tabWrapper.appendChild(tabLabel);
-  
-      // Dropdown (if present)
-      if (Array.isArray(tab.name) && Array.isArray(tab.link)) {
-        const dropdown = document.createElement('ul');
-        dropdown.classList.add('dropdown');
-  
-        tab.name.forEach((label, i) => {
-          const li = document.createElement('li');
-          const a = document.createElement('a');
-          a.textContent = label;
-          a.href = tab.link[i] || '#';
-          li.appendChild(a);
-          dropdown.appendChild(li);
-        });
-  
-        tabWrapper.appendChild(dropdown);
-  
-        // Show/hide logic
-        tabLabel.addEventListener('click', () => {
-          dropdown.classList.toggle('open');
-        });
+
+    // Transfer content: move row's children into the new li
+    while (row.firstElementChild) {
+      li.appendChild(row.firstElementChild);
+    }
+
+    // Assign classes based on content type
+    Array.from(li.children).forEach(div => {
+      if (
+        div.children.length === 1 &&
+        div.querySelector('picture')
+      ) {
+        div.classList.add('cards-card-image');
+      } else {
+        div.classList.add('cards-card-body');
       }
-  
-      nav.appendChild(tabWrapper);
     });
-  
-    block.textContent = ''; // Clear existing
-    block.appendChild(nav);
-  }
+
+    ul.appendChild(li);
+  });
+
+  // Replace original block content with new list
+  block.innerHTML = '';
+  block.appendChild(ul);
+}
