@@ -219,25 +219,26 @@
     "id": "navigation",
     "fields": [
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
-      },
-      {
         "component": "richtext",
         "name": "text",
         "value": "",
         "label": "Text",
-        "valueType": "string"
+        "valueType": "string",
+        "multi": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "title",
+            "label": "Subtitle",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "link",
+            "label": "Sublink URL",
+            "valueType": "string"
+          }
+        ]
       }
     ]
   }
