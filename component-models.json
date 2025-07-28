@@ -216,41 +216,25 @@
     ]
   },
   {
-    "component": "multi",
-    "name": "items",
-    "label": "Menu Items",
-    "valueType": "object",
-    "multi": true,
+    "id": "navigation",
     "fields": [
       {
-        "component": "text",
-        "name": "title",
-        "label": "Title",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "link",
-        "label": "Link URL",
-        "valueType": "string"
-      },
-      {
         "component": "multi",
-        "name": "children",
-        "label": "Sub-items",
+        "name": "items",
+        "label": "Menu Items",
         "valueType": "object",
         "multi": true,
         "fields": [
           {
             "component": "text",
             "name": "title",
-            "label": "Sub-title",
+            "label": "Title",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "link",
-            "label": "Sub-link URL",
+            "label": "Link URL",
             "valueType": "string"
           }
         ]
