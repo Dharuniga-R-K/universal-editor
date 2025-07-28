@@ -21,7 +21,7 @@
       "id": "navigation",
       "fields": [
         {
-          "component": "dropdown",
+          "component": "multiselect",
           "name": "items",
           "label": "Menu Items",
           "valueType": "object",
