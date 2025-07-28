@@ -18,40 +18,40 @@
   ],
   "models": [
     {
-        "id": "navigation",
-        "fields": [
+      "id": "navigation",
+      "fields": [
+        {
+          "component": "container",
+          "name": "navigationTabs",
+          "label": "Navigation Tabs",
+          "valueType": "object",
+          "multi": true,
+          "collapsible": true,
+          "fields": [
             {
-                "component": "container",
-                "label": "Navigation Tabs",
-                "name": "navigationTabs",
-                "valueType": "string",
-                "collapsible": true,
-                "multi": true,
-                "fields": [
-                    {
-                        "component": "text",
-                        "label": "Tab Name",
-                        "name": "tabName",
-                        "valueType": "string"
-                    },
-                    {
-                        "component": "text",
-                        "label": "Name",
-                        "name": "name",
-                        "valueType": "string",
-                        "multi": true
-                    },
-                    {
-                        "component": "text",
-                        "label": "Link",
-                        "name": "link",
-                        "valueType": "string",
-                        "multi": true
-                    }
-                ]
+              "component": "text",
+              "name": "tabName",
+              "label": "Tab Name",
+              "valueType": "string"
+            },
+            {
+              "component": "text",
+              "name": "name",
+              "label": "Name",
+              "valueType": "string",
+              "multi": true
+            },
+            {
+              "component": "text",
+              "name": "link",
+              "label": "Link",
+              "valueType": "string",
+              "multi": true
             }
-        ]
+          ]
+        }
+      ]
     }
-],
+  ],
   "filters": []
 }
