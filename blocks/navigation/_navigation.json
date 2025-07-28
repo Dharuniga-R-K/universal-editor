@@ -32,33 +32,26 @@
                         "label": "Tab Name",
                         "name": "tabName",
                         "valueType": "string",
-                        "multi": true,
-                        "fields": [
-                            {
-                                "component": "text",
-                                "label": "Name",
-                                "name": "name",
-                                "valueType": "string"
-                            },
-                            {
-                                "component": "text",
-                                "label": "Link",
-                                "name": "link",
-                                "valueType": "string"
-                            }
-                        ]
+                        "multi": true
+                    },
+                    {
+                        "component": "text",
+                        "label": "Name",
+                        "name": "name",
+                        "valueType": "string",
+                        "multi": true
+                    },
+                    {
+                        "component": "text",
+                        "label": "Link",
+                        "name": "link",
+                        "valueType": "string",
+                        "multi": true
                     }
                 ]
             }
         ]
     }
 ],
-  "filters": [
-    {
-      "id": "navigation",
-      "components": [
-        "navigation"
-  ] 
-}
-  ]
+  "filters": []
 }

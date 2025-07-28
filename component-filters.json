@@ -39,11 +39,5 @@
       "button",
       "title"
     ]
-  },
-  {
-    "id": "navigation",
-    "components": [
-      "navigation"
-    ]
   }
 ]
