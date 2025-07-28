@@ -32,8 +32,7 @@
                         "component": "text",
                         "label": "Tab Name",
                         "name": "tabName",
-                        "valueType": "string",
-                        "multi": true
+                        "valueType": "string"
                     },
                     {
                         "component": "text",
