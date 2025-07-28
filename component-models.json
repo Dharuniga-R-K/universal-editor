@@ -242,15 +242,13 @@
                 "component": "text",
                 "label": "Name",
                 "name": "name",
-                "valueType": "string",
-                "multi": true
+                "valueType": "string"
               },
               {
                 "component": "text",
                 "label": "Link",
                 "name": "link",
-                "valueType": "string",
-                "multi": true
+                "valueType": "string"
               }
             ]
           }
