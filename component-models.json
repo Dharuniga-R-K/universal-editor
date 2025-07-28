@@ -226,20 +226,20 @@
         "collapsible": true,
         "fields": [
           {
-            "component": "text-input",
+            "component": "text",
             "label": "tab",
             "name": "text",
             "multi": true,
             "valueType": "string",
             "fields": [
               {
-                "component": "text-input",
+                "component": "text",
                 "label": "dropdown value",
                 "name": "text",
                 "valueType": "string"
               },
               {
-                "component": "text-input",
+                "component": "text",
                 "label": "link value",
                 "name": "text2",
                 "valueType": "string"
