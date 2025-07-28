@@ -42,9 +42,9 @@
                 },
                 {
                   "component": "text-input",
-                  "label": "link",
+                  "label": "link value",
                   "name": "text2",
-                  "valueType": "string"
+                  "valueType": "string" 
                 }
               ]
             }
