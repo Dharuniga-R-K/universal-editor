@@ -227,21 +227,21 @@
         "fields": [
           {
             "component": "text",
-            "label": "tab",
-            "name": "text",
+            "label": "Tab",
+            "name": "tabs",
             "multi": true,
-            "valueType": "string",
+            "valueType": "object",
             "fields": [
               {
                 "component": "text",
-                "label": "dropdown value",
-                "name": "text",
+                "label": "Dropdown Value",
+                "name": "dropdownValue",
                 "valueType": "string"
               },
               {
                 "component": "text",
-                "label": "link value",
-                "name": "text2",
+                "label": "Link Value",
+                "name": "linkValue",
                 "valueType": "string"
               }
             ]

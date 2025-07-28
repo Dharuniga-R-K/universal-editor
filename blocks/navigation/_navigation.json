@@ -18,42 +18,41 @@
   ],
   "models": [
     {
-      "id": "navigation",
-      "fields": [
-        {
-          "component": "container",
-          "label": "Container",
-          "name": "container",
-          "valueType": "string",
-          "collapsible": true,
-          "fields": [
+        "id": "navigation",
+        "fields": [
             {
-              "component": "text",
-              "label": "tab",
-              "name": "text",
-              "multi": true,
-              "valueType": "string",
-              "fields": [
-                {
-                  "component": "text",
-                  "label": "dropdown value",
-                  "name": "text",
-                  "valueType": "string"
-                },
-                {
-                  "component": "text",
-                  "label": "link value",
-                  "name": "text2",
-                  "valueType": "string" 
-                }
-              ]
+                "component": "container",
+                "label": "Container",
+                "name": "container",
+                "valueType": "string",
+                "collapsible": true,
+                "fields": [
+                    {
+                        "component": "text",
+                        "label": "Tab",
+                        "name": "tabs",
+                        "multi": true,
+                        "valueType": "object",
+                        "fields": [
+                            {
+                                "component": "text",
+                                "label": "Dropdown Value",
+                                "name": "dropdownValue",
+                                "valueType": "string"
+                            },
+                            {
+                                "component": "text",
+                                "label": "Link Value",
+                                "name": "linkValue",
+                                "valueType": "string"
+                            }
+                        ]
+                    }
+                ]
             }
-          ]
-        }
-      ]
+        ]
     }
-    
-  ],
+],
   
   "filters": [] 
 }
