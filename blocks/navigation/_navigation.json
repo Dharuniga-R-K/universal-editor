@@ -22,31 +22,24 @@
       "fields": [
         {
           "component": "container",
-          "name": "navigationTabs",
-          "label": "Navigation Tabs",
-          "valueType": "object",
+          "name": "navItems",
+          "label": "Navigation Items",
           "multi": true,
-          "collapsible": true,
+          "valueType": "object",
           "fields": [
             {
               "component": "text",
-              "name": "tabName",
-              "label": "Tab Name",
-              "valueType": "string"
+              "valueType": "string",
+              "name": "label",
+              "label": "Label",
+              "value": ""
             },
             {
               "component": "text",
-              "name": "name",
-              "label": "Name",
               "valueType": "string",
-              "multi": true
-            },
-            {
-              "component": "text",
-              "name": "link",
-              "label": "Link",
-              "valueType": "string",
-              "multi": true
+              "name": "targetId",
+              "label": "Target ID",
+              "value": ""
             }
           ]
         }
