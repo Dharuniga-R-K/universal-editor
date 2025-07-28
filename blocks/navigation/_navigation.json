@@ -17,33 +17,49 @@
     }
   ],
   "models": [
-    {
-      "id": "navigation",
-      "fields": [
-        {
-          "component": "richtext",
-          "name": "text",
-          "value": "",
-          "label": "Text",
-          "valueType": "string",
-          "multi": true,
-          "fields": [
-            {
-              "component": "text",
-              "name": "title",
-              "label": "Subtitle",
-              "valueType": "string"
-            },
-            {
-              "component": "text",
-              "name": "link",
-              "label": "Sublink URL",
-              "valueType": "string"
-            }
-          ]
-        }
-      ]
-    }
+  {
+    "component": "multi",
+    "name": "items",
+    "label": "Menu Items",
+    "valueType": "object",
+    "multi": true,
+    "fields": [
+      { 
+        "component": "text", 
+        "name": "title", 
+        "label": "Title", 
+        "valueType": "string" 
+      },
+      { 
+        "component": "text", 
+        "name": "link",  
+        "label": "Link URL",  
+        "valueType": "string" 
+      },
+      {
+        "component": "multi",
+        "name": "children",
+        "label": "Sub-items",
+        "valueType": "object",
+        "multi": true,
+        "fields": [
+          { 
+            "component": "text", 
+            "name": "title", 
+            "label": "Sub-title", 
+            "valueType": "string" 
+          },
+          { 
+            "component": "text", 
+            "name": "link",  
+            "label": "Sub-link URL", 
+            "valueType": "string" 
+          }
+        ]
+      }
+    ]
+  }
   ],
+  
   "filters": [] 
 }

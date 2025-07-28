@@ -216,26 +216,41 @@
     ]
   },
   {
-    "id": "navigation",
+    "component": "multi",
+    "name": "items",
+    "label": "Menu Items",
+    "valueType": "object",
+    "multi": true,
     "fields": [
       {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
-        "valueType": "string",
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "link",
+        "label": "Link URL",
+        "valueType": "string"
+      },
+      {
+        "component": "multi",
+        "name": "children",
+        "label": "Sub-items",
+        "valueType": "object",
         "multi": true,
         "fields": [
           {
             "component": "text",
             "name": "title",
-            "label": "Subtitle",
+            "label": "Sub-title",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "link",
-            "label": "Sublink URL",
+            "label": "Sub-link URL",
             "valueType": "string"
           }
         ]
