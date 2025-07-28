@@ -21,28 +21,29 @@
       "id": "navigation",
       "fields": [
         {
-          "component": "multiselect",
-          "name": "items",
-          "label": "Menu Items",
-          "valueType": "object",
-          "multi": true,
+          "component": "container",
+          "label": "Container",
+          "name": "container",
+          "valueType": "string",
+          "collapsible": true,
           "fields": [
             {
-              "component": "text",
-              "name": "title",
-              "label": "Title",
+              "component": "text-input",
+              "label": "Simple Text 1",
+              "name": "text",
               "valueType": "string"
             },
             {
-              "component": "text",
-              "name": "link",
-              "label": "Link URL",
+              "component": "text-input",
+              "label": "Simple Text 2",
+              "name": "text2",
               "valueType": "string"
             }
           ]
         }
       ]
     }
+    
   ],
   
   "filters": [] 
