@@ -1,24 +1,58 @@
 export default function decorate(block) {
-    const raw = block.getAttribute('data-aue-model-navigationTabs');
-    if (!raw) return;
-    const tabs = JSON.parse(raw);
-    block.innerHTML = '';
+    // Get model data from Universal Editor
+    const modelData = block.dataset.aueModelNavigation;
+    if (!modelData) return;
   
+    let parsed;
+    try {
+      parsed = JSON.parse(modelData);
+    } catch (e) {
+      console.error('Failed to parse navigation model data:', e);
+      return;
+    }
+  
+    const { navigationTabs } = parsed;
+    if (!Array.isArray(navigationTabs)) return;
+  
+    // Create navigation container
     const nav = document.createElement('nav');
-    tabs.forEach(tab => {
-      const tabEl = document.createElement('div');
-      tabEl.textContent = tab.tabName || '';
-      if (Array.isArray(tab.items)) {
-        const ul = document.createElement('ul');
-        tab.items.forEach(item => {
+    nav.classList.add('navigation');
+  
+    navigationTabs.forEach((tab) => {
+      const tabWrapper = document.createElement('div');
+      tabWrapper.classList.add('nav-tab');
+  
+      // Main tab label
+      const tabLabel = document.createElement('button');
+      tabLabel.classList.add('tab-name');
+      tabLabel.textContent = tab.tabName;
+      tabWrapper.appendChild(tabLabel);
+  
+      // Dropdown (if present)
+      if (Array.isArray(tab.name) && Array.isArray(tab.link)) {
+        const dropdown = document.createElement('ul');
+        dropdown.classList.add('dropdown');
+  
+        tab.name.forEach((label, i) => {
           const li = document.createElement('li');
-          li.textContent = item.name || '';
-          ul.appendChild(li);
+          const a = document.createElement('a');
+          a.textContent = label;
+          a.href = tab.link[i] || '#';
+          li.appendChild(a);
+          dropdown.appendChild(li);
         });
-        tabEl.appendChild(ul);
+  
+        tabWrapper.appendChild(dropdown);
+  
+        // Show/hide logic
+        tabLabel.addEventListener('click', () => {
+          dropdown.classList.toggle('open');
+        });
       }
-      nav.appendChild(tabEl);
+  
+      nav.appendChild(tabWrapper);
     });
+  
+    block.textContent = ''; // Clear existing
     block.appendChild(nav);
   }
-  
