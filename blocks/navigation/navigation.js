@@ -1,5 +1,5 @@
 export default function decorate(block) {
-    const raw = block.getAttribute('data-aue-model-navigationTabs');
+    const raw = block.getAttribute('data-aue-model-navigation');
     const tabs = raw ? JSON.parse(raw) : [];
   
     // Clean container
