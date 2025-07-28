@@ -233,18 +233,26 @@
             "valueType": "string"
           },
           {
-            "component": "text",
-            "label": "Name",
-            "name": "name",
-            "valueType": "string",
-            "multi": true
-          },
-          {
-            "component": "text",
-            "label": "Link",
-            "name": "link",
-            "valueType": "string",
-            "multi": true
+            "component": "container",
+            "name": "items",
+            "multi": true,
+            "label": "Dropdown Items",
+            "fields": [
+              {
+                "component": "text",
+                "label": "Name",
+                "name": "name",
+                "valueType": "string",
+                "multi": true
+              },
+              {
+                "component": "text",
+                "label": "Link",
+                "name": "link",
+                "valueType": "string",
+                "multi": true
+              }
+            ]
           }
         ]
       }

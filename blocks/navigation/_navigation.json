@@ -35,6 +35,12 @@
                         "valueType": "string"
                     },
                     {
+                          "component": "container",
+                          "name": "items",
+                          "multi": true,
+                          "label": "Dropdown Items",
+                          "fields": [
+                      {
                         "component": "text",
                         "label": "Name",
                         "name": "name",
@@ -48,10 +54,12 @@
                         "valueType": "string",
                         "multi": true
                     }
+                  ]
+                  }
+                ]
+                }
                 ]
             }
-        ]
-    }
-],
+        ],
   "filters": []
 }
