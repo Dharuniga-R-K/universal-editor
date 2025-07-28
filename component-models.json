@@ -219,7 +219,7 @@
     "id": "navigation",
     "fields": [
       {
-        "component": "multi",
+        "component": "text",
         "name": "items",
         "label": "Menu Items",
         "valueType": "object",
