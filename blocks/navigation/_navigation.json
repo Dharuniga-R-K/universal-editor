@@ -20,21 +20,15 @@
     {
         "id": "navigation",
         "fields": [
-            {
-                "component": "container",
-                "label": "Navigation Tabs",
-                "name": "navigationTabs",
-                "valueType": "string",
-                "collapsible": true,
-                "fields": [
+
                     {
                         "component": "text",
                         "label": "Tab Name",
                         "name": "tabName",
                         "valueType": "string",
-                        "multi": true
-                    },
-                    {
+                        "multi": true,
+                        "fields": [
+                      {
                         "component": "text",
                         "label": "Name",
                         "name": "name",
@@ -48,8 +42,9 @@
                         "valueType": "string",
                         "multi": true
                     }
-                ]
-            }
+                    ]
+                    }
+                
         ]
     }
 ],
