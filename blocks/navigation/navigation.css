@@ -1,15 +1,18 @@
 .nav-block { font-family: sans-serif; }
+
 .nav-items {
   display: flex;
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 .nav-item {
   position: relative;
   margin-right: 2rem;
   cursor: pointer;
 }
+
 .nav-item .dropdown {
   display: none;
   position: absolute;
@@ -17,12 +20,14 @@
   left: 0;
   background: white;
   padding: 0.5rem 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 15%);
   list-style: none;
 }
+
 .nav-item:hover .dropdown {
   display: block;
 }
+
 .nav-item .dropdown li {
   padding: 0.5rem 1rem;
   white-space: nowrap;
