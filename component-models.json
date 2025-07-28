@@ -220,28 +220,28 @@
     "fields": [
       {
         "component": "container",
-        "label": "Container",
-        "name": "container",
+        "label": "Navigation Tabs",
+        "name": "navigationTabs",
         "valueType": "string",
         "collapsible": true,
         "fields": [
           {
             "component": "text",
-            "label": "Tab",
-            "name": "tabs",
+            "label": "Tab Name",
+            "name": "tabName",
+            "valueType": "string",
             "multi": true,
-            "valueType": "object",
             "fields": [
               {
                 "component": "text",
-                "label": "Dropdown Value",
-                "name": "dropdownValue",
+                "label": "Name",
+                "name": "name",
                 "valueType": "string"
               },
               {
                 "component": "text",
-                "label": "Link Value",
-                "name": "linkValue",
+                "label": "Link",
+                "name": "link",
                 "valueType": "string"
               }
             ]
