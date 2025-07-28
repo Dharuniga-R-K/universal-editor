@@ -24,7 +24,7 @@
     padding: .5rem 0;
     background: #fff;
     list-style: none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 6px rgb(0 0 0 / 15%);
     display: none;
     min-width: 180px;
     z-index: 10;
