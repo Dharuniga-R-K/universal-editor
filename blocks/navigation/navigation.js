@@ -1,15 +1,16 @@
 export default function decorate(block) {
-    const fragment = document.createDocumentFragment();
+    const rows = [...block.children];
+    block.innerHTML = ''; // Clear the original content
   
-    [...block.children].forEach((row) => {
+    rows.forEach((row) => {
       const cells = [...row.children];
-      const text = cells.map(cell => cell.textContent.trim()).join(' | ');
       const p = document.createElement('p');
-      p.textContent = text;
-      fragment.appendChild(p);
-    });
   
-    block.textContent = '';
-    block.appendChild(fragment);
+      // Join text values of each field with separator
+      const values = cells.map((cell) => cell.textContent.trim());
+      p.textContent = values.join(' | ');
+  
+      block.appendChild(p);
+    });
   }
   
