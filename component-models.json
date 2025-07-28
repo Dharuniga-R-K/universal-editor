@@ -219,12 +219,20 @@
     "id": "navigation",
     "fields": [
       {
-        "component": "text",
-        "label": "Tab Name",
-        "name": "tabName",
+        "component": "container",
+        "label": "Navigation Tabs",
+        "name": "navigationTabs",
         "valueType": "string",
+        "collapsible": true,
         "multi": true,
         "fields": [
+          {
+            "component": "text",
+            "label": "Tab Name",
+            "name": "tabName",
+            "valueType": "string",
+            "multi": true
+          },
           {
             "component": "text",
             "label": "Name",
