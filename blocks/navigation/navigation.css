@@ -1,35 +1,43 @@
-.nav-block {
-    display: flex;
+.navigation-block {
     font-family: sans-serif;
+  }
+  
+  .nav-block {
+    display: flex;
   }
   
   .nav-tab {
     position: relative;
-    margin-right: 2rem;
+    margin-right: 1.5rem;
     cursor: pointer;
   }
   
-  .nav-tab .dropdown {
+  .tab-title {
+    padding: 0.5rem;
+  }
+  
+  .dropdown {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
     background: #fff;
     list-style: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0;
     padding: 0.5rem 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   }
   
   .nav-tab:hover .dropdown {
     display: block;
   }
   
-  .nav-tab .dropdown li {
-    padding: 0.4rem 1rem;
+  .dropdown-item {
+    padding: 0.5rem 1rem;
   }
   
-  .nav-tab .dropdown li a {
+  .dropdown-item a {
     text-decoration: none;
-    color: #333;
+    color: inherit;
   }
   

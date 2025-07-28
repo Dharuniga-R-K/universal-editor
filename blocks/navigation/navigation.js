@@ -1,25 +1,34 @@
-export default function decorate(blockElem) {
-    const model = blockElem.getAttribute('data-aue-model-navigationTabs');
-    const tabs = model ? JSON.parse(model) : [];
+export default function decorate(block) {
+    const raw = block.getAttribute('data-aue-model-navigationTabs');
+    const tabs = raw ? JSON.parse(raw) : [];
   
+    // Clean container
+    block.innerHTML = '';
+    block.classList.add('navigation-block');
+  
+    // Build wrapper
     const nav = document.createElement('nav');
     nav.className = 'nav-block';
+    block.appendChild(nav);
   
-    tabs.forEach(tab => {
+    tabs.forEach((tab) => {
       const tabDiv = document.createElement('div');
       tabDiv.className = 'nav-tab';
-      const title = document.createElement('span');
-      title.textContent = tab.tabName;
+  
+      const title = document.createElement('div');
+      title.className = 'tab-title';
+      title.textContent = tab.tabName || 'Untitled Tab';
       tabDiv.appendChild(title);
   
       if (Array.isArray(tab.items)) {
         const ul = document.createElement('ul');
         ul.className = 'dropdown';
-        tab.items.forEach(item => {
+        tab.items.forEach((item) => {
           const li = document.createElement('li');
+          li.className = 'dropdown-item';
           const a = document.createElement('a');
           a.href = item.link || '#';
-          a.textContent = item.name || '';
+          a.textContent = item.name || 'Untitled';
           li.appendChild(a);
           ul.appendChild(li);
         });
@@ -28,8 +37,5 @@ export default function decorate(blockElem) {
   
       nav.appendChild(tabDiv);
     });
-  
-    blockElem.innerHTML = '';
-    blockElem.appendChild(nav);
   }
   
