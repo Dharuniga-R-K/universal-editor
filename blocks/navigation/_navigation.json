@@ -25,6 +25,7 @@
           "label": "Container",
           "name": "container",
           "valueType": "string",
+          "multi": true,
           "collapsible": true,
           "fields": [
             {
