@@ -29,15 +29,24 @@
           "fields": [
             {
               "component": "text-input",
-              "label": "Simple Text 1",
+              "label": "tab",
               "name": "text",
-              "valueType": "string"
-            },
-            {
-              "component": "text-input",
-              "label": "Simple Text 2",
-              "name": "text2",
-              "valueType": "string"
+              "multi": true,
+              "valueType": "string",
+              "fields": [
+                {
+                  "component": "text-input",
+                  "label": "dropdown value",
+                  "name": "text",
+                  "valueType": "string"
+                },
+                {
+                  "component": "text-input",
+                  "label": "link",
+                  "name": "text2",
+                  "valueType": "string"
+                }
+              ]
             }
           ]
         }
