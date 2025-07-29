@@ -2,17 +2,20 @@ export default function decorate(block) {
     const rows = Array.from(block.children);
     if (!rows.length) return;
   
-    // 1. Get dropdown title from first row
+    // 1. Get the dropdown title from the first row
     const titleRow = rows.shift();
     const title = titleRow.querySelector('p')?.textContent?.trim() || 'Menu';
   
     // 2. Extract dropdown items
     const items = rows.map((row) => {
-      const cells = row.querySelectorAll('div');
-      const label = cells[0]?.textContent?.trim() || '';
-      const link = cells[1]?.textContent?.trim() || '#';
-      return { label, link };
-    }).filter(item => item.label); // Filter out empty rows
+      const text = row.textContent.trim();
+      // Expect format: Label|Link
+      const [label, link] = text.split('|').map(s => s.trim());
+      return {
+        label: label || '',
+        link: link || '#'
+      };
+    }).filter(item => item.label); // Only keep rows with label
   
     // 3. Build dropdown
     const container = document.createElement('div');
@@ -44,7 +47,6 @@ export default function decorate(block) {
     container.appendChild(icon);
     container.appendChild(dropdownContent);
   
-    // Replace original block content with dropdown
     block.innerHTML = '';
     block.appendChild(container);
   
