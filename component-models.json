@@ -228,6 +228,7 @@
       {
         "component": "container",
         "name": "items",
+        "multi": true,
         "label": "Dropdown Items",
         "valueType": "object",
         "fields": [
