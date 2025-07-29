@@ -2,25 +2,27 @@ export default function decorate(block) {
     const rows = Array.from(block.children);
     if (!rows.length) return;
   
-    // 1. Title is in the first row's first inner div
+    // Step 1: Get title
     const titleRow = rows.shift();
     const title = titleRow.querySelector('p')?.textContent?.trim() || 'Menu';
   
-    // 2. Extract items from each remaining row
+    // Step 2: Extract label|link from each row
     const items = rows.map((row) => {
       const innerDiv = row.querySelector('div');
       if (!innerDiv) return null;
   
-      // Expect content like "Label | Link"
       const text = innerDiv.textContent.trim();
-      const [label, link] = text.split('|').map(str => str.trim());
+      const parts = text.split('|').map(str => str.trim());
   
-      if (!label || !link) return null;
+      if (parts.length !== 2 || !parts[0] || !parts[1]) return null;
   
-      return { label, link };
-    }).filter(Boolean); // Remove nulls
+      return {
+        label: parts[0],
+        link: parts[1]
+      };
+    }).filter(Boolean);
   
-    // 3. Build dropdown container
+    // ✅ Step 3: Create dropdown elements before touching the block DOM
     const container = document.createElement('div');
     container.className = 'dropdown-container';
   
@@ -35,26 +37,31 @@ export default function decorate(block) {
     const dropdownContent = document.createElement('ul');
     dropdownContent.className = 'dropdown-content';
   
-    items.forEach(({ label, link }) => {
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+  
       const li = document.createElement('li');
       const a = document.createElement('a');
-      a.textContent = label;
-      a.href = link;
+  
+      a.textContent = item.label || 'Link';
+      a.href = item.link || '#';
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
+  
       li.appendChild(a);
       dropdownContent.appendChild(li);
-    });
+    }
   
+    // Assemble the dropdown
     container.appendChild(dropdownTitle);
     container.appendChild(icon);
     container.appendChild(dropdownContent);
   
-    // Replace original block content
+    // ✅ Now replace block content
     block.innerHTML = '';
     block.appendChild(container);
   
-    // Add toggle behavior
+    // Step 4: Add toggle behavior
     container.addEventListener('click', () => {
       dropdownContent.classList.toggle('open');
       icon.textContent = dropdownContent.classList.contains('open') ? '▾' : '▴';
