@@ -43,7 +43,6 @@ export default function decorate(block) {
     });
   
     container.appendChild(dropdownTitle);
-    container.appendChild(icon);
     container.appendChild(dropdownContent);
   
     // Clear old content and append dropdown
