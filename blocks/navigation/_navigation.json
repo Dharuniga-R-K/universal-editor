@@ -25,20 +25,27 @@
         "name": "title",
         "label": "Dropdown Title",
         "valueType": "string",
-        "value": "",
+        "value": ""
+      },
+      {
+        "component": "container",
+        "name": "container",
+        "label": "Dropdown Items",
+        "valueType": "string",
         "fields": [
           {
             "component": "text",
-            "label": "label | link",
-            "name": "text",
-            "multi": true,
-            "valueType": "string"           
+            "name": "label",
+            "label": "Label | URL",
+            "valueType": "string",
+            "multi" : true
           }
           
+        ]
+      }
     ]
-  }
-]
   }
 ],
 "filters": []
 }
+
