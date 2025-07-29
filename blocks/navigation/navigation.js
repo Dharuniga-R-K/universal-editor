@@ -1,61 +1,60 @@
-// export default function decorate(block) {
-//     const container = document.createElement('div');
-//     container.className = 'dropdown-container';
+export default function decorate(block) {
+    const divs = [...block.querySelectorAll(':scope > div')];
+    if (divs.length < 2) return; // Need at least 2 divs
   
-//     const rows = [...block.children];
+    // Extract title
+    const title = divs[0].querySelector('p')?.textContent.trim() || 'Dropdown';
   
-//     // Get dropdown title from the first row
-//     const titleDiv = rows[0]?.querySelector('div');
-//     const title = titleDiv?.textContent?.trim() || 'Menu';
+    // Extract items string and parse it
+    const itemsString = divs[1].querySelector('p')?.textContent.trim() || '';
+    // Split by comma, then split each by '|'
+    const items = itemsString.split(',')
+      .map(item => {
+        const [label, link] = item.split('|').map(s => s.trim());
+        return label && link ? { label, link } : null;
+      })
+      .filter(Boolean);
   
-//     const dropdownTitle = document.createElement('div');
-//     dropdownTitle.className = 'dropdown-title';
-//     dropdownTitle.textContent = title;
+    // Create dropdown container
+    const container = document.createElement('div');
+    container.className = 'dropdown-container';
   
-//     const icon = document.createElement('span');
-//     icon.className = 'dropdown-icon';
-//     icon.textContent = '▴';
+    // Title + icon
+    const dropdownTitle = document.createElement('div');
+    dropdownTitle.className = 'dropdown-title';
+    dropdownTitle.textContent = title;
   
-//     const dropdownContent = document.createElement('ul');
-//     dropdownContent.className = 'dropdown-content';
+    const icon = document.createElement('span');
+    icon.className = 'dropdown-icon';
+    icon.textContent = '▴';
   
-//     // Process the rest of the rows for label|link pairs
-//     rows.slice(1).forEach((row, i) => {
-//       const innerDiv = row.querySelector('div');
-//       const text = innerDiv?.textContent?.trim();
+    // Dropdown list
+    const dropdownContent = document.createElement('ul');
+    dropdownContent.className = 'dropdown-content';
   
-//       if (!text || !text.includes('|')) {
-//         console.warn(`Row ${i + 2} is invalid or missing '|':`, text);
-//         return;
-//       }
+    items.forEach(({ label, link }) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = label;
+      a.href = link;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      li.appendChild(a);
+      dropdownContent.appendChild(li);
+    });
   
-//       const [label, link] = text.split('|').map(s => s.trim());
-//       if (!label || !link) {
-//         console.warn(`Row ${i + 2} missing label or link`, { label, link });
-//         return;
-//       }
+    container.appendChild(dropdownTitle);
+    container.appendChild(icon);
+    container.appendChild(dropdownContent);
   
-//       const li = document.createElement('li');
-//       const a = document.createElement('a');
-//       a.textContent = label;
-//       a.href = link;
-//       a.target = '_blank';
-//       a.rel = 'noopener noreferrer';
-//       li.appendChild(a);
-//       dropdownContent.appendChild(li);
-//     });
+    // Clear old content and append dropdown
+    block.textContent = '';
+    block.appendChild(container);
   
-//     container.appendChild(dropdownTitle);
-//     container.appendChild(icon);
-//     container.appendChild(dropdownContent);
-  
-//     block.innerHTML = '';
-//     block.appendChild(container);
-  
-//     // Toggle logic
-//     container.addEventListener('click', () => {
-//       dropdownContent.classList.toggle('open');
-//       icon.textContent = dropdownContent.classList.contains('open') ? '▾' : '▴';
-//     });
-//   }
+    // Toggle dropdown open/close
+    container.addEventListener('click', () => {
+      dropdownContent.classList.toggle('open');
+      icon.textContent = dropdownContent.classList.contains('open') ? '▾' : '▴';
+    });
+  }
   
