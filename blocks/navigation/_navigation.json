@@ -25,23 +25,14 @@
         "name": "title",
         "label": "Dropdown Title",
         "valueType": "string",
-        "multi": true,
         "value": "",
         "fields": [
           {
-            "component": "text-input",
-            "label": "Simple Text 1",
+            "component": "text",
+            "label": "label | link",
             "name": "text",
             "multi": true,
-            "valueType": "string",
-            "fields":[
-              {
-                "component": "text-input",
-                "label": "Simple Text 2",
-                "name": "text2",
-                "valueType": "string"
-              }
-            ]
+            "valueType": "string"           
           }
           
     ]
