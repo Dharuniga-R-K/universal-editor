@@ -32,7 +32,7 @@
         "name": "items",
         "multi": true,
         "label": "Dropdown Items",
-        "valueType": "object",
+        "valueType": "string",
         "fields": [
           {
             "component": "text",
