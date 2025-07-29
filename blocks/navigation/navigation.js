@@ -16,16 +16,16 @@ export default function decorate(block) {
       .filter(Boolean);
   
     // Create dropdown container
-    const container = document.createElement('div');
-    container.className = 'dropdown-container';
+    // const container = document.createElement('div');
+    // container.className = 'dropdown-container';
   
     const dropdownTitle = document.createElement('div');
     dropdownTitle.className = 'dropdown-title';
     dropdownTitle.textContent = title;
   
-    const icon = document.createElement('span');
-    icon.className = 'dropdown-icon';
-    icon.textContent = '▴';
+    // const icon = document.createElement('span');
+    // icon.className = 'dropdown-icon';
+    // icon.textContent = '▴';
   
     // Dropdown list
     const dropdownContent = document.createElement('ul');
