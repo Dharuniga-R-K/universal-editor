@@ -16,13 +16,13 @@
     transition: border-color 0.3s ease;
   }
   
-  .dropdown-container:hover .dropdown-title,
-  .dropdown-content.open + .dropdown-title {
+  .dropdown-container:hover .dropdown-header,
+  .dropdown-content.open + .dropdown-header {
     color: #82eaa6; 
   }
   
   .dropdown-icon {
-    font-size: 14px;
+    font-size: 24px;
     margin-top: 2px;
     color: #444;
   }
