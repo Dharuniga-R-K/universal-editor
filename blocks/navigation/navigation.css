@@ -18,7 +18,7 @@
   
   .dropdown-container:hover .dropdown-title,
   .dropdown-content.open + .dropdown-title {
-    border-color: #82eaa6; 
+    color: #82eaa6; 
   }
   
   .dropdown-icon {
