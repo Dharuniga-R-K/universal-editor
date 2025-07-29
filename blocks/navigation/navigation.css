@@ -16,8 +16,13 @@
     transition: border-color 0.3s ease;
   }
   
-  .dropdown-container:hover .dropdown-title .dropdown-icon,
-  .dropdown-content.open + .dropdown-title .dropdown-icon{
+  .dropdown-container:hover .dropdown-title,
+  .dropdown-content.open + .dropdown-title{
+    color: #82eaa6; 
+  }
+
+  .dropdown-container:hover .dropdown-icon,
+  .dropdown-content.open + .dropdown-icon{
     color: #82eaa6; 
   }
   
