@@ -19,6 +19,8 @@ export default function decorate(block) {
     const container = document.createElement('div');
     container.className = 'dropdown-container';
   
+    const header = document.createElement('div');
+    header.className = 'dropdown-header';
     // Title + icon
     const dropdownTitle = document.createElement('div');
     dropdownTitle.className = 'dropdown-title';
