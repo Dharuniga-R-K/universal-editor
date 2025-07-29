@@ -41,6 +41,7 @@ export default function decorate(block) {
   });
 
   container.appendChild(dropdownTitle);
+  container.appendChild(icon);
   container.appendChild(dropdownContent);
 
   block.textContent = '';
