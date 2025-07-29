@@ -16,8 +16,8 @@
     transition: border-color 0.3s ease;
   }
   
-  .dropdown-container:hover .dropdown-header,
-  .dropdown-content.open + .dropdown-header {
+  .dropdown-container:hover .dropdown-container,
+  .dropdown-content.open + .dropdown-container {
     border-color: #82eaa6; 
   }
   
