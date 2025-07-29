@@ -15,13 +15,19 @@ export default function decorate(block) {
   const container = document.createElement('div');
   container.className = 'dropdown-container';
 
+  const header = document.createElement('div');
+  header.className = 'dropdown-header';
+
   const dropdownTitle = document.createElement('div');
   dropdownTitle.className = 'dropdown-title';
   dropdownTitle.textContent = title;
 
-  const icon = document.createElement('div');
+  const icon = document.createElement('span');
   icon.className = 'dropdown-icon';
   icon.textContent = '▾';
+
+  header.appendChild(dropdownTitle);
+  header.appendChild(icon);
 
   const dropdownContent = document.createElement('ul');
   dropdownContent.className = 'dropdown-content';
@@ -40,8 +46,7 @@ export default function decorate(block) {
     dropdownContent.appendChild(li);
   });
 
-  container.appendChild(dropdownTitle);
-  container.appendChild(icon);
+  container.appendChild(header);
   container.appendChild(dropdownContent);
 
   block.textContent = '';
