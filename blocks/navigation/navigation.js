@@ -1,28 +1,37 @@
 export default function decorate(block) {
+    console.log('Block loaded:', block);
+  
     const rows = Array.from(block.children);
+    console.log('Row count:', rows.length);
     if (!rows.length) return;
   
-    // Step 1: Get title
     const titleRow = rows.shift();
     const title = titleRow.querySelector('p')?.textContent?.trim() || 'Menu';
+    console.log('Parsed Title:', title);
   
-    // Step 2: Extract label|link from each row
-    const items = rows.map((row) => {
+    const items = rows.map((row, i) => {
       const innerDiv = row.querySelector('div');
-      if (!innerDiv) return null;
+      if (!innerDiv) {
+        console.warn(`Row ${i + 1} has no inner div`);
+        return null;
+      }
   
       const text = innerDiv.textContent.trim();
-      const parts = text.split('|').map(str => str.trim());
+      console.log(`Row ${i + 1} raw text:`, text);
   
-      if (parts.length !== 2 || !parts[0] || !parts[1]) return null;
+      const [label, link] = text.split('|').map(str => str.trim());
   
-      return {
-        label: parts[0],
-        link: parts[1]
-      };
+      if (!label || !link) {
+        console.warn(`Row ${i + 1} missing label or link`);
+        return null;
+      }
+  
+      return { label, link };
     }).filter(Boolean);
   
-    // ✅ Step 3: Create dropdown elements before touching the block DOM
+    console.log('Final parsed items:', items);
+  
+    // Create dropdown container
     const container = document.createElement('div');
     container.className = 'dropdown-container';
   
@@ -37,31 +46,33 @@ export default function decorate(block) {
     const dropdownContent = document.createElement('ul');
     dropdownContent.className = 'dropdown-content';
   
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-  
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-  
-      a.textContent = item.label || 'Link';
-      a.href = item.link || '#';
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-  
-      li.appendChild(a);
-      dropdownContent.appendChild(li);
+    // Now populate items
+    if (items.length === 0) {
+      console.warn('No items to render in dropdown');
     }
   
-    // Assemble the dropdown
+    items.forEach(item => {
+      console.log('Rendering item:', item);
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = item.label;
+      a.href = item.link;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      li.appendChild(a);
+      dropdownContent.appendChild(li);
+    });
+  
+    // Assemble dropdown
     container.appendChild(dropdownTitle);
     container.appendChild(icon);
     container.appendChild(dropdownContent);
   
-    // ✅ Now replace block content
+    // Replace block content
     block.innerHTML = '';
     block.appendChild(container);
   
-    // Step 4: Add toggle behavior
+    // Toggle dropdown
     container.addEventListener('click', () => {
       dropdownContent.classList.toggle('open');
       icon.textContent = dropdownContent.classList.contains('open') ? '▾' : '▴';
