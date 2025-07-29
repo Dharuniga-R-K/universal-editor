@@ -1,6 +1,6 @@
 export default function decorate(block) {
     const divs = [...block.querySelectorAll(':scope > div')];
-    if (divs.length < 2) return; // Need at least 2 divs
+   // if (divs.length < 2) return; // Need at least 2 divs
   
     // Extract title
     const title = divs[0].querySelector('p')?.textContent.trim() || 'Dropdown';
@@ -23,11 +23,6 @@ export default function decorate(block) {
     dropdownTitle.className = 'dropdown-title';
     dropdownTitle.textContent = title;
   
-    // const icon = document.createElement('span');
-    // icon.className = 'dropdown-icon';
-    // icon.textContent = '▴';
-  
-    // Dropdown list
     const dropdownContent = document.createElement('ul');
     dropdownContent.className = 'dropdown-content';
   
