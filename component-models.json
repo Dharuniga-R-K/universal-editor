@@ -224,26 +224,28 @@
         "label": "Dropdown Title",
         "valueType": "string",
         "multi": true,
-        "value": ""
-      },
-      {
-        "component": "container",
-        "name": "items",
-        "multi": true,
-        "label": "Dropdown Items",
-        "valueType": "object",
+        "value": "",
         "fields": [
           {
-            "component": "text",
-            "name": "label",
-            "label": "Item Label",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "link",
-            "label": "Item Link (URL)",
-            "valueType": "string"
+            "component": "container",
+            "name": "items",
+            "multi": true,
+            "label": "Dropdown Items",
+            "valueType": "object",
+            "fields": [
+              {
+                "component": "text",
+                "name": "label",
+                "label": "Item Label",
+                "valueType": "string"
+              },
+              {
+                "component": "text",
+                "name": "link",
+                "label": "Item Link (URL)",
+                "valueType": "string"
+              }
+            ]
           }
         ]
       }

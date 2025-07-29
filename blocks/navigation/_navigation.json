@@ -26,8 +26,8 @@
           "label": "Dropdown Title",
           "valueType": "string",
           "multi": true,
-          "value": ""
-        },
+          "value": "",
+          "fields": [
         {
           "component": "container",
           "name": "items",
@@ -49,6 +49,8 @@
             }
           ]
         }
+      ]
+    }
       ]
     }
   ],
