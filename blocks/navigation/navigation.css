@@ -16,8 +16,8 @@
     transition: border-color 0.3s ease;
   }
   
-  .dropdown-container:hover .dropdown-title,
-  .dropdown-content.open + .dropdown-title{
+  .dropdown-container:hover .dropdown-header,
+  .dropdown-content.open + .dropdown-header{
     color: #42711e; 
     background-color: #f0f2f2;
   }
@@ -25,7 +25,7 @@
   .dropdown-icon {
     font-size: 24px;
     margin-top: 2px;
-    color: #444;
+   
   }
   
   .dropdown-content {
