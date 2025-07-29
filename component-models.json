@@ -230,8 +230,7 @@
         "name": "items",
         "label": "Dropdown Items",
         "valueType": "object",
-        "itemLabel": "Dropdown Item",
-        "itemFields": [
+        "fields": [
           {
             "component": "text",
             "name": "label",
