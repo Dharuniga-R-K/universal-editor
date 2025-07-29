@@ -18,7 +18,6 @@
   
   .dropdown-container:hover .dropdown-header,
   .dropdown-content.open + .dropdown-header{
-    color: #96ce6b; 
     background-color: #f0f2f2;
   }
   
