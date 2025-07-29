@@ -20,11 +20,6 @@
   .dropdown-content.open + .dropdown-title{
     color: #82eaa6; 
   }
-
-  .dropdown-container:hover .dropdown-icon,
-  .dropdown-content.open + .dropdown-icon{
-    color: #82eaa6; 
-  }
   
   .dropdown-icon {
     font-size: 24px;
