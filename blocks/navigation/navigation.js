@@ -19,16 +19,16 @@ export default function decorate(block) {
     const container = document.createElement('div');
     container.className = 'dropdown-container';
   
-    const header = document.createElement('div');
-    header.className = 'dropdown-header';
+    // const header = document.createElement('div');
+    // header.className = 'dropdown-header';
     // Title + icon
     const dropdownTitle = document.createElement('div');
     dropdownTitle.className = 'dropdown-title';
-    dropdownTitle.textContent = title;
+    dropdownTitle.textContent = title + '▴';
   
-    const icon = document.createElement('span');
-    icon.className = 'dropdown-icon';
-    icon.textContent = '▴';
+    // const icon = document.createElement('span');
+    // icon.className = 'dropdown-icon';
+    // icon.textContent = '▴';
   
     // Dropdown list
     const dropdownContent = document.createElement('ul');
