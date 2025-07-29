@@ -224,27 +224,22 @@
         "label": "Dropdown Title",
         "valueType": "string",
         "multi": true,
-        "value": ""
-      },
-      {
-        "component": "container",
-        "label": "Container",
-        "name": "container",
-        "valueType": "string",
-        "collapsible": true,
-        "multi": true,
+        "value": "",
         "fields": [
           {
             "component": "text-input",
             "label": "Simple Text 1",
             "name": "text",
-            "valueType": "string"
-          },
-          {
-            "component": "text-input",
-            "label": "Simple Text 2",
-            "name": "text2",
-            "valueType": "string"
+            "multi": true,
+            "valueType": "string",
+            "fields": [
+              {
+                "component": "text-input",
+                "label": "Simple Text 2",
+                "name": "text2",
+                "valueType": "string"
+              }
+            ]
           }
         ]
       }
