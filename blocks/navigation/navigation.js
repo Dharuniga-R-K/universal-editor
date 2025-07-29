@@ -1,37 +1,29 @@
 export default function decorate(block) {
-    console.log('Block loaded:', block);
-  
     const rows = Array.from(block.children);
-    console.log('Row count:', rows.length);
     if (!rows.length) return;
   
+    // 1. Title
     const titleRow = rows.shift();
     const title = titleRow.querySelector('p')?.textContent?.trim() || 'Menu';
     console.log('Parsed Title:', title);
   
+    // 2. Extract items assuming each row has two <div>s: label and link
     const items = rows.map((row, i) => {
-      const innerDiv = row.querySelector('div');
-      if (!innerDiv) {
-        console.warn(`Row ${i + 1} has no inner div`);
-        return null;
-      }
-  
-      const text = innerDiv.textContent.trim();
-      console.log(`Row ${i + 1} raw text:`, text);
-  
-      const [label, link] = text.split('|').map(str => str.trim());
+      const cols = row.querySelectorAll('div');
+      const label = cols[0]?.textContent?.trim();
+      const link = cols[1]?.textContent?.trim();
   
       if (!label || !link) {
-        console.warn(`Row ${i + 1} missing label or link`);
+        console.warn(`Row ${i + 1} missing label or link`, { label, link });
         return null;
       }
   
       return { label, link };
     }).filter(Boolean);
   
-    console.log('Final parsed items:', items);
+    console.log('Parsed items:', items);
   
-    // Create dropdown container
+    // 3. Create DOM
     const container = document.createElement('div');
     container.className = 'dropdown-container';
   
@@ -46,13 +38,7 @@ export default function decorate(block) {
     const dropdownContent = document.createElement('ul');
     dropdownContent.className = 'dropdown-content';
   
-    // Now populate items
-    if (items.length === 0) {
-      console.warn('No items to render in dropdown');
-    }
-  
     items.forEach(item => {
-      console.log('Rendering item:', item);
       const li = document.createElement('li');
       const a = document.createElement('a');
       a.textContent = item.label;
@@ -63,16 +49,13 @@ export default function decorate(block) {
       dropdownContent.appendChild(li);
     });
   
-    // Assemble dropdown
     container.appendChild(dropdownTitle);
     container.appendChild(icon);
     container.appendChild(dropdownContent);
   
-    // Replace block content
     block.innerHTML = '';
     block.appendChild(container);
   
-    // Toggle dropdown
     container.addEventListener('click', () => {
       dropdownContent.classList.toggle('open');
       icon.textContent = dropdownContent.classList.contains('open') ? '▾' : '▴';
