@@ -2,22 +2,25 @@ export default function decorate(block) {
     const rows = Array.from(block.children);
     if (!rows.length) return;
   
-    // 1. Get the dropdown title from the first row
+    // 1. Title is in the first row's first inner div
     const titleRow = rows.shift();
     const title = titleRow.querySelector('p')?.textContent?.trim() || 'Menu';
   
-    // 2. Extract dropdown items
+    // 2. Extract items from each remaining row
     const items = rows.map((row) => {
-      const text = row.textContent.trim();
-      // Expect format: Label|Link
-      const [label, link] = text.split('|').map(s => s.trim());
-      return {
-        label: label || '',
-        link: link || '#'
-      };
-    }).filter(item => item.label); // Only keep rows with label
+      const innerDiv = row.querySelector('div');
+      if (!innerDiv) return null;
   
-    // 3. Build dropdown
+      // Expect content like "Label | Link"
+      const text = innerDiv.textContent.trim();
+      const [label, link] = text.split('|').map(str => str.trim());
+  
+      if (!label || !link) return null;
+  
+      return { label, link };
+    }).filter(Boolean); // Remove nulls
+  
+    // 3. Build dropdown container
     const container = document.createElement('div');
     container.className = 'dropdown-container';
   
@@ -47,10 +50,11 @@ export default function decorate(block) {
     container.appendChild(icon);
     container.appendChild(dropdownContent);
   
+    // Replace original block content
     block.innerHTML = '';
     block.appendChild(container);
   
-    // Toggle behavior
+    // Add toggle behavior
     container.addEventListener('click', () => {
       dropdownContent.classList.toggle('open');
       icon.textContent = dropdownContent.classList.contains('open') ? '▾' : '▴';
