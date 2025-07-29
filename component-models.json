@@ -223,6 +223,7 @@
         "name": "title",
         "label": "Dropdown Title",
         "valueType": "string",
+        "multi": true,
         "value": ""
       },
       {
