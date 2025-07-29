@@ -1,16 +1,8 @@
 export default function decorate(block) {
-    const rows = [...block.children];
-    block.innerHTML = ''; // Clear the original content
-  
-    rows.forEach((row) => {
-      const cells = [...row.children];
-      const p = document.createElement('p');
-  
-      // Join text values of each field with separator
-      const values = cells.map((cell) => cell.textContent.trim());
-      p.textContent = values.join(' | ');
-  
-      block.appendChild(p);
-    });
-  }
-  
+  const message = block.textContent.trim(); // AEM EDS will render raw value inside block
+  block.innerHTML = ''; // Clear default rendering
+  const p = document.createElement('p');
+  p.className = 'simple-text-message';
+  p.textContent = message;
+  block.appendChild(p);
+}
