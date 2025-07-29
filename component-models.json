@@ -227,21 +227,21 @@
       },
       {
         "component": "container",
-        "name": "items",
-        "multi": true,
-        "label": "Dropdown Items",
+        "label": "Container",
+        "name": "container",
         "valueType": "string",
+        "collapsible": true,
         "fields": [
           {
-            "component": "text",
-            "name": "label",
-            "label": "Item Label",
+            "component": "text-input",
+            "label": "Simple Text 1",
+            "name": "text",
             "valueType": "string"
           },
           {
-            "component": "text",
-            "name": "link",
-            "label": "Item Link (URL)",
+            "component": "text-input",
+            "label": "Simple Text 2",
+            "name": "text2",
             "valueType": "string"
           }
         ]
