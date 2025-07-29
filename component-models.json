@@ -229,7 +229,7 @@
         "component": "container",
         "name": "items",
         "label": "Dropdown Items",
-        "valueType": "array",
+        "valueType": "object",
         "itemLabel": "Dropdown Item",
         "itemFields": [
           {
