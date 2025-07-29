@@ -26,11 +26,6 @@ export default function decorate(block) {
     const icon = document.createElement('span');
     icon.className = 'dropdown-icon';
     icon.textContent = '▴';
-
-    const header = document.createElement('div');
-    header.className = 'dropdown-header';
-    header.appendChild(dropdownTitle);
-    header.appendChild(icon);
   
     // Dropdown list
     const dropdownContent = document.createElement('ul');
@@ -58,7 +53,6 @@ export default function decorate(block) {
     // Toggle dropdown open/close
     container.addEventListener('click', () => {
       dropdownContent.classList.toggle('open');
-      icon.textContent = dropdownContent.classList.contains('open') ? '▾' : '▴';
     });
   }
   
