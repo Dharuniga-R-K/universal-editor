@@ -45,8 +45,8 @@ export default function decorate(block) {
     block.appendChild(container);
   
     // Toggle dropdown open/close
-    container.addEventListener('click', () => {
-      dropdownContent.classList.toggle('open');
-    });
+    // container.addEventListener('click', () => {
+    //   dropdownContent.classList.toggle('open');
+    // });
   }
   

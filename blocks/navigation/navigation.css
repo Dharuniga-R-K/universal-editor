@@ -63,4 +63,19 @@
   .dropdown-content li a:hover {
     background-color: #f0f0f0;
   }
+
+  .dropdown-content {
+    display: none; /* Hide dropdown by default */
+    position: absolute; /* Or relative to container */
+    background: white;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    z-index: 10;
+  }
+  
+  .dropdown-container:hover .dropdown-content {
+    display: block; /* Show dropdown on hover */
+  }
   
