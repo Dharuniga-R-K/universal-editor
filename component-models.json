@@ -221,16 +221,16 @@
       {
         "component": "richtext",
         "valueType": "string",
-        "name": "link",
-        "label": "link",
+        "name": "sub-menu",
+        "label": "sub-menu",
         "value": "",
         "multi": false
       },
       {
         "component": "richtext",
-        "name": "text",
+        "name": "link",
         "value": "",
-        "label": "Text",
+        "label": "link",
         "valueType": "string"
       }
     ]
