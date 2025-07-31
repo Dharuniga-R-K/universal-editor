@@ -14,7 +14,7 @@ export default function decorate(block) {
     }).filter(Boolean);
   
     // === DO NOT REMOVE EXISTING CONTENT ===
-    block.classList.add('menu-block-hidden'); // Just hide from view, not from DOM
+   // block.classList.add('menu-block-hidden'); // Just hide from view, not from DOM
   
     // Create dropdown container
     const dropdownWrapper = document.createElement('div');
