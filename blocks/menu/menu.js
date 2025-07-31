@@ -1,102 +1,48 @@
 export default function decorate(block) {
-
-    const divs = [...block.querySelectorAll(':scope > div')];
-
-    if (divs.length < 2) return; // Need at least 2 divs
-
- 
-
-    // Extract title for dropdown (from first div)
-
+    // Add class to hide original content
+    block.classList.add('menu-original-hidden');
+  
+    const divs = [...block.children];
+    if (divs.length < 2) return;
+  
     const title = divs[0].querySelector('p')?.textContent.trim() || 'Menu';
-
- 
-
-    // Create container
-
-    const container = document.createElement('div');
-
-    container.className = 'dropdown-container';
-
- 
-
-    // Create dropdown title
-
+  
+    const submenuItems = divs.slice(1).map((div) => {
+      const label = div.querySelector('p')?.textContent.trim();
+      const link = div.querySelector('a')?.href;
+      return (label && link) ? { label, link } : null;
+    }).filter(Boolean);
+  
+    // Create new dropdown structure
+    const dropdownWrapper = document.createElement('div');
+    dropdownWrapper.className = 'menu-enhanced-dropdown';
+  
     const dropdownTitle = document.createElement('div');
-
     dropdownTitle.className = 'dropdown-title';
-
     dropdownTitle.textContent = title;
-
- 
-
-    // Create dropdown content
-
-    const dropdownContent = document.createElement('ul');
-
+  
+    const dropdownArrow = document.createElement('div');
+    dropdownArrow.className = 'dropdown-arrow';
+    dropdownArrow.textContent = '▼';
+  
+    const dropdownContent = document.createElement('div');
     dropdownContent.className = 'dropdown-content';
-
- 
-
-    // Loop through all submenu divs (from 2nd div onward)
-
-    for (let i = 1; i < divs.length; i++) {
-
-      const label = divs[i].querySelector('div > p')?.textContent.trim() || '';
-
-      const link = divs[i].querySelector('a')?.href || '#';
-
- 
-
-      if (label) {
-
-        const li = document.createElement('li');
-
-        const a = document.createElement('a');
-
-        a.textContent = label;
-
-        a.href = link;
-
-        a.target = '_blank';
-
-        a.rel = 'noopener noreferrer';
-
- 
-
-        li.appendChild(a);
-
-        dropdownContent.appendChild(li);
-
-      }
-
-    }
-
- 
-
-    container.appendChild(dropdownTitle);
-
-    container.appendChild(dropdownContent);
-
-
-    block.appendChild(container);
-
- 
-
-    // Show dropdown on hover
-
-    container.addEventListener('mouseenter', () => {
-
-      dropdownContent.classList.add('open');
-
+  
+    submenuItems.forEach(({ label, link }) => {
+      const a = document.createElement('a');
+      a.href = link;
+      a.textContent = label;
+      a.className = 'dropdown-item';
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      dropdownContent.appendChild(a);
     });
-
-    container.addEventListener('mouseleave', () => {
-
-      dropdownContent.classList.remove('open');
-
-    });
-
+  
+    dropdownWrapper.appendChild(dropdownTitle);
+    dropdownWrapper.appendChild(dropdownArrow);
+    dropdownWrapper.appendChild(dropdownContent);
+  
+    // Append dropdown UI after the hidden block
+    block.appendChild(dropdownWrapper);
   }
-
- 
+  
