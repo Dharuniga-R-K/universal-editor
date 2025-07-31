@@ -17,7 +17,8 @@
       "columns",
       "fragment",
       "navigation",
-      "simple-text"
+      "simple-text",
+      "menu"
     ]
   },
   {
@@ -39,6 +40,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "menu",
+    "components": [
+      "menu-item"
     ]
   }
 ]

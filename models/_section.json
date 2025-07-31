@@ -52,7 +52,8 @@
         "columns",
         "fragment",
         "navigation",
-        "simple-text"
+        "simple-text",
+        "menu"
       ]
     }
   ]
