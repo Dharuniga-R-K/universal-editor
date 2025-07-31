@@ -1,5 +1,6 @@
 /* Hide original inner content, not your new dropdown */
-.menu-original-hidden > div {
+/* Hide only child <div>s of .menu.block, not the block itself */
+.menu.block > .menu-original-hidden {
     display: none !important;
   }
   

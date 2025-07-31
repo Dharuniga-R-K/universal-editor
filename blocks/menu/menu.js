@@ -1,35 +1,35 @@
 export default function decorate(block) {
-    const originalInner = block.querySelector('.menu.block');
-    if (originalInner) {
-      originalInner.classList.add('menu-original-hidden');
-    }
+    // Step 1: Add hide class to all direct child <div>s under .menu.block
+    const childDivs = [...block.querySelectorAll(':scope > div')];
+    childDivs.forEach(div => {
+      div.classList.add('menu-original-hidden'); // This will be used in CSS to hide
+    });
   
-    const divs = [...block.querySelectorAll(':scope > .menu-original-hidden ~ div')];
-    // If your structure differs, adjust the selector above
+    if (childDivs.length < 2) return;
   
-    // Extract title
-    const title = divs[0]?.querySelector('p')?.textContent.trim() || 'Menu';
+    // Step 2: Extract title and submenu items
+    const title = childDivs[0].querySelector('p')?.textContent.trim() || 'Menu';
   
-    const submenuItems = divs.slice(1).map((div) => {
+    const submenuItems = childDivs.slice(1).map((div) => {
       const label = div.querySelector('p')?.textContent.trim();
-      const aTag = div.querySelector('a');
-      const link = aTag?.href || '';
-      return label && link ? { label, link } : null;
+      const link = div.querySelector('a')?.href;
+      return (label && link) ? { label, link } : null;
     }).filter(Boolean);
   
-    const dropdownWrapper = document.createElement('div');
-    dropdownWrapper.className = 'menu-enhanced-dropdown';
+    // Step 3: Build new dropdown UI
+    const wrapper = document.createElement('div');
+    wrapper.className = 'menu-enhanced-dropdown';
   
-    const dropdownTitle = document.createElement('div');
-    dropdownTitle.className = 'dropdown-title';
-    dropdownTitle.textContent = title;
+    const titleEl = document.createElement('div');
+    titleEl.className = 'dropdown-title';
+    titleEl.textContent = title;
   
-    const dropdownArrow = document.createElement('div');
-    dropdownArrow.className = 'dropdown-arrow';
-    dropdownArrow.textContent = '▼';
+    const arrowEl = document.createElement('div');
+    arrowEl.className = 'dropdown-arrow';
+    arrowEl.textContent = '▼';
   
-    const dropdownContent = document.createElement('div');
-    dropdownContent.className = 'dropdown-content';
+    const contentEl = document.createElement('div');
+    contentEl.className = 'dropdown-content';
   
     submenuItems.forEach(({ label, link }) => {
       const a = document.createElement('a');
@@ -38,10 +38,10 @@ export default function decorate(block) {
       a.className = 'dropdown-item';
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
-      dropdownContent.appendChild(a);
+      contentEl.appendChild(a);
     });
   
-    dropdownWrapper.append(dropdownTitle, dropdownArrow, dropdownContent);
-    block.appendChild(dropdownWrapper);
+    wrapper.append(titleEl, arrowEl, contentEl);
+    block.appendChild(wrapper); // Append new UI after hiding old divs
   }
   
