@@ -1,30 +1,36 @@
 export default function decorate(block) {
+    // Detect if we're in authoring mode (Universal Editor)
+    const isAuthoring = window?.hlx?.editor?.isEditing;
+    if (isAuthoring) return;
+  
     const divs = [...block.querySelectorAll(':scope > div')];
     if (divs.length < 2) return;
   
+    // Extract dropdown title from first <div>
     const title = divs[0].querySelector('p')?.textContent.trim() || 'Menu';
   
-    // Extract submenu items from divs starting at index 1
-    const submenuItems = divs.slice(1).map(div => {
+    // Parse submenu items from remaining <div>s
+    const submenuItems = divs.slice(1).map((div) => {
       const label = div.querySelector('div > p')?.textContent.trim() || '';
       const link = div.querySelector('a')?.href || '#';
       return { label, link };
     });
   
-    // Create dropdown container
+    // Create container
     const container = document.createElement('div');
     container.className = 'dropdown-container';
   
-    // Title with arrow below
+    // Create title
     const dropdownTitle = document.createElement('div');
     dropdownTitle.className = 'dropdown-title';
     dropdownTitle.textContent = title;
   
-    const dropdownArrow = document.createElement('div');
-    dropdownArrow.className = 'dropdown-arrow';
-    dropdownArrow.textContent = '▼';
+    // Optional arrow (downward only)
+    const arrow = document.createElement('span');
+    arrow.className = 'dropdown-arrow';
+    arrow.textContent = '▼';
   
-    // Dropdown list container
+    // Create submenu content
     const dropdownContent = document.createElement('ul');
     dropdownContent.className = 'dropdown-content';
   
@@ -39,22 +45,26 @@ export default function decorate(block) {
       dropdownContent.appendChild(li);
     });
   
-    container.appendChild(dropdownTitle);
-    container.appendChild(dropdownArrow);
+    // Compose DOM
+    const titleWrapper = document.createElement('div');
+    titleWrapper.className = 'dropdown-title-wrapper';
+    titleWrapper.appendChild(dropdownTitle);
+    titleWrapper.appendChild(arrow);
+  
+    container.appendChild(titleWrapper);
     container.appendChild(dropdownContent);
   
-    // Append dropdown container **without removing existing markup**
+    // Replace old content
+    block.textContent = '';
     block.appendChild(container);
   
-    // Show dropdown on hover
+    // Hover behavior
     container.addEventListener('mouseenter', () => {
       dropdownContent.classList.add('open');
-      // Optional: hide original menu items visually when dropdown opens
-      divs.slice(1).forEach(div => div.style.display = 'none');
     });
+  
     container.addEventListener('mouseleave', () => {
       dropdownContent.classList.remove('open');
-      divs.slice(1).forEach(div => div.style.display = '');
     });
   }
   
