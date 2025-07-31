@@ -1,11 +1,11 @@
-export default function decorateAllMenus(container = document) {
-    const menus = container.querySelectorAll('.menu.block');
+export default function decorate(block) {
+    const menus = block.querySelectorAll('.menu.block');
   
-    menus.forEach((block) => {
-      const divs = [...block.querySelectorAll(':scope > div')];
+    menus.forEach((menuBlock) => {
+      const divs = [...menuBlock.querySelectorAll(':scope > div')];
       if (divs.length < 2) return;
   
-      // Get menu title from first div
+      // Menu title from first div
       const title = divs[0].querySelector('p')?.textContent.trim() || 'Menu';
   
       // Create dropdown container
@@ -19,7 +19,7 @@ export default function decorateAllMenus(container = document) {
       const dropdownContent = document.createElement('ul');
       dropdownContent.className = 'dropdown-content';
   
-      // Process each submenu item
+      // Process submenu items from 2nd div onward
       for (let i = 1; i < divs.length; i++) {
         const label = divs[i].querySelector('div > p')?.textContent.trim();
         const linkEl = divs[i].querySelector('a');
@@ -37,15 +37,15 @@ export default function decorateAllMenus(container = document) {
         }
       }
   
-      // Assemble and render
+      // Assemble dropdown
       container.appendChild(dropdownTitle);
       container.appendChild(dropdownContent);
   
-      // Clear and replace block content
-      block.textContent = '';
-      block.appendChild(container);
+      // Clear old menu content and add dropdown
+      menuBlock.textContent = '';
+      menuBlock.appendChild(container);
   
-      // Add hover behavior
+      // Hover events to show/hide dropdown
       container.addEventListener('mouseenter', () => {
         dropdownContent.classList.add('open');
       });
