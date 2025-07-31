@@ -1,19 +1,22 @@
 export default function decorate(block) {
-    // Add class to hide original content
-    block.classList.add('menu-original-hidden');
+    const originalInner = block.querySelector('.menu.block');
+    if (originalInner) {
+      originalInner.classList.add('menu-original-hidden');
+    }
   
-    const divs = [...block.children];
-    if (divs.length < 2) return;
+    const divs = [...block.querySelectorAll(':scope > .menu-original-hidden ~ div')];
+    // If your structure differs, adjust the selector above
   
-    const title = divs[0].querySelector('p')?.textContent.trim() || 'Menu';
+    // Extract title
+    const title = divs[0]?.querySelector('p')?.textContent.trim() || 'Menu';
   
     const submenuItems = divs.slice(1).map((div) => {
       const label = div.querySelector('p')?.textContent.trim();
-      const link = div.querySelector('a')?.href;
-      return (label && link) ? { label, link } : null;
+      const aTag = div.querySelector('a');
+      const link = aTag?.href || '';
+      return label && link ? { label, link } : null;
     }).filter(Boolean);
   
-    // Create new dropdown structure
     const dropdownWrapper = document.createElement('div');
     dropdownWrapper.className = 'menu-enhanced-dropdown';
   
@@ -38,11 +41,7 @@ export default function decorate(block) {
       dropdownContent.appendChild(a);
     });
   
-    dropdownWrapper.appendChild(dropdownTitle);
-    dropdownWrapper.appendChild(dropdownArrow);
-    dropdownWrapper.appendChild(dropdownContent);
-  
-    // Append dropdown UI after the hidden block
+    dropdownWrapper.append(dropdownTitle, dropdownArrow, dropdownContent);
     block.appendChild(dropdownWrapper);
   }
   
