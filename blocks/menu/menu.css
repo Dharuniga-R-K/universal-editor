@@ -1,67 +1,79 @@
-.menu-wrapper {
+/* Container to hold title, arrow, and submenu */
+.dropdown-container {
     display: inline-block;
-    margin-right: 30px; /* spacing between titles */
     position: relative;
+    margin: 0 20px; /* space between menu titles */
+    cursor: pointer;
     font-family: Arial, sans-serif;
   }
   
-  /* Container holding all titles should be flex */
-  .section.menu-container {
-    display: flex;
-    gap: 40px; /* space between each menu-wrapper */
-  }
-  
-  /* Main title with arrow below */
-  .menu-wrapper > .menu > div:first-child > div > p {
-    position: relative;
-    padding-bottom: 20px; /* space for arrow */
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    color: #1f4f3f; /* dark green */
-    user-select: none;
-    text-align: center;
-  }
-  
-  /* Simple static down arrow below title */
-  .menu-wrapper > .menu > div:first-child > div > p::after {
-    content: "▼";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 12px;
-    color: #396d31; /* green */
-    user-select: none;
-  }
-  
-  /* Submenu container */
-  .menu-wrapper > .menu > div:not(:first-child) {
-    display: none; /* hidden by default */
-    margin-top: 10px;
-  }
-  
-  /* Show submenu on hover of the menu-wrapper */
-  .menu-wrapper:hover > .menu > div:not(:first-child) {
-    display: block;
-  }
-  
-  /* Submenu items vertical stack */
-  .menu-wrapper > .menu > div:not(:first-child) > div > p,
-  .menu-wrapper > .menu > div:not(:first-child) > div > p.button-container {
-    margin: 6px 0;
-  }
-  
-  /* Submenu link styling */
-  .menu-wrapper > .menu > div:not(:first-child) a.button {
+  /* Title text next to each other */
+  .dropdown-title {
+    display: inline-block;
+    font-weight: bold;
     color: #333;
-    text-decoration: none;
-    font-weight: 400;
-    transition: color 0.2s ease;
+    padding: 8px 12px;
+    transition: color 0.3s;
   }
   
-  .menu-wrapper > .menu > div:not(:first-child) a.button:hover {
-    color: #396d31;
-    text-decoration: underline;
+  /* Title text turns light green on hover */
+  .dropdown-container:hover .dropdown-title {
+    color: #4caf50; /* light green */
+  }
+  
+  /* Down arrow below the title */
+  .dropdown-arrow {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    user-select: none;
+    margin-top: 2px;
+  }
+  
+  /* Dropdown submenu - horizontal list */
+  .dropdown-content {
+    position: absolute;
+    top: 100%; /* directly below arrow */
+    left: 0;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    border-radius: 4px;
+    padding: 8px 12px;
+    display: flex; /* horizontal layout */
+    gap: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    z-index: 1000;
+  }
+  
+  /* Show submenu on open */
+  .dropdown-content.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  /* Individual submenu items */
+  .dropdown-content li {
+    list-style: none;
+  }
+  
+  /* Submenu links */
+  .dropdown-content li a {
+    text-decoration: none;
+    color: #555;
+    font-weight: normal;
+    font-size: 14px;
+    padding: 6px 8px;
+    border-radius: 3px;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  /* Hover effect on submenu links */
+  .dropdown-content li a:hover {
+    background-color: #4caf50;
+    color: white;
   }
   
