@@ -45,7 +45,8 @@
   {
     "id": "menu-items",
     "components": [
-      "menu-item"
+      "menu-item",
+      "text"
     ]
   }
 ]
