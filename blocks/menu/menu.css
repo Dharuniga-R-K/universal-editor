@@ -10,52 +10,35 @@
     font-weight: 600;
     color: #1f4f3f; /* dark green text */
     user-select: none;
-    display: flex;
-    align-items: center;
-    gap: 6px;
     border-bottom: 4px solid transparent;
     transition: border-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 8px;
   }
   
-  /* Arrow icon using CSS */
-  .dropdown-title::after {
-    content: "⌃"; /* Unicode for up caret */
-    font-size: 12px;
-    line-height: 1;
-    color: #1f4f3f;
-    transition: transform 0.3s ease;
-    transform-origin: center;
-    transform: rotate(0deg);
-  }
-  
-  /* On hover, underline turns green and arrow rotates */
   .dropdown-container:hover .dropdown-title {
-    color: #1f4f3f;
     border-bottom-color: #396d31; /* green underline */
+    color: #1f4f3f;
   }
   
-  .dropdown-container:hover .dropdown-title::after {
-    transform: rotate(180deg);
-    color: #396d31;
-  }
-  
+  /* Dropdown content styled horizontally */
   .dropdown-content {
     position: absolute;
     top: 100%;
     left: 0;
-    min-width: 220px;
     background-color: #fff;
     border: 1px solid #ccc;
     box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-    padding: 0;
+    padding: 10px 15px;
     margin: 8px 0 0 0;
-    list-style: none;
+    display: flex;           /* horizontal layout */
+    gap: 20px;               /* space between items */
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
     z-index: 1000;
     border-radius: 0 0 4px 4px;
+    white-space: nowrap;     /* keep items on single line */
   }
   
   .dropdown-content.open {
@@ -65,24 +48,33 @@
   }
   
   .dropdown-content li {
-    border-bottom: 1px solid #eee;
-  }
-  
-  .dropdown-content li:last-child {
-    border-bottom: none;
+    list-style: none;
+    position: relative;
+    padding-bottom: 18px; /* space for arrow below each label */
   }
   
   .dropdown-content li a {
-    display: block;
-    padding: 12px 20px;
     color: #333;
     text-decoration: none;
     font-weight: 400;
+    padding: 6px 8px;
+    display: block;
     transition: background-color 0.2s ease;
   }
   
   .dropdown-content li a:hover {
-    background-color: #f0f7e8; /* subtle green highlight */
+    background-color: #f0f7e8;
+    color: #396d31;
+  }
+  
+  /* Down arrow below each submenu item */
+  .dropdown-content li::after {
+    content: "▼";            /* simple down arrow */
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
     color: #396d31;
   }
   
