@@ -1,59 +1,47 @@
 export default function decorate(block) {
-    // Skip if no children
     const divs = [...block.children];
     if (divs.length < 2) return;
   
-    // Extract menu title
     const title = divs[0].querySelector('p')?.textContent.trim() || 'Menu';
   
-    // Collect sub-menu items
-    const submenuItems = divs.slice(1).map((div) => {
-      const label = div.querySelector('p')?.textContent.trim();
-      const link = div.querySelector('a')?.href;
+    // Collect submenu items, handling <a> or fallback to raw URL text
+    const submenuItems = divs.slice(1).map(div => {
+      const label = div.querySelector('div > p')?.textContent.trim();
+  
+      const aTag = div.querySelector('a');
+      let link;
+      if (aTag) {
+        link = aTag.href;
+      } else {
+        link = div.querySelector('div:nth-child(2) > p')?.textContent.trim() || '#';
+      }
+  
       return (label && link) ? { label, link } : null;
     }).filter(Boolean);
   
-    // === DO NOT REMOVE EXISTING CONTENT ===
-   // block.classList.add('menu-block-hidden'); // Just hide from view, not from DOM
+    // Build a simple ul/li list
+    const ul = document.createElement('ul');
+    
+    // Add title as first list item (not clickable)
+    const titleLi = document.createElement('li');
+    titleLi.textContent = title;
+    titleLi.style.fontWeight = 'bold';
+    ul.appendChild(titleLi);
   
-    // Create dropdown container
-    const dropdownWrapper = document.createElement('div');
-    dropdownWrapper.className = 'dropdown-container';
-  
-    const dropdownTitle = document.createElement('div');
-    dropdownTitle.className = 'dropdown-title';
-    dropdownTitle.textContent = title;
-  
-    const dropdownArrow = document.createElement('div');
-    dropdownArrow.className = 'dropdown-arrow';
-    dropdownArrow.textContent = '▼';
-  
-    const dropdownContent = document.createElement('div');
-    dropdownContent.className = 'dropdown-content';
-  
+    // Add submenu items
     submenuItems.forEach(({ label, link }) => {
+      const li = document.createElement('li');
       const a = document.createElement('a');
       a.href = link;
       a.textContent = label;
-      a.className = 'dropdown-item';
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
-      dropdownContent.appendChild(a);
+      li.appendChild(a);
+      ul.appendChild(li);
     });
   
-    dropdownWrapper.appendChild(dropdownTitle);
-    dropdownWrapper.appendChild(dropdownArrow);
-    dropdownWrapper.appendChild(dropdownContent);
-  
-    // Append visual dropdown above actual content
-    block.parentElement.insertBefore(dropdownWrapper, block);
-  
-    // Hover interaction
-    dropdownWrapper.addEventListener('mouseenter', () => {
-      dropdownContent.classList.add('open');
-    });
-    dropdownWrapper.addEventListener('mouseleave', () => {
-      dropdownContent.classList.remove('open');
-    });
+    // Clear original content and append list
+    block.textContent = '';
+    block.append(ul);
   }
   
