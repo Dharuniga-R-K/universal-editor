@@ -1,9 +1,11 @@
 export default function decorate(block) {
-    // Get the title (from first div > p)
-    const title = block.querySelector(':scope > div:first-child p')?.textContent.trim() || 'Menu';
+    const divs = [...block.querySelectorAll(':scope > div')];
+    if (divs.length < 2) return;
   
-    // Collect submenu items from all sibling divs except the first (which is the title)
-    const submenuItems = [...block.querySelectorAll(':scope > div:not(:first-child)')].map(div => {
+    const title = divs[0].querySelector('p')?.textContent.trim() || 'Menu';
+  
+    // Extract submenu items from divs starting at index 1
+    const submenuItems = divs.slice(1).map(div => {
       const label = div.querySelector('div > p')?.textContent.trim() || '';
       const link = div.querySelector('a')?.href || '#';
       return { label, link };
@@ -13,17 +15,16 @@ export default function decorate(block) {
     const container = document.createElement('div');
     container.className = 'dropdown-container';
   
-    // Create dropdown title
+    // Title with arrow below
     const dropdownTitle = document.createElement('div');
     dropdownTitle.className = 'dropdown-title';
     dropdownTitle.textContent = title;
   
-    // Create arrow below title (static down arrow)
-    const arrow = document.createElement('div');
-    arrow.className = 'dropdown-arrow';
-    arrow.textContent = '▼';  // simple down arrow
+    const dropdownArrow = document.createElement('div');
+    dropdownArrow.className = 'dropdown-arrow';
+    dropdownArrow.textContent = '▼';
   
-    // Create dropdown content (submenu list)
+    // Dropdown list container
     const dropdownContent = document.createElement('ul');
     dropdownContent.className = 'dropdown-content';
   
@@ -38,20 +39,22 @@ export default function decorate(block) {
       dropdownContent.appendChild(li);
     });
   
-    // Append title, arrow, and dropdown content to container
     container.appendChild(dropdownTitle);
-    container.appendChild(arrow);
+    container.appendChild(dropdownArrow);
     container.appendChild(dropdownContent);
   
-    // Append container to block (do NOT clear block content)
+    // Append dropdown container **without removing existing markup**
     block.appendChild(container);
   
     // Show dropdown on hover
     container.addEventListener('mouseenter', () => {
       dropdownContent.classList.add('open');
+      // Optional: hide original menu items visually when dropdown opens
+      divs.slice(1).forEach(div => div.style.display = 'none');
     });
     container.addEventListener('mouseleave', () => {
       dropdownContent.classList.remove('open');
+      divs.slice(1).forEach(div => div.style.display = '');
     });
   }
   
