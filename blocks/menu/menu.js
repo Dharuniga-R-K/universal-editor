@@ -1,62 +1,58 @@
 export default function decorate(block) {
+    // Skip if no children
     const divs = [...block.children];
     if (divs.length < 2) return;
   
-    // Get dropdown title (first div)
-    const titleDiv = divs[0].querySelector('p');
-    const title = titleDiv?.textContent.trim() || 'Menu';
+    // Extract menu title
+    const title = divs[0].querySelector('p')?.textContent.trim() || 'Menu';
   
-    // Create container for dropdown
-    const container = document.createElement('div');
-    container.className = 'dropdown-container';
+    // Collect sub-menu items
+    const submenuItems = divs.slice(1).map((div) => {
+      const label = div.querySelector('p')?.textContent.trim();
+      const link = div.querySelector('a')?.href;
+      return (label && link) ? { label, link } : null;
+    }).filter(Boolean);
   
-    // Create the visible dropdown title
+    // === DO NOT REMOVE EXISTING CONTENT ===
+    block.classList.add('menu-block-hidden'); // Just hide from view, not from DOM
+  
+    // Create dropdown container
+    const dropdownWrapper = document.createElement('div');
+    dropdownWrapper.className = 'dropdown-container';
+  
     const dropdownTitle = document.createElement('div');
     dropdownTitle.className = 'dropdown-title';
     dropdownTitle.textContent = title;
   
-    // Optional: Add a static downward arrow below the title
-    const arrow = document.createElement('div');
-    arrow.className = 'dropdown-arrow';
-    arrow.textContent = '▼'; // Simple down arrow
+    const dropdownArrow = document.createElement('div');
+    dropdownArrow.className = 'dropdown-arrow';
+    dropdownArrow.textContent = '▼';
   
-    // Create dropdown content (list of submenus)
     const dropdownContent = document.createElement('div');
     dropdownContent.className = 'dropdown-content';
   
-    // Loop through remaining divs for sub-menus
-    divs.slice(1).forEach((subDiv) => {
-      const label = subDiv.querySelector('p')?.textContent.trim();
-      const link = subDiv.querySelector('a');
-      const url = link?.href;
-      const text = label || link?.textContent;
-  
-      if (text && url) {
-        const submenu = document.createElement('a');
-        submenu.href = url;
-        submenu.textContent = text;
-        submenu.target = '_blank';
-        submenu.rel = 'noopener noreferrer';
-        submenu.className = 'dropdown-item';
-        dropdownContent.appendChild(submenu);
-      }
+    submenuItems.forEach(({ label, link }) => {
+      const a = document.createElement('a');
+      a.href = link;
+      a.textContent = label;
+      a.className = 'dropdown-item';
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      dropdownContent.appendChild(a);
     });
   
-    // Assemble the block
-    container.appendChild(dropdownTitle);
-    container.appendChild(arrow);
-    container.appendChild(dropdownContent);
+    dropdownWrapper.appendChild(dropdownTitle);
+    dropdownWrapper.appendChild(dropdownArrow);
+    dropdownWrapper.appendChild(dropdownContent);
   
-    // Replace block content with transformed dropdown
-    block.textContent = '';
-    block.appendChild(container);
+    // Append visual dropdown above actual content
+    block.parentElement.insertBefore(dropdownWrapper, block);
   
-    // Hover events
-    container.addEventListener('mouseenter', () => {
+    // Hover interaction
+    dropdownWrapper.addEventListener('mouseenter', () => {
       dropdownContent.classList.add('open');
     });
-  
-    container.addEventListener('mouseleave', () => {
+    dropdownWrapper.addEventListener('mouseleave', () => {
       dropdownContent.classList.remove('open');
     });
   }
