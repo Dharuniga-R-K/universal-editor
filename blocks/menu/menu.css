@@ -7,34 +7,55 @@
   .dropdown-title {
     cursor: pointer;
     padding: 10px 15px;
-    background-color: #222;
-    color: #fff;
-    font-weight: bold;
+    font-weight: 600;
+    color: #1f4f3f; /* dark green text */
     user-select: none;
-    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 4px solid transparent;
+    transition: border-color 0.3s ease, color 0.3s ease;
   }
   
+  /* Arrow icon using CSS */
+  .dropdown-title::after {
+    content: "⌃"; /* Unicode for up caret */
+    font-size: 12px;
+    line-height: 1;
+    color: #1f4f3f;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+    transform: rotate(0deg);
+  }
+  
+  /* On hover, underline turns green and arrow rotates */
   .dropdown-container:hover .dropdown-title {
-    background-color: #1a5e29; /* dark green shade */
-    color: #a7f432; /* light green text */
+    color: #1f4f3f;
+    border-bottom-color: #396d31; /* green underline */
+  }
+  
+  .dropdown-container:hover .dropdown-title::after {
+    transform: rotate(180deg);
+    color: #396d31;
   }
   
   .dropdown-content {
     position: absolute;
     top: 100%;
     left: 0;
-    min-width: 200px;
-    background-color: #222;
-    border: 1px solid #444;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    min-width: 220px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
     padding: 0;
-    margin: 0;
+    margin: 8px 0 0 0;
     list-style: none;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
     z-index: 1000;
+    border-radius: 0 0 4px 4px;
   }
   
   .dropdown-content.open {
@@ -44,7 +65,7 @@
   }
   
   .dropdown-content li {
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid #eee;
   }
   
   .dropdown-content li:last-child {
@@ -53,14 +74,15 @@
   
   .dropdown-content li a {
     display: block;
-    padding: 10px 15px;
-    color: #ddd;
+    padding: 12px 20px;
+    color: #333;
     text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
+    font-weight: 400;
+    transition: background-color 0.2s ease;
   }
   
   .dropdown-content li a:hover {
-    background-color: #1a5e29; /* dark green */
-    color: #a7f432; /* light green */
+    background-color: #f0f7e8; /* subtle green highlight */
+    color: #396d31;
   }
   
