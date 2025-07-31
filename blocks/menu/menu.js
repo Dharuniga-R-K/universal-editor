@@ -78,11 +78,6 @@ export default function decorate(block) {
 
     container.appendChild(dropdownContent);
 
- 
-
-    // Clear old content and append dropdown container
-
-    block.textContent = '';
 
     block.appendChild(container);
 
