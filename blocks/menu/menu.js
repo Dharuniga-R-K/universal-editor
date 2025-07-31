@@ -2,8 +2,10 @@ export default function decorate(block) {
     const divs = [...block.children];
     if (divs.length < 2) return;
   
+    // Extract main menu title
     const title = divs[0].querySelector('p')?.textContent.trim() || 'Menu';
   
+    // Collect submenu items from other divs
     const submenuItems = divs.slice(1).map(div => {
       const label = div.querySelector('div > p')?.textContent.trim();
       const aTag = div.querySelector('a');
@@ -14,13 +16,15 @@ export default function decorate(block) {
     // Hide original content but keep in DOM for authoring
     block.style.position = 'relative';
     block.style.zIndex = 0;
-    block.style.opacity = '0'; // or use visibility: hidden; pointer-events: none;
+    block.style.opacity = '0'; // or visibility:hidden etc.
   
-    // Create visual dropdown container outside or above block content
+    // Create container that will hold all menu titles horizontally
+    const menuTitlesContainer = document.createElement('div');
+    menuTitlesContainer.className = 'menu-titles-container';
+  
+    // Create one title + dropdown for current block
     const dropdownWrapper = document.createElement('div');
     dropdownWrapper.className = 'dropdown-container';
-    dropdownWrapper.style.position = 'relative';
-    dropdownWrapper.style.zIndex = 10;
   
     const dropdownTitle = document.createElement('div');
     dropdownTitle.className = 'dropdown-title';
@@ -47,12 +51,16 @@ export default function decorate(block) {
     dropdownWrapper.appendChild(dropdownArrow);
     dropdownWrapper.appendChild(dropdownContent);
   
-    block.parentElement.insertBefore(dropdownWrapper, block);
+    // Append this dropdown inside the menuTitlesContainer
+    menuTitlesContainer.appendChild(dropdownWrapper);
   
+    // Add menuTitlesContainer before the original block
+    block.parentElement.insertBefore(menuTitlesContainer, block);
+  
+    // Show dropdown on hover
     dropdownWrapper.addEventListener('mouseenter', () => {
-      dropdownContent.style.display = 'flex';
+      dropdownContent.style.display = 'block';
     });
-  
     dropdownWrapper.addEventListener('mouseleave', () => {
       dropdownContent.style.display = 'none';
     });
