@@ -239,9 +239,9 @@
     "fields": [
       {
         "component": "text",
-        "name": "text",
+        "name": "title",
         "value": "",
-        "label": "menu-name",
+        "label": "title",
         "valueType": "string"
       }
     ]
