@@ -219,18 +219,17 @@
     "id": "menu-item",
     "fields": [
       {
-        "component": "richtext",
-        "name": "name",
-        "value": "",
-        "label": "name",
+        "component": "reference",
         "valueType": "string",
+        "name": "image",
+        "label": "Image",
         "multi": false
       },
       {
-        "component": "text",
-        "name": "link",
+        "component": "richtext",
+        "name": "text",
         "value": "",
-        "label": "link",
+        "label": "Text",
         "valueType": "string"
       }
     ]
