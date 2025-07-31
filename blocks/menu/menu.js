@@ -4,44 +4,59 @@ export default function decorate(block) {
   
     const title = divs[0].querySelector('p')?.textContent.trim() || 'Menu';
   
-    // Collect submenu items, handling <a> or fallback to raw URL text
     const submenuItems = divs.slice(1).map(div => {
       const label = div.querySelector('div > p')?.textContent.trim();
-  
       const aTag = div.querySelector('a');
-      let link;
-      if (aTag) {
-        link = aTag.href;
-      } else {
-        link = div.querySelector('div:nth-child(2) > p')?.textContent.trim() || '#';
-      }
-  
+      const link = aTag ? aTag.href : '#';
       return (label && link) ? { label, link } : null;
     }).filter(Boolean);
   
-    // Build a simple ul/li list
-    const ul = document.createElement('ul');
-    
-    // Add title as first list item (not clickable)
-    const titleLi = document.createElement('li');
-    titleLi.textContent = title;
-    titleLi.style.fontWeight = 'bold';
-    ul.appendChild(titleLi);
+    // Hide original content but keep in DOM for authoring
+    block.style.position = 'relative';
+    block.style.zIndex = 0;
+    block.style.opacity = '0'; // or use visibility: hidden; pointer-events: none;
   
-    // Add submenu items
+    // Create visual dropdown container outside or above block content
+    const dropdownWrapper = document.createElement('div');
+    dropdownWrapper.className = 'dropdown-container';
+    dropdownWrapper.style.position = 'relative';
+    dropdownWrapper.style.zIndex = 10;
+  
+    const dropdownTitle = document.createElement('div');
+    dropdownTitle.className = 'dropdown-title';
+    dropdownTitle.textContent = title;
+  
+    const dropdownArrow = document.createElement('div');
+    dropdownArrow.className = 'dropdown-arrow';
+    dropdownArrow.textContent = '▼';
+  
+    const dropdownContent = document.createElement('div');
+    dropdownContent.className = 'dropdown-content';
+  
     submenuItems.forEach(({ label, link }) => {
-      const li = document.createElement('li');
       const a = document.createElement('a');
+      a.className = 'dropdown-item';
       a.href = link;
       a.textContent = label;
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
-      li.appendChild(a);
-      ul.appendChild(li);
+      dropdownContent.appendChild(a);
     });
   
-    // Clear original content and append list
-    block.textContent = '';
-    block.append(ul);
+    dropdownWrapper.appendChild(dropdownTitle);
+    dropdownWrapper.appendChild(dropdownArrow);
+    dropdownWrapper.appendChild(dropdownContent);
+  
+    block.parentElement.insertBefore(dropdownWrapper, block);
+  
+    dropdownWrapper.addEventListener('mouseenter', () => {
+      dropdownContent.style.display = 'flex';
+    });
+  
+    dropdownWrapper.addEventListener('mouseleave', () => {
+      dropdownContent.style.display = 'none';
+    });
+  
+    dropdownContent.style.display = 'none';
   }
   
