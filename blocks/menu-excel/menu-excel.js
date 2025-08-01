@@ -1,6 +1,6 @@
 export default async function decorate(block) {
     // STEP 1: Get the JSON URL from block data attributes
-    const jsonUrl = block.dataset.jsonLink;
+    const jsonUrl = block.dataset.data-source;
     if (!jsonUrl) {
       console.error('Missing JSON link in block properties.');
       return;
