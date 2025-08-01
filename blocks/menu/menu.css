@@ -5,8 +5,8 @@
   .menu-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 40px;
-   /* justify-content: center;    center horizontally */
+    gap: 100px;
+    justify-content: center;    /*center horizontally */
     align-items: flex-start;
   }
 
