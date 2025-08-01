@@ -10,12 +10,6 @@
     align-items: flex-start;
   }
 
-  .menu-enhanced-dropdown {
-    position: relative;
-    display: inline-block;
-    font-family: Arial, sans-serif;
-    text-align: center;
-  }
   .menu-wrapper {
     display: flex;
     flex-wrap: wrap;
