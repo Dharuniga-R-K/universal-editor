@@ -1,3 +1,9 @@
 .menu-original-hidden {
     display: none;
   }
+
+.dropdown-content.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
