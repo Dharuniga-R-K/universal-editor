@@ -2,7 +2,8 @@
   "mappings": [
     "/content/universal-editor/:/",
     "/content/universal-editor/configuration:/.helix/config.json",
-    "/content/universal-editor/metadata:/metadata.json"
+    "/content/universal-editor/metadata:/metadata.json",
+    "/content/universal-editor/spreadsheet1"
   ],
   "includes": [
     "/content/universal-editor/"

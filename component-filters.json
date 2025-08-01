@@ -47,12 +47,5 @@
     "components": [
       "menu-item"
     ]
-  },
-  {
-    "id": "menu-component",
-    "components": [
-      "menu",
-      "menu-item"
-    ]
   }
 ]
