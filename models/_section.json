@@ -53,7 +53,7 @@
         "fragment",
         "navigation",
         "simple-text",
-        "menu"
+        "menu-component"
       ]
     }
   ]
