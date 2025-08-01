@@ -1,6 +1,6 @@
 export default function decorate(block) {
   // Hide all original child blocks (components)
-  [...block.querySelectorAll('.menu.block, .menu-original-hidden')].forEach(el => {
+  [...block.querySelectorAll('.menu.block')].forEach(el => {
     el.classList.add('menu-original-hidden');
   });
 
