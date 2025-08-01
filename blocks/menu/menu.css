@@ -28,4 +28,15 @@
     color: #396d31;
   }
 
+  .menu-enhanced-dropdown:hover .dropdown-title {
+    color: #1f4f3f;
+    border-bottom-color: #396d31; /* green underline */
+  }
+  
+  .menu-enhanced-dropdown:hover .dropdown-title::after {
+    transform: rotate(180deg);
+    color: #396d31;
+  }
+
+
   
