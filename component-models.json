@@ -216,6 +216,17 @@
     ]
   },
   {
+    "id": "menu-excel",
+    "fields": [
+      {
+        "component": "path",
+        "name": "data-source",
+        "label": "Data Source",
+        "value": "menu-data"
+      }
+    ]
+  },
+  {
     "id": "menu-item",
     "fields": [
       {
