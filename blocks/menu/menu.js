@@ -1,5 +1,5 @@
 export default function decorate(block) {
-  // Hide original children
+  // Hide original content
   [...block.children].forEach((child) => {
     child.classList.add('menu-original-hidden');
   });
@@ -7,66 +7,61 @@ export default function decorate(block) {
   const menuWrapper = document.createElement('div');
   menuWrapper.className = 'menu-wrapper';
 
-  // Loop through each dropdown block
-  [...block.children].forEach((child) => {
-    const divs = [...child.querySelectorAll(':scope > div')];
-    const title = divs[0]?.querySelector('p')?.textContent.trim() || 'Menu';
+  // Process each group of (title + submenu items)
+  let children = [...block.children];
+  for (let i = 0; i < children.length; ) {
+    const titleDiv = children[i];
+    const title = titleDiv.querySelector('p')?.textContent.trim();
+    const submenuItems = [];
 
-    const submenuItems = divs.slice(1).map((div) => {
-      const label = div.querySelector('div > p')?.textContent.trim();
-      const link = div.querySelector('a')?.href;
-      return (label && link) ? { label, link } : null;
-    }).filter(Boolean);
+    let j = i + 1;
+    // Collect submenu items until we reach the next title or end
+    while (j < children.length && !children[j].querySelector('p')) {
+      const link = children[j].querySelector('a')?.href;
+      const label = children[j].querySelector('div > p')?.textContent.trim();
+      if (label && link) submenuItems.push({ label, link });
+      j++;
+    }
 
-    if (submenuItems.length === 0) return;
+    // Only if valid title and at least 1 submenu
+    if (title && submenuItems.length) {
+      const dropdownWrapper = document.createElement('div');
+      dropdownWrapper.className = 'menu-enhanced-dropdown';
 
-    // Dropdown wrapper
-    const dropdownWrapper = document.createElement('div');
-    dropdownWrapper.className = 'menu-enhanced-dropdown';
+      const titleEl = document.createElement('div');
+      titleEl.className = 'dropdown-title';
+      titleEl.innerHTML = `${title} <span class="dropdown-arrow">▼</span>`;
 
-    // Title + Arrow container
-    const titleContainer = document.createElement('div');
-    titleContainer.className = 'dropdown-title';
+      const contentEl = document.createElement('ul');
+      contentEl.className = 'dropdown-content';
 
-    const titleEl = document.createElement('span');
-    titleEl.className = 'dropdown-title-text';
-    titleEl.textContent = title;
+      submenuItems.forEach(({ label, link }) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.className = 'dropdown-item';
+        a.href = link;
+        a.textContent = label;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        li.appendChild(a);
+        contentEl.appendChild(li);
+      });
 
-    const arrowEl = document.createElement('span');
-    arrowEl.className = 'dropdown-arrow';
-    arrowEl.textContent = '▼';
+      dropdownWrapper.append(titleEl, contentEl);
+      menuWrapper.appendChild(dropdownWrapper);
 
-    titleContainer.append(titleEl, arrowEl);
+      // Hover logic
+      dropdownWrapper.addEventListener('mouseenter', () => {
+        contentEl.classList.add('open');
+      });
+      dropdownWrapper.addEventListener('mouseleave', () => {
+        contentEl.classList.remove('open');
+      });
+    }
 
-    const contentEl = document.createElement('ul');
-    contentEl.className = 'dropdown-content';
+    i = j; // Move to next group
+  }
 
-    submenuItems.forEach(({ label, link }) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.className = 'dropdown-item';
-      a.href = link;
-      a.textContent = label;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      li.appendChild(a);
-      contentEl.appendChild(li);
-    });
-
-    dropdownWrapper.append(titleContainer, contentEl);
-    menuWrapper.appendChild(dropdownWrapper);
-
-    // Hover behavior on wrapper
-    dropdownWrapper.addEventListener('mouseenter', () => {
-      contentEl.classList.add('open');
-    });
-
-    dropdownWrapper.addEventListener('mouseleave', () => {
-      contentEl.classList.remove('open');
-    });
-  });
-
-  // Clear original and append menu
-  
+  // Append flattened result
   block.appendChild(menuWrapper);
 }
