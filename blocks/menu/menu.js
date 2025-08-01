@@ -39,5 +39,13 @@ export default function decorate(block) {
   
     dropdownWrapper.append(titleEl, arrowEl, contentEl);
     block.appendChild(dropdownWrapper);
+
+    container.addEventListener('mouseenter', () => {
+      contentEl.classList.add('open');
+    });
+
+    container.addEventListener('mouseleave', () => {
+      contentEl.classList.remove('open');
+    });
   }
   
