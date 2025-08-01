@@ -4,11 +4,10 @@ export default function decorate(block) {
     child.classList.add('menu-original-hidden');
   });
 
-  // Create the wrapper to hold all dropdowns side-by-side
   const menuWrapper = document.createElement('div');
   menuWrapper.className = 'menu-wrapper';
 
-  // Loop over each block-level child div
+  // Loop through each dropdown block
   [...block.children].forEach((child) => {
     const divs = [...child.querySelectorAll(':scope > div')];
     const title = divs[0]?.querySelector('p')?.textContent.trim() || 'Menu';
@@ -19,19 +18,25 @@ export default function decorate(block) {
       return (label && link) ? { label, link } : null;
     }).filter(Boolean);
 
-    if (submenuItems.length === 0) return; // skip empty
+    if (submenuItems.length === 0) return;
 
-    // Build dropdown structure
+    // Dropdown wrapper
     const dropdownWrapper = document.createElement('div');
     dropdownWrapper.className = 'menu-enhanced-dropdown';
 
-    const titleEl = document.createElement('div');
-    titleEl.className = 'dropdown-title';
+    // Title + Arrow container
+    const titleContainer = document.createElement('div');
+    titleContainer.className = 'dropdown-title';
+
+    const titleEl = document.createElement('span');
+    titleEl.className = 'dropdown-title-text';
     titleEl.textContent = title;
 
-    const arrowEl = document.createElement('div');
+    const arrowEl = document.createElement('span');
     arrowEl.className = 'dropdown-arrow';
     arrowEl.textContent = '▼';
+
+    titleContainer.append(titleEl, arrowEl);
 
     const contentEl = document.createElement('ul');
     contentEl.className = 'dropdown-content';
@@ -48,10 +53,10 @@ export default function decorate(block) {
       contentEl.appendChild(li);
     });
 
-    dropdownWrapper.append(titleEl, arrowEl, contentEl);
+    dropdownWrapper.append(titleContainer, contentEl);
     menuWrapper.appendChild(dropdownWrapper);
 
-    // Hover behavior
+    // Hover behavior on wrapper
     dropdownWrapper.addEventListener('mouseenter', () => {
       contentEl.classList.add('open');
     });
@@ -61,7 +66,7 @@ export default function decorate(block) {
     });
   });
 
-  // Clear block and append the wrapper
- 
+  // Clear original and append menu
+  
   block.appendChild(menuWrapper);
 }
