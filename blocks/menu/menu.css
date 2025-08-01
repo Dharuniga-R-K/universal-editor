@@ -99,3 +99,8 @@
     color: #396d31;
   }
   
+  .dropdown-arrow {
+    font-size: 16px;
+    line-height: 1;
+    font-weight: normal;
+  }
