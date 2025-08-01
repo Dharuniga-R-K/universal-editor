@@ -5,11 +5,11 @@
   .menu-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 40px;
     justify-content: center;   /* center horizontally */
     align-items: flex-start;
   }
-  
+
   .menu-enhanced-dropdown {
     position: relative;
     display: inline-block;
