@@ -19,8 +19,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px; 
-    margin-left: 0px !important;
-    margin-right: 0px !important;
+   
 
   }
   
@@ -37,6 +36,7 @@
     align-items: center;
     gap: 6px;
     border-bottom: 4px solid transparent;
+    font-size: 16px;
     transition: border-color 0.3s ease, color 0.3s ease;
   }
   
