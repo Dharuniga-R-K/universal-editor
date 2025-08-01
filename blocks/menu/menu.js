@@ -1,13 +1,11 @@
 export default function decorate(block) {
-    // 1. Hide the original structure without removing it
+    
     [...block.children].forEach((child) => {
       child.classList.add('menu-original-hidden');
     });
   
-    // 2. Now build the new dropdown UI based on that hidden structure
+   
     const divs = [...block.querySelectorAll(':scope > div')];
-    if (divs.length < 2) return;
-  
     const title = divs[0].querySelector('p')?.textContent.trim() || 'Menu';
     const submenuItems = divs.slice(1).map((div) => {
       const label = div.querySelector('div > p')?.textContent.trim();
