@@ -6,8 +6,11 @@
     position: relative;
     display: inline-block;
     font-family: Arial, sans-serif;
+    text-align: center;
   }
-  
+  .menu-wrapper {
+    display: flex;
+  }
   .dropdown-title {
     cursor: pointer;
     padding: 10px 15px;
