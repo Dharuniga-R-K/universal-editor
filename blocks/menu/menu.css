@@ -6,7 +6,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
-    justify-content: center;   /* center horizontally */
+    justify-content: flex-start;   
     align-items: flex-start;
   }
 
