@@ -92,7 +92,8 @@
     {
       "id": "menu-component",
       "components": [
-        "menu"
+        "menu",
+        "menu-item"
       ]
     }
   ]
