@@ -1,5 +1,31 @@
 .menu-original-hidden {
     display: none;
   }
+  .dropdown-content.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .dropdown-content li {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .dropdown-content li:last-child {
+    border-bottom: none;
+  }
+  
+  .dropdown-content li a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 400;
+    transition: background-color 0.2s ease;
+  }
+  
+  .dropdown-content li a:hover {
+    background-color: #f0f7e8; /* subtle green highlight */
+    color: #396d31;
+  }
 
   
