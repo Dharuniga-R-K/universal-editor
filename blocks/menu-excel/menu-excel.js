@@ -1,21 +1,21 @@
 export default async function decorate(block) {
-    // Find the anchor with the JSON URL inside the block
+    // Find the anchor inside the block
     const anchor = block.querySelector('a.button');
   
     if (!anchor) {
-      console.warn('No anchor with JSON URL found inside block');
+      console.warn('No anchor found inside block');
       return;
     }
   
-    // Get href (relative or absolute URL)
-    const jsonUrl = anchor.getAttribute('href');
-    if (!jsonUrl) {
-      console.warn('Anchor has no href attribute');
+    // Get the URL from the text content inside the anchor
+    const jsonUrlText = anchor.textContent.trim();
+    if (!jsonUrlText) {
+      console.warn('Anchor text is empty');
       return;
     }
   
-    // Convert to absolute URL
-    const absoluteUrl = new URL(jsonUrl, window.location.origin).href;
+    // Convert to absolute URL (if needed)
+    const absoluteUrl = new URL(jsonUrlText, window.location.origin).href;
   
     try {
       // Fetch the JSON
@@ -26,10 +26,10 @@ export default async function decorate(block) {
   
       const data = await response.json();
   
-      // Do something with the data array
+      // Process the JSON data as needed
       console.log('Fetched JSON data:', data);
   
-      // Example: add a simple list of menu names inside the block
+      // Example: Add list of main-menu items inside the block
       const list = document.createElement('ul');
       data.data.forEach(item => {
         const li = document.createElement('li');
