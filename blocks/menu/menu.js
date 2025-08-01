@@ -24,17 +24,19 @@ export default function decorate(block) {
     arrowEl.className = 'dropdown-arrow';
     arrowEl.textContent = '▼';
   
-    const contentEl = document.createElement('div');
+    const contentEl = document.createElement('ul');
     contentEl.className = 'dropdown-content';
   
     submenuItems.forEach(({ label, link }) => {
+      const li = document.createElement('li');
       const a = document.createElement('a');
       a.className = 'dropdown-item';
       a.href = link;
       a.textContent = label;
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
-      contentEl.appendChild(a);
+      li.appendChild(a)
+      contentEl.appendChild(li);
     });
   
     dropdownWrapper.append(titleEl, arrowEl, contentEl);
