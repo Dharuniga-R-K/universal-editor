@@ -10,6 +10,12 @@
   }
   .menu-wrapper {
     display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .menu.block {
+    flex: 0 0 auto;
   }
   .dropdown-title {
     cursor: pointer;
