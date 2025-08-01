@@ -19,10 +19,10 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px; 
-    margin-left: 0px;
-    margin-right: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 
   }
   
