@@ -1,35 +1,45 @@
 export default async function decorate(block) {
-    // STEP 1: Get the JSON URL from block data attributes
-    const jsonUrl = block.dataset.data-source;
-    if (!jsonUrl) {
-      console.error('Missing JSON link in block properties.');
+    // Find the anchor with the JSON URL inside the block
+    const anchor = block.querySelector('a.button');
+  
+    if (!anchor) {
+      console.warn('No anchor with JSON URL found inside block');
       return;
     }
   
-    try {
-      // STEP 2: Fetch the JSON
-      const res = await fetch(jsonUrl);
-      if (!res.ok) throw new Error(`Failed to fetch JSON: ${res.status}`);
-      const json = await res.json();
+    // Get href (relative or absolute URL)
+    const jsonUrl = anchor.getAttribute('href');
+    if (!jsonUrl) {
+      console.warn('Anchor has no href attribute');
+      return;
+    }
   
-      // STEP 3: Extract data
-      const menuData = json.data;
-      if (!Array.isArray(menuData)) {
-        console.error('Invalid JSON structure: "data" should be an array.');
-        return;
+    // Convert to absolute URL
+    const absoluteUrl = new URL(jsonUrl, window.location.origin).href;
+  
+    try {
+      // Fetch the JSON
+      const response = await fetch(absoluteUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
   
-      // STEP 4: Use or render data (example rendering)
-      const ul = document.createElement('ul');
-      menuData.forEach(item => {
+      const data = await response.json();
+  
+      // Do something with the data array
+      console.log('Fetched JSON data:', data);
+  
+      // Example: add a simple list of menu names inside the block
+      const list = document.createElement('ul');
+      data.data.forEach(item => {
         const li = document.createElement('li');
-        li.innerHTML = `<strong>${item["main-menu"]}</strong> → ${item["menu"]}: <a href="${item.link}" target="_blank">${item["sub-menu"]}</a>`;
-        ul.appendChild(li);
+        li.textContent = item['main-menu'] || 'No main menu';
+        list.appendChild(li);
       });
-      block.appendChild(ul);
+      block.appendChild(list);
   
     } catch (err) {
-      console.error('Error loading or parsing JSON:', err);
+      console.error('Error fetching or parsing JSON:', err);
     }
   }
   
