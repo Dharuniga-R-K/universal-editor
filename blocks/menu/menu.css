@@ -1,6 +1,6 @@
-/* .menu-original-hidden {
+.menu-original-hidden {
     display: none;
-  } */
+  }
   .menu-container {
     display: flex;
     flex-wrap: wrap;
