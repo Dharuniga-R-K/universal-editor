@@ -3,7 +3,8 @@
     "/content/universal-editor/:/",
     "/content/universal-editor/configuration:/.helix/config.json",
     "/content/universal-editor/metadata:/metadata.json",
-    "/content/universal-editor/spreadsheet1"
+    "/content/universal-editor/spreadsheet1:/spreadsheet.json",
+    "/content/universal-editor/menu-:/menu.json"
   ],
   "includes": [
     "/content/universal-editor/"
