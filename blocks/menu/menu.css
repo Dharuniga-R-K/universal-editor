@@ -5,7 +5,7 @@
   .menu-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 10px;
     justify-content: flex-start;   
     align-items: flex-start;
   }
@@ -19,7 +19,7 @@
   .menu-wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 10px;
   }
   
   .menu.block {
