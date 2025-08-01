@@ -111,6 +111,6 @@
   .section.menu-container{
     
     margin-left: 235px;
-    margin-top: 40px;
+    margin-top: 40px !important;
     margin-bottom: 40px;
   }

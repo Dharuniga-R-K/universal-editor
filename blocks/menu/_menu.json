@@ -1,6 +1,22 @@
 {
   "definitions": [
     {
+      "title": "Menu-component",
+      "id": "menu-component",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "menu-component",
+              "model": "menu-component",
+              "filter": "menu-component"
+            }
+          }
+        }
+      }
+    },
+    {
       "title": "Menu",
       "id": "menu",
       "plugins": {
@@ -71,6 +87,12 @@
       "id": "menu-items",
       "components": [
         "menu-item"
+      ]
+    },
+    {
+      "id": "menu-component",
+      "components": [
+        "menu-items"
       ]
     }
   ]
