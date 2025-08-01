@@ -219,10 +219,10 @@
     "id": "menu-excel",
     "fields": [
       {
-        "component": "path",
+        "component": "aem-content",
         "name": "data-source",
         "label": "Data Source",
-        "value": "menu-data"
+        "value": ""
       }
     ]
   },
