@@ -1,36 +1,39 @@
 export default function decorate(block) {
-  // Hide original content
+  // Hide the original content
   [...block.children].forEach((child) => {
     child.classList.add('menu-original-hidden');
   });
 
-  const menuWrapper = document.createElement('div');
-  menuWrapper.className = 'menu-wrapper';
+  const divs = [...block.querySelectorAll(':scope > div')];
+  const dropdownWrapper = document.createElement('div');
+  dropdownWrapper.className = 'menu-wrapper';
 
-  // Process each group of (title + submenu items)
-  let children = [...block.children];
-  for (let i = 0; i < children.length; ) {
-    const titleDiv = children[i];
-    const title = titleDiv.querySelector('p')?.textContent.trim();
+  let i = 0;
+  while (i < divs.length) {
+    const titleDiv = divs[i];
+    const title = titleDiv.querySelector('p')?.textContent.trim() || `Menu ${i}`;
+    i++;
+
     const submenuItems = [];
-
-    let j = i + 1;
-    // Collect submenu items until we reach the next title or end
-    while (j < children.length && !children[j].querySelector('p')) {
-      const link = children[j].querySelector('a')?.href;
-      const label = children[j].querySelector('div > p')?.textContent.trim();
+    while (i < divs.length && !divs[i].querySelector('p')) {
+      const label = divs[i].querySelector('div > p')?.textContent.trim();
+      const link = divs[i].querySelector('a')?.href;
       if (label && link) submenuItems.push({ label, link });
-      j++;
+      i++;
     }
 
-    // Only if valid title and at least 1 submenu
-    if (title && submenuItems.length) {
-      const dropdownWrapper = document.createElement('div');
-      dropdownWrapper.className = 'menu-enhanced-dropdown';
+    // Create dropdown only if submenu items exist
+    if (submenuItems.length) {
+      const dropdown = document.createElement('div');
+      dropdown.className = 'menu-enhanced-dropdown';
 
       const titleEl = document.createElement('div');
       titleEl.className = 'dropdown-title';
-      titleEl.innerHTML = `${title} <span class="dropdown-arrow">▼</span>`;
+      titleEl.textContent = title;
+
+      const arrowEl = document.createElement('div');
+      arrowEl.className = 'dropdown-arrow';
+      arrowEl.textContent = '▼';
 
       const contentEl = document.createElement('ul');
       contentEl.className = 'dropdown-content';
@@ -47,21 +50,19 @@ export default function decorate(block) {
         contentEl.appendChild(li);
       });
 
-      dropdownWrapper.append(titleEl, contentEl);
-      menuWrapper.appendChild(dropdownWrapper);
+      dropdown.append(titleEl, arrowEl, contentEl);
+      dropdownWrapper.appendChild(dropdown);
 
-      // Hover logic
-      dropdownWrapper.addEventListener('mouseenter', () => {
+      // Add hover behavior
+      dropdown.addEventListener('mouseenter', () => {
         contentEl.classList.add('open');
       });
-      dropdownWrapper.addEventListener('mouseleave', () => {
+
+      dropdown.addEventListener('mouseleave', () => {
         contentEl.classList.remove('open');
       });
     }
-
-    i = j; // Move to next group
   }
 
-  // Append flattened result
-  block.appendChild(menuWrapper);
+  block.appendChild(dropdownWrapper);
 }
