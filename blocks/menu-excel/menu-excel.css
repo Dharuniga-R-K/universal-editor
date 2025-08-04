@@ -1,13 +1,12 @@
 .menu-excel.block {
     display: flex;
     flex-wrap: nowrap;
-    border-top: 3px solid #f9b000;
+    border-top: 3px solid #f9b000; /* yellow line like screenshot */
     font-family: Arial, sans-serif;
     overflow-x: auto;
-    position: relative;
   }
   
-  /* Green main menu section */
+  /* Left green section */
   .main-menu-wrapper {
     background: #003820;
     color: white;
@@ -17,13 +16,11 @@
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;
-    position: relative;
   }
   
   .main-menu-wrapper span {
     font-size: 12px;
     letter-spacing: 0.05em;
-    margin-bottom: 8px;
   }
   
   .main-menu-button {
@@ -33,10 +30,8 @@
     font-size: 18px;
     font-weight: bold;
     text-align: left;
+    padding: 8px 0;
     cursor: pointer;
-    width: 100%;
-    padding: 4px 0;
-    position: relative;
   }
   
   .main-menu-button::after {
@@ -45,21 +40,16 @@
     margin-left: 8px;
   }
   
-  /* Dropdown list, hidden by default */
+  /* Dropdown on button click */
   .main-menu-dropdown {
-    display: none;
     position: absolute;
-    top: 80px;
-    left: 16px;
     background: white;
-    color: black;
     border: 1px solid #ccc;
     list-style: none;
-    margin: 0;
     padding: 8px 0;
-    z-index: 1000;
-    width: 260px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    margin: 0;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
   
   .main-menu-dropdown li {
@@ -67,14 +57,8 @@
     cursor: pointer;
     white-space: nowrap;
   }
-  
   .main-menu-dropdown li:hover {
-    background: #f0f0f0;
-  }
-  
-  /* Show dropdown on hover */
-  .main-menu-wrapper:hover .main-menu-dropdown {
-    display: block;
+    background: #eee;
   }
   
   /* Right submenu section */
@@ -107,7 +91,7 @@
     gap: 4px;
   }
   
-  .dropdown-arrow {
+  .submenu-title .dropdown-arrow {
     font-size: 10px;
     margin-top: 2px;
   }
@@ -130,4 +114,7 @@
   .submenu-column a:hover {
     text-decoration: underline;
   }
-  
+  .menu-excel.block {
+    position: relative;
+  }
+    

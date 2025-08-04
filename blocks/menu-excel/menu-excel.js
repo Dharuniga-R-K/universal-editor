@@ -15,10 +15,10 @@ export default async function decorate(block) {
       grouped[main].push(item);
     });
   
-    // Clear initial block content
-    block.innerHTML = "";
+    // Build the UI
+    block.innerHTML = ""; // clear block contents
   
-    // Create main menu wrapper (left green section)
+    // Create main menu selector (dark green button)
     const mainMenuWrapper = document.createElement("div");
     mainMenuWrapper.className = "main-menu-wrapper";
   
@@ -27,29 +27,36 @@ export default async function decorate(block) {
   
     const mainMenuButton = document.createElement("button");
     mainMenuButton.className = "main-menu-button";
-  
     const mainMenus = Object.keys(grouped);
     let selectedMain = mainMenus[0];
     mainMenuButton.textContent = selectedMain;
   
-    // Main menu dropdown
-    const dropdown = document.createElement("ul");
-    dropdown.className = "main-menu-dropdown";
-    mainMenus.forEach(menu => {
-      const li = document.createElement("li");
-      li.textContent = menu;
-      li.onclick = () => {
-        selectedMain = menu;
-        mainMenuButton.textContent = menu;
-        renderSubmenus();
-      };
-      dropdown.appendChild(li);
-    });
+    mainMenuButton.onclick = () => {
+      const dropdown = document.createElement("ul");
+      dropdown.className = "main-menu-dropdown";
   
-    mainMenuWrapper.append(selectLabel, mainMenuButton, dropdown);
+      mainMenus.forEach(menu => {
+        const li = document.createElement("li");
+        li.textContent = menu;
+        li.onclick = () => {
+          selectedMain = menu;
+          mainMenuButton.textContent = menu;
+          dropdown.remove();
+          renderSubmenus();
+        };
+        dropdown.appendChild(li);
+      });
+  
+      // Remove existing dropdown if any
+      const existing = block.querySelector(".main-menu-dropdown");
+      if (existing) existing.remove();
+  
+      block.appendChild(dropdown);
+    };
+  
+    mainMenuWrapper.append(selectLabel, mainMenuButton);
     block.appendChild(mainMenuWrapper);
   
-    // Submenu wrapper (right section)
     const submenuWrapper = document.createElement("div");
     submenuWrapper.className = "submenu-wrapper";
     block.appendChild(submenuWrapper);
@@ -58,6 +65,7 @@ export default async function decorate(block) {
       submenuWrapper.innerHTML = "";
       const rows = grouped[selectedMain];
   
+      // Group sub-menu to menu/link
       const submenuMap = {};
       rows.forEach(row => {
         const sub = row["sub-menu"];
@@ -65,15 +73,16 @@ export default async function decorate(block) {
         submenuMap[sub].push({ title: row.menu, link: row.link });
       });
   
+      // Render each sub-menu
       Object.entries(submenuMap).forEach(([submenu, items]) => {
-        const col = document.createElement("div");
-        col.className = "submenu-column";
+        const submenuCol = document.createElement("div");
+        submenuCol.className = "submenu-column";
   
         const title = document.createElement("div");
         title.className = "submenu-title";
         title.innerHTML = `${submenu} <span class="dropdown-arrow">▼</span>`;
   
-        const list = document.createElement("ul");
+        const menuList = document.createElement("ul");
         items.forEach(item => {
           const li = document.createElement("li");
           const a = document.createElement("a");
@@ -81,14 +90,14 @@ export default async function decorate(block) {
           a.textContent = item.title;
           a.target = "_blank";
           li.appendChild(a);
-          list.appendChild(li);
+          menuList.appendChild(li);
         });
   
-        col.append(title, list);
-        submenuWrapper.appendChild(col);
+        submenuCol.append(title, menuList);
+        submenuWrapper.appendChild(submenuCol);
       });
     }
   
-    renderSubmenus(); // Initial render
+    renderSubmenus(); // initial render
   }
   
