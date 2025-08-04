@@ -1,5 +1,5 @@
 export async function decorate({ props, fetch }) {
-    const path = props.reference;
+    const path = props.spreadsheet;
   
     if (!path) {
       return { spreadsheetData: null };
@@ -7,14 +7,10 @@ export async function decorate({ props, fetch }) {
   
     try {
       const response = await fetch(path);
-      const spreadsheet = await response.json();
-  
-      return { spreadsheetData: spreadsheet };
-    } catch (err) {
-      return {
-        spreadsheetData: null,
-        error: `Failed to load spreadsheet: ${err.message}`
-      };
+      const data = await response.json();
+      return { spreadsheetData: data };
+    } catch (e) {
+      return { spreadsheetData: null, error: e.message };
     }
   }
   

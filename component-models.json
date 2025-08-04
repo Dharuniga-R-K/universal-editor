@@ -219,9 +219,9 @@
     "id": "menu-excel",
     "fields": [
       {
-        "component": "reference",
-        "label": "Reference",
-        "name": "reference",
+        "component": "aem-content",
+        "label": "Spreadsheet Path",
+        "name": "spreadsheet",
         "valueType": "string"
       }
     ]
