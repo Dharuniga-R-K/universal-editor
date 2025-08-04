@@ -219,13 +219,10 @@
     "id": "menu-excel",
     "fields": [
       {
-        "component": "aem-content",
-        "name": "data-source",
-        "label": "Data Source",
-        "value": "",
-        "validation": {
-          "rootPath": "/content/universal-editor"
-        }
+        "component": "reference",
+        "label": "Reference",
+        "name": "reference",
+        "valueType": "string"
       }
     ]
   },
