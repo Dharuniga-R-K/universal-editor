@@ -15,7 +15,9 @@ export default async function decorate(block) {
     }
   
     try {
-      const response = await fetch(path);
+        const fetchUrl = new URL(rawPath, window.location.origin).href;
+
+        const response = await fetch(fetchUrl);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
   
       const json = await response.json();
