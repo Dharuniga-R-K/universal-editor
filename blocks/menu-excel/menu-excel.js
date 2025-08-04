@@ -1,44 +1,42 @@
-export async function decorate({ block, fetch }) {
-    // Get the rendered HTML from the block
-    const html = block?.html;
+export default async function decorate(block) {
+    // Look for the first link inside the block
+    const link = block.querySelector("a");
   
-    if (!html) {
-      return {
-        jsonData: null,
-        error: "No block HTML found."
-      };
+    if (!link) {
+      console.warn("No link found in block to fetch JSON.");
+      return;
     }
   
-    // Use DOMParser or regex to extract the path
-    const match = html.match(/<a[^>]*href="([^"]+)"[^>]*>/);
-  
-    const path = match?.[1];
+    const path = link.getAttribute("href");
   
     if (!path) {
-      return {
-        jsonData: null,
-        error: "No document path found in rendered HTML."
-      };
+      console.warn("No href found on link.");
+      return;
     }
   
     try {
       const response = await fetch(path);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
   
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status} - ${response.statusText}`);
+      const json = await response.json();
+  
+      // You can now render using json.data
+      console.log("✅ Fetched JSON:", json);
+  
+      // Example: show menu items below the link
+      if (Array.isArray(json.data)) {
+        const list = document.createElement("ul");
+  
+        json.data.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = item.menu || "No label";
+          list.appendChild(li);
+        });
+  
+        block.appendChild(list);
       }
-  
-      const jsonData = await response.json();
-  
-      return {
-        jsonData,
-        originalPath: path
-      };
     } catch (err) {
-      return {
-        jsonData: null,
-        error: `Failed to fetch JSON from ${path}: ${err.message}`
-      };
+      console.error("❌ Failed to fetch JSON:", err.message);
     }
   }
   
