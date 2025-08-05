@@ -112,7 +112,6 @@ export default async function decorate(block) {
           const arrow = document.createElement("div");
           arrow.className = "submenu-arrow";
           arrow.textContent = "▼";
-          col.appendChild(arrow);
           }
       
           const list = document.createElement("ul");
@@ -126,7 +125,7 @@ export default async function decorate(block) {
             list.appendChild(li);
           });
       
-          col.append(title, list);
+          col.append(title, arrow, list);
           submenuWrapper.appendChild(col);
         });
       }
