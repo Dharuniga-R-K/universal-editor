@@ -1,12 +1,14 @@
+/* Base block layout */
 .menu-excel.block {
     display: flex;
     flex-wrap: nowrap;
-    border-top: 3px solid #f9b000; /* yellow line like screenshot */
+    border-top: 3px solid #f9b000; /* Yellow line on top */
     font-family: Arial, sans-serif;
     overflow-x: auto;
+    position: relative;
   }
   
-  /* Left green section */
+  /* Left: Green main menu section */
   .main-menu-wrapper {
     background: #003820;
     color: white;
@@ -16,11 +18,13 @@
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;
+    position: relative;
   }
   
   .main-menu-wrapper span {
     font-size: 12px;
     letter-spacing: 0.05em;
+    margin-bottom: 8px;
   }
   
   .main-menu-button {
@@ -30,8 +34,10 @@
     font-size: 18px;
     font-weight: bold;
     text-align: left;
-    padding: 8px 0;
     cursor: pointer;
+    width: 100%;
+    padding: 4px 0;
+    position: relative;
   }
   
   .main-menu-button::after {
@@ -40,16 +46,21 @@
     margin-left: 8px;
   }
   
-  /* Dropdown on button click */
+  /* Dropdown list for main-menu */
   .main-menu-dropdown {
+    display: none;
     position: absolute;
+    top: 80px;
+    left: 16px;
     background: white;
+    color: black;
     border: 1px solid #ccc;
     list-style: none;
-    padding: 8px 0;
     margin: 0;
-    z-index: 999;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 8px 0;
+    z-index: 1000;
+    width: 260px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
   
   .main-menu-dropdown li {
@@ -57,11 +68,17 @@
     cursor: pointer;
     white-space: nowrap;
   }
+  
   .main-menu-dropdown li:hover {
-    background: #eee;
+    background: #f0f0f0;
   }
   
-  /* Right submenu section */
+  /* Show dropdown on hover */
+  .main-menu-wrapper:hover .main-menu-dropdown {
+    display: block;
+  }
+  
+  /* Right: Submenu columns container */
   .submenu-wrapper {
     display: flex;
     flex-grow: 1;
@@ -72,6 +89,7 @@
     overflow-x: auto;
   }
   
+  /* Individual submenu column */
   .submenu-column {
     display: flex;
     flex-direction: column;
@@ -79,8 +97,11 @@
     min-width: 120px;
     padding: 0 12px;
     text-align: center;
+    position: relative;
+    cursor: pointer;
   }
   
+  /* Title + arrow */
   .submenu-title {
     font-weight: bold;
     color: #333;
@@ -91,17 +112,32 @@
     gap: 4px;
   }
   
-  .submenu-title .dropdown-arrow {
+  .dropdown-arrow {
     font-size: 10px;
+    transition: transform 0.2s ease;
     margin-top: 2px;
   }
   
+  /* Rotate arrow on hover */
+  .submenu-column:hover .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+  
+  /* Submenu links list: hidden by default */
   .submenu-column ul {
+    display: none;
     list-style: none;
     padding: 0;
     margin: 0;
+    transition: opacity 0.2s ease;
   }
   
+  /* Show links on hover */
+  .submenu-column:hover ul {
+    display: block;
+  }
+  
+  /* Individual link styling */
   .submenu-column li {
     margin: 4px 0;
   }
@@ -111,10 +147,8 @@
     color: #0066cc;
     font-size: 13px;
   }
+  
   .submenu-column a:hover {
     text-decoration: underline;
   }
-  .menu-excel.block {
-    position: relative;
-  }
-    
+  
