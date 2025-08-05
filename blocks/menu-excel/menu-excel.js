@@ -82,48 +82,52 @@ export default async function decorate(block) {
     block.appendChild(submenuWrapper);
   
     function renderSubmenus() {
-      submenuWrapper.innerHTML = "";
-      const rows = grouped[selectedMain];
-  
-      const submenuMap = {};
-      rows.forEach(row => {
-        const sub = row["sub-menu"];
-        if (!submenuMap[sub]) submenuMap[sub] = [];
-        submenuMap[sub].push({ title: row.menu, link: row.link });
+        submenuWrapper.innerHTML = "";
+        const rows = grouped[selectedMain];
       
-      if (!submenuLinks[sub]) submenuLinks[sub] = row.link1 || row.link; // fallback to row.link if link1 not present
-  });
-  
-      Object.entries(submenuMap).forEach(([submenu, items]) => {
-        const col = document.createElement("div");
-        col.className = "submenu-column";
-  
-        const title = document.createElement("div");
-        title.className = "submenu-title";
-        title.textContent = submenu;
-        title.href = submenuLinks[submenu] || "#"; // link for the sub-menu title
-        title.target = "_blank";  // open in new tab
-        title.style.cursor = "pointer";
-  
-        const arrow = document.createElement("div");
-        arrow.className = "submenu-arrow";
-        arrow.textContent = "▼";
-  
-        const list = document.createElement("ul");
-        items.forEach(item => {
-          const li = document.createElement("li");
-          const a = document.createElement("a");
-          a.href = item.link;
-          a.textContent = item.title;
-          a.target = "_blank";
-          li.appendChild(a);
-          list.appendChild(li);
+        const submenuMap = {};
+        const submenuLinks = {}; // Define this object before the loop
+      
+        rows.forEach(row => {
+          const sub = row["sub-menu"];
+          if (!submenuMap[sub]) submenuMap[sub] = [];
+          submenuMap[sub].push({ title: row.menu, link: row.link });
+      
+          if (!submenuLinks[sub]) submenuLinks[sub] = row.link1 || row.link; // fallback to row.link if link1 not present
         });
-  
-        col.append(title, arrow, list);
-        submenuWrapper.appendChild(col);
-      });
-    }
+      
+        Object.entries(submenuMap).forEach(([submenu, items]) => {
+          const col = document.createElement("div");
+          col.className = "submenu-column";
+      
+          // Create an anchor element for submenu title
+          const title = document.createElement("a");
+          title.className = "submenu-title";
+          title.textContent = submenu;
+          title.href = submenuLinks[submenu] || "#"; // link for the sub-menu title
+          title.target = "_blank";  // open in new tab
+          title.style.cursor = "pointer";
+      
+          const arrow = document.createElement("div");
+          arrow.className = "submenu-arrow";
+          arrow.textContent = "▼";
+      
+          const list = document.createElement("ul");
+          items.forEach(item => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = item.link;
+            a.textContent = item.title;
+            a.target = "_blank";
+            li.appendChild(a);
+            list.appendChild(li);
+          });
+      
+          col.append(title, arrow, list);
+          submenuWrapper.appendChild(col);
+        });
+      }
+      
   
     renderSubmenus();
   }
