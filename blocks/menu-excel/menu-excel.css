@@ -34,7 +34,6 @@
 
 .main-menu-wrapper span {
     font-size: 13px;
-    font-weight: 700;
     line-height: 1.1;
     text-transform: uppercase;
 }
@@ -84,7 +83,7 @@
 
 .main-menu-dropdown li {
     cursor: pointer;
-    white-space: nowrap; /* prevent wrapping */
+    white-space: wrap; /* prevent wrapping */
     color: #000;
     padding: 16px 24px;
     font-size: 0.9375rem;
@@ -149,7 +148,7 @@
     top: 100%;
     left: 0;
     background: white;
-    border: 2px solid #144633;
+    /* border: 2px solid #144633; */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     padding: 8px 0;
     margin: 0;
@@ -164,16 +163,31 @@
 /* Show submenu dropdown only on hover */
 .submenu-column:hover > ul {
     display: block;
+    padding-left: 1rem;
+        padding-right: 1.875rem;
+        box-shadow: -30px 26px 29px -31px rgba(0, 0, 0, .75);
+        height: auto;
+    
 }
 
 .submenu-column li {
     margin: 4px 0;
+    
+        line-height: 1.4;
+        font-weight: 400;
+        display: block;
+        text-align: left;
+        padding-bottom: 1rem;
+        border: none;
+    
+    
 }
 
 .submenu-column a {
     text-decoration: none;
-    color: #0066cc;
-    font-size: 13px;
+    font-size: 0.9375rem;
+    color: #414042;
+    font-family: "HCo Whitney SSm", sans-serif;
 }
 
 .submenu-column a:hover {
