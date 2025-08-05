@@ -146,4 +146,13 @@
   .submenu-column a:hover {
     text-decoration: underline;
   }
+
+  .submenu-column:hover .dropdown-arrow {
+    transform: rotate(180deg);
+  }
   
+  .submenu-arrow {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 8px;
+  }
