@@ -19,7 +19,7 @@
   justify-content: center;      /* centers items vertically */
   align-items: baseline;        /* aligns items on baseline horizontally */
   height: 100%;
-  width: 100%;
+  width: 24%;
   padding: 0.5rem 3.125rem 0.5rem 0.9375rem;
   background-color: #07412c;
   font-size: 0.6875rem;
@@ -33,9 +33,10 @@
   }
   
   .main-menu-wrapper span {
-    font-size: 12px;
-    letter-spacing: 0.05em;
-    margin-bottom: 8px;
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.1;
   }
   
   .main-menu-button {
@@ -67,10 +68,10 @@
     left: 16px;
     background: white;
     color: black;
-    border: 1px solid #ccc;
+    border: 2px solid #144633;
     list-style: none;
     margin: 0;
-    padding: 8px 0;
+    padding: 5px 0;
     z-index: 1000;
     width: 260px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
@@ -83,6 +84,7 @@
     padding: 12px 35px;
     font-size: 0.9375rem;
     line-height: 1.4;
+    padding-bottom: 0;
   }
 
   .main-menu ul {
