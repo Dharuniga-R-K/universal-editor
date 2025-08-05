@@ -109,12 +109,14 @@ export default async function decorate(block) {
           title.style.cursor = "pointer";
           col.append(title);
       
-          if (items.length > 0) {
-          const arrow = document.createElement("div");
-          arrow.className = "submenu-arrow";
-          arrow.textContent = "▼";
-          col.append(arrow);
-          }
+          const hasValidItems = items.some(item => item.title && item.title.trim() !== "");
+
+          if (hasValidItems) {
+            const arrow = document.createElement("div");
+            arrow.className = "submenu-arrow";
+            arrow.textContent = "▼";
+            col.append(arrow);
+        } 
       
           const list = document.createElement("ul");
           items.forEach(item => {
