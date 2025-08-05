@@ -135,33 +135,61 @@
     margin-bottom: 8px;
   }
   
-  .submenu-column ul {
-    display: none !important;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  /* Make submenu column position relative for absolute dropdown */
+.submenu-column {
+    position: relative;
+    cursor: pointer;
   }
   
-  /* Show submenu list only when hovering over submenu column */
-  .submenu-column:hover ul {
+  /* Submenu dropdown: hidden by default, floating absolute */
+  .submenu-column > ul {
+    display: none !important;
+    position: absolute;
+    top: 100%;    /* directly below submenu title */
+    left: 0;
+    background: white;
+    border: 2px solid #144633;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    padding: 8px 0;
+    margin: 0;
+    min-width: 160px;
+    z-index: 300;
+    list-style: none;
+    text-align: left;
+  }
+  
+  /* Show submenu dropdown only on hover */
+  .submenu-column:hover > ul {
     display: block !important;
   }
   
-  .submenu-column li {
-    margin: 4px 0;
+  /* Submenu list items */
+  .submenu-column ul li {
+    padding: 10px 24px;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #000;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
   }
   
-  .submenu-column a {
-    text-decoration: none;
+  .submenu-column ul li:last-child {
+    border-bottom: none;
+  }
+  
+  .submenu-column ul li:hover {
+    background: #f0f0f0;
+  }
+  
+  /* Submenu links */
+  .submenu-column ul li a {
     color: #0066cc;
-    font-size: 13px;
+    text-decoration: none;
+    display: block;
   }
   
-  .submenu-column a:hover {
+  .submenu-column ul li a:hover {
     text-decoration: underline;
-  }
-  
-  .submenu-column:hover .dropdown-arrow {
-    transform: rotate(180deg);
   }
   
