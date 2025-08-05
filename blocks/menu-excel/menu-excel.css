@@ -1,29 +1,41 @@
-/* Indications List */
+/* Main indications dropdown */
 .menu__indications {
     display: none;
   }
   .menu__indications.open {
     display: block;
   }
-  
-  /* Submenu */
-  .menu__mdd-internal--sub {
-    display: none;
-  }
-  .menu__mdd-internal-item.open > .menu__mdd-internal--sub,
-  .menu__mdd-internal-item.hover > .menu__mdd-internal--sub {
-    display: block;
-  }
-  
-  /* Arrow styles for interaction feedback (optional) */
   .dropdown-button::after {
-    content: '▼';
+    content: "▼";
     margin-left: 8px;
-    display: inline-block;
     transform: rotate(0deg);
     transition: transform 0.3s ease;
   }
   .dropdown-button.open::after {
     transform: rotate(180deg);
+  }
+  
+  /* Submenu default hidden */
+  .menu__mdd-internal--sub {
+    display: none;
+  }
+  .menu__mdd-internal-item.open > .menu__mdd-internal--sub {
+    display: block;
+  }
+  
+  /* Basic resets & styling */
+  .nav {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .nav li {
+    padding: 0;
+  }
+  .dropdown-item {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    padding: 8px 16px;
   }
   
