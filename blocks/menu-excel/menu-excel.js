@@ -17,7 +17,7 @@ export default async function decorate(block) {
   
     block.innerHTML = "";
   
-    // Main menu block (left column)
+    // Main menu block
     const mainMenuWrapper = document.createElement("div");
     mainMenuWrapper.className = "main-menu-wrapper";
   
@@ -61,12 +61,6 @@ export default async function decorate(block) {
       
     });
   
-    // Keep dropdown open if hovering over it
-    mainMenuWrapper.addEventListener("mouseenter", () => {
-      if (dropdown.style.display === "block") {
-        dropdown.style.display = "block";
-      }
-    });
   
     // Close dropdown on outside click
     document.addEventListener("click", () => {
