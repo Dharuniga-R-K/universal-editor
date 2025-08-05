@@ -4,7 +4,7 @@
     flex-wrap: nowrap;
     border-top: 3px solid #f9b000;
     font-family: Arial, sans-serif;
-    overflow-x: visible;
+    overflow-x: visible; /* allow horizontal overflow */
     position: relative;
   }
   
@@ -28,7 +28,7 @@
     position: relative;
     cursor: pointer;
     min-height: 72px;
-    overflow: visible;
+    overflow: visible; /* IMPORTANT: allow dropdown to overflow */
     z-index: 100;
   }
   
@@ -97,7 +97,9 @@
     background: #f0f0f0;
   }
   
-  /* Submenu container (inline/static layout) */
+  /* Show main menu dropdown on button click handled by JS */
+  
+  /* Submenu container */
   .submenu-wrapper {
     display: flex;
     flex-grow: 1;
@@ -105,8 +107,9 @@
     align-items: flex-start;
     background: white;
     padding: 16px;
-    overflow-x: auto;
+    overflow: visible; /* allow dropdown overflow */
     position: relative;
+    z-index: 10;
   }
   
   /* Each submenu column */
@@ -117,7 +120,7 @@
     min-width: 120px;
     padding: 0 12px;
     text-align: center;
-    position: relative;
+    position: relative; /* anchor submenu dropdown */
     cursor: pointer;
   }
   
@@ -135,61 +138,43 @@
     margin-bottom: 8px;
   }
   
-  /* Make submenu column position relative for absolute dropdown */
-.submenu-column {
-    position: relative;
-    cursor: pointer;
-  }
-  
-  /* Submenu dropdown: hidden by default, floating absolute */
+  /* Submenu dropdown styling */
   .submenu-column > ul {
-    display: none !important;
+    display: none; /* hidden by default */
     position: absolute;
-    top: 100%;    /* directly below submenu title */
+    top: 100%;
     left: 0;
     background: white;
     border: 2px solid #144633;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     padding: 8px 0;
     margin: 0;
     min-width: 160px;
-    z-index: 300;
+    z-index: 1000; /* above most elements */
     list-style: none;
     text-align: left;
   }
   
   /* Show submenu dropdown only on hover */
   .submenu-column:hover > ul {
-    display: block !important;
-  }
-  
-  /* Submenu list items */
-  .submenu-column ul li {
-    padding: 10px 24px;
-    white-space: nowrap;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #000;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-  }
-  
-  .submenu-column ul li:last-child {
-    border-bottom: none;
-  }
-  
-  .submenu-column ul li:hover {
-    background: #f0f0f0;
-  }
-  
-  /* Submenu links */
-  .submenu-column ul li a {
-    color: #0066cc;
-    text-decoration: none;
     display: block;
   }
   
-  .submenu-column ul li a:hover {
+  .submenu-column li {
+    margin: 4px 0;
+  }
+  
+  .submenu-column a {
+    text-decoration: none;
+    color: #0066cc;
+    font-size: 13px;
+  }
+  
+  .submenu-column a:hover {
     text-decoration: underline;
+  }
+  
+  .submenu-column:hover .dropdown-arrow {
+    transform: rotate(180deg);
   }
   
