@@ -29,7 +29,8 @@ export default async function decorate(block) {
   
     const mainMenus = Object.keys(grouped);
     let selectedMain = mainMenus[0];
-    mainMenuButton.textContent = selectedMain;
+    mainMenuButton.innerHTML = `<span class="label">${selectedMain}</span> <span class="main-menu-arrow">▶</span>`;
+
   
     const dropdown = document.createElement("ul");
     dropdown.className = "main-menu-dropdown";
@@ -39,10 +40,11 @@ export default async function decorate(block) {
       const li = document.createElement("li");
       li.textContent = menu;
       li.onclick = (e) => {
-        e.stopPropagation(); // prevent closing dropdown
+        e.stopPropagation();
         selectedMain = menu;
-        mainMenuButton.textContent = menu;
+        mainMenuButton.querySelector(".label").textContent = menu;
         dropdown.style.display = "none";
+        mainMenuButton.querySelector(".main-menu-arrow").textContent = "▶";
         renderSubmenus();
       };
       dropdown.appendChild(li);
@@ -53,6 +55,11 @@ export default async function decorate(block) {
       e.stopPropagation();
       const isVisible = dropdown.style.display === "block";
       dropdown.style.display = isVisible ? "none" : "block";
+      
+      // Toggle arrow
+      const arrow = mainMenuButton.querySelector(".main-menu-arrow");
+      arrow.textContent = isVisible ? "▶" : "▼";
+      
     });
   
     // Keep dropdown open if hovering over it
@@ -96,7 +103,7 @@ export default async function decorate(block) {
   
         const arrow = document.createElement("div");
         arrow.className = "dropdown-arrow";
-        arrow.textContent = "↓";
+        arrow.textContent = "▼";
   
         const list = document.createElement("ul");
         items.forEach(item => {

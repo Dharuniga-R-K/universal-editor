@@ -37,7 +37,9 @@
     cursor: pointer;
     width: 100%;
     padding: 4px 0;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
   .main-menu-button::after {
@@ -107,9 +109,14 @@
   
   /* ↓ arrow below the submenu title */
   .dropdown-arrow {
-    font-size: 14px;
+    font-size: 16px;
     color: #666;
     margin-bottom: 8px;
+  }
+
+  .main-menu-arrow {
+    font-size: 16px;
+    margin-left: 8px;
   }
   
   /* Hide submenu list by default */
