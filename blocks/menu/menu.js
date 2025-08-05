@@ -1,10 +1,8 @@
 export default function decorate(block) {
-    
   [...block.children].forEach((child) => {
     child.classList.add('menu-original-hidden');
   });
 
- 
   const divs = [...block.querySelectorAll(':scope > div')];
   const title = divs[0].querySelector('p')?.textContent.trim() || 'Menu';
   const submenuItems = divs.slice(1).map((div) => {
@@ -35,7 +33,7 @@ export default function decorate(block) {
     a.textContent = label;
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
-    li.appendChild(a)
+    li.appendChild(a);
     contentEl.appendChild(li);
   });
 

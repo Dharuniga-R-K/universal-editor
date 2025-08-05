@@ -1,14 +1,14 @@
-/* Base block layout */
+/* Base layout */
 .menu-excel.block {
     display: flex;
     flex-wrap: nowrap;
-    border-top: 3px solid #f9b000; /* Yellow line on top */
+    border-top: 3px solid #f9b000;
     font-family: Arial, sans-serif;
     overflow-x: auto;
     position: relative;
   }
   
-  /* Left: Green main menu section */
+  /* Left green main menu */
   .main-menu-wrapper {
     background: #003820;
     color: white;
@@ -46,7 +46,7 @@
     margin-left: 8px;
   }
   
-  /* Dropdown list for main-menu */
+  /* Dropdown list */
   .main-menu-dropdown {
     display: none;
     position: absolute;
@@ -78,7 +78,7 @@
     display: block;
   }
   
-  /* Right: Submenu columns container */
+  /* Submenu container (right section) */
   .submenu-wrapper {
     display: flex;
     flex-grow: 1;
@@ -89,7 +89,7 @@
     overflow-x: auto;
   }
   
-  /* Individual submenu column */
+  /* Each submenu column */
   .submenu-column {
     display: flex;
     flex-direction: column;
@@ -101,43 +101,35 @@
     cursor: pointer;
   }
   
-  /* Title + arrow */
+  /* Submenu title */
   .submenu-title {
     font-weight: bold;
     color: #333;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
   }
   
+  /* ↓ arrow below the submenu title */
   .dropdown-arrow {
-    font-size: 10px;
-    transition: transform 0.2s ease;
-    margin-top: 2px;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
   }
   
-  /* Rotate arrow on hover */
-  .submenu-column:hover .dropdown-arrow {
-    transform: rotate(180deg);
-  }
-  
-  /* Submenu links list: hidden by default */
+  /* Hide submenu list by default */
   .submenu-column ul {
     display: none;
     list-style: none;
     padding: 0;
     margin: 0;
-    transition: opacity 0.2s ease;
   }
   
-  /* Show links on hover */
+  /* Show submenu list on hover */
   .submenu-column:hover ul {
     display: block;
   }
   
-  /* Individual link styling */
+  /* Submenu links */
   .submenu-column li {
     margin: 4px 0;
   }
