@@ -24,7 +24,7 @@ export default async function decorate(block) {
     const selectLabel = document.createElement("span");
     selectLabel.textContent = "SELECT THE INDICATION";
   
-    const mainMenuButton = document.createElement("button");
+    const mainMenuButton = document.createElement("div");
     mainMenuButton.className = "main-menu-button";
   
     const mainMenus = Object.keys(grouped);
