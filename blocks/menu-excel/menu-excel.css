@@ -73,10 +73,6 @@
     background: #f0f0f0;
   }
   
-  /* Show dropdown on hover */
-  .main-menu-wrapper:hover .main-menu-dropdown {
-    display: block;
-  }
   
   /* Submenu container (right section) */
   .submenu-wrapper {
