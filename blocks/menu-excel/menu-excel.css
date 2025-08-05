@@ -7,18 +7,29 @@
     overflow-x: auto;
     position: relative;
   }
+
+  .menu-excel {
+    min-height: 72px;
+  }
   
   /* Left green main menu */
   .main-menu-wrapper {
-    background: #003820;
-    color: white;
-    padding: 16px;
-    min-width: 300px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    position: relative;
+  flex-direction: column;
+  justify-content: center;      /* centers items vertically */
+  align-items: baseline;        /* aligns items on baseline horizontally */
+  height: 100%;
+  width: 100%;
+  padding: 0.5rem 3.125rem 0.5rem 0.9375rem;
+  background-color: #07412c;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  font-weight: 400;
+  color: #fff;
+  position: relative;
+  cursor: pointer;
+  min-height: 72px;
+  overflow: hidden;
   }
   
   .main-menu-wrapper span {
@@ -66,9 +77,22 @@
   }
   
   .main-menu-dropdown li {
-    padding: 8px 16px;
     cursor: pointer;
     white-space: nowrap;
+    color: #000;
+    padding: 12px 35px;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+  }
+
+  .main-menu ul {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 5px 0;
+    border: 2px solid #144633;
+    margin: 0;          /* good practice to reset */
+    list-style: none;   /* remove bullets */
   }
   
   .main-menu-dropdown li:hover {
