@@ -1,0 +1,29 @@
+/* Indications List */
+.menu__indications {
+    display: none;
+  }
+  .menu__indications.open {
+    display: block;
+  }
+  
+  /* Submenu */
+  .menu__mdd-internal--sub {
+    display: none;
+  }
+  .menu__mdd-internal-item.open > .menu__mdd-internal--sub,
+  .menu__mdd-internal-item.hover > .menu__mdd-internal--sub {
+    display: block;
+  }
+  
+  /* Arrow styles for interaction feedback (optional) */
+  .dropdown-button::after {
+    content: '▼';
+    margin-left: 8px;
+    display: inline-block;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+  }
+  .dropdown-button.open::after {
+    transform: rotate(180deg);
+  }
+  

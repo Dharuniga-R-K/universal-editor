@@ -1,27 +1,30 @@
 export default async function decorate(block) {
+    // Get the spreadsheet path from the anchor
     const rawPath = block.querySelector("a")?.getAttribute("href");
     if (!rawPath) return;
   
     const fetchUrl = new URL(rawPath, window.location.origin).href;
-    const data = (await fetch(fetchUrl).then(r => r.json())).data;
+    const response = await fetch(fetchUrl);
+    const json = await response.json();
+    const data = json.data;
   
-    // Group rows by main‑menu
+    // Group rows by main-menu
     const grouped = {};
-    data.forEach(item => {
-      (grouped[item['main-menu']] ||= []).push(item);
+    data.forEach((item) => {
+      if (!grouped[item['main-menu']]) grouped[item['main-menu']] = [];
+      grouped[item['main-menu']].push(item);
     });
   
-    // Pick first main-menu (e.g. "Major Depressive Disorder")
-    const mainLabels = Object.keys(grouped);
-    const selectedMain = mainLabels[0];
-    const subItems = grouped[selectedMain];
+    const mainMenus = Object.keys(grouped);
+    const defaultMain = mainMenus[0];
+    const defaultSubItems = grouped[defaultMain];
   
-    block.innerHTML = '';
+    block.innerHTML = ''; // Clear existing
   
     const headerBottom = document.createElement('div');
     headerBottom.className = 'header__bottom';
   
-    // Left section (Indications)
+    // === Left Section ===
     const leftSec = document.createElement('section');
     leftSec.className = 'row region region-header-bottom-left';
   
@@ -35,34 +38,29 @@ export default async function decorate(block) {
     titleDiv.innerHTML = `
       <span class="indications-menu-title text-small">select the Indication</span>
       <span class="indications-menu-sub-title text-regular header__headline">
-        <span class="mobile-link" data-url="${subItems[0]['link']}">${selectedMain}</span>
+        <span class="mobile-link" data-url="${defaultSubItems[0].link}">${defaultMain}</span>
       </span>
       <i class="dropdown-button" tabindex="0"></i>
     `;
   
     const ulInd = document.createElement('ul');
     ulInd.className = 'menu__indications nav clearfix';
-    grouped[selectedMain].forEach(item => {
-      // use nav items from each group key
-      mainLabels.forEach(main => {
-        grouped[main].forEach(sg => {
-          const li = document.createElement('li');
-          li.className = 'menu__indications-item nav-item';
-          const a = document.createElement('a');
-          a.href = sg.link;
-          a.className = `${main.toLowerCase().replace(/\s+/g, '')} menu__indications-link nav-link`;
-          a.textContent = sg['main-menu'];
-          li.append(a);
-          ulInd.append(li);
-        });
-      });
+    mainMenus.forEach((menu) => {
+      const li = document.createElement('li');
+      li.className = 'menu__indications-item nav-item';
+      const a = document.createElement('a');
+      a.href = grouped[menu][0].link;
+      a.className = 'menu__indications-link nav-link';
+      a.textContent = menu;
+      li.append(a);
+      ulInd.append(li);
     });
   
     navInd.append(titleDiv, ulInd);
     leftSec.append(navInd);
     headerBottom.append(leftSec);
   
-    // Right section (Submenu)
+    // === Right Section ===
     const rightSec = document.createElement('section');
     rightSec.className = 'row region region-header-bottom-right';
   
@@ -74,34 +72,66 @@ export default async function decorate(block) {
     const ulMain = document.createElement('ul');
     ulMain.className = 'menu__mdd-internal nav clearfix';
   
-    subItems.forEach((item) => {
+    defaultSubItems.forEach((item) => {
       const li = document.createElement('li');
       li.className = 'menu__mdd-internal-item menu__mdd-internal-item--with-sub menu__mdd-internal-item--dropdown nav-item dropdown';
+  
       const a = document.createElement('a');
       a.href = item.link;
       a.className = 'menu__mdd-internal-link nav-link dropdown-toggle-item';
-      a.innerHTML = item.menu;
-      
-      // nested submenu
+      a.innerHTML = `<span>${item.menu}</span>`;
+  
       const ulSub = document.createElement('ul');
       ulSub.className = 'menu__mdd-internal menu__mdd-internal--sub menu__mdd-internal--sub-1 nav clearfix';
+  
       const liSub = document.createElement('li');
       liSub.className = 'menu__mdd-internal-item menu__mdd-internal-item--sub menu__mdd-internal-item--sub-1 nav-item dropdown';
+  
       const aSub = document.createElement('a');
       aSub.href = item.link;
       aSub.className = 'menu__mdd-internal-link nav-link dropdown-item';
-      aSub.textContent = item.menu;
+      aSub.textContent = item.submenu;
+  
       liSub.append(aSub);
       ulSub.append(liSub);
-      li.append(a); 
-      li.append(ulSub);
+      li.append(a, ulSub);
       ulMain.append(li);
     });
   
     navSub.append(ulMain);
     rightSec.append(navSub);
     headerBottom.append(rightSec);
-  
     block.append(headerBottom);
+  
+    // === Interactions ===
+  
+    // Toggle Indications Dropdown
+    const dropdownBtn = block.querySelector('.dropdown-button');
+    const indicationsList = block.querySelector('.menu__indications');
+  
+    dropdownBtn?.addEventListener('click', () => {
+      indicationsList.classList.toggle('open');
+      dropdownBtn.classList.toggle('open');
+    });
+  
+    // Toggle submenus on click
+    block.querySelectorAll('.menu__mdd-internal-item--with-sub').forEach((item) => {
+      const toggle = item.querySelector('.dropdown-toggle-item');
+  
+      toggle?.addEventListener('click', (e) => {
+        e.preventDefault();
+  
+        // Close other open submenus
+        block.querySelectorAll('.menu__mdd-internal-item--with-sub').forEach((el) => {
+          if (el !== item) el.classList.remove('open');
+        });
+  
+        item.classList.toggle('open');
+      });
+  
+      // Hover support (optional)
+      item.addEventListener('mouseenter', () => item.classList.add('hover'));
+      item.addEventListener('mouseleave', () => item.classList.remove('hover'));
+    });
   }
   
