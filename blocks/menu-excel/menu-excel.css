@@ -6,14 +6,14 @@
     font-family: Arial, sans-serif;
     overflow-x: visible; /* allow horizontal overflow */
     position: relative;
-  }
-  
-  .menu-excel {
+}
+
+.menu-excel {
     min-height: 72px;
-  }
-  
-  /* Left green main menu */
-  .main-menu-wrapper {
+}
+
+/* Left green main menu */
+.main-menu-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,16 +30,16 @@
     min-height: 72px;
     overflow: visible; /* IMPORTANT: allow dropdown to overflow */
     z-index: 100;
-  }
-  
-  .main-menu-wrapper span {
+}
+
+.main-menu-wrapper span {
     font-size: 13px;
     font-weight: 700;
     line-height: 1.1;
     text-transform: uppercase;
-  }
-  
-  .main-menu-button {
+}
+
+.main-menu-button {
     background: transparent;
     border: none;
     color: white;
@@ -53,19 +53,19 @@
     justify-content: space-between;
     align-items: center;
     text-transform: uppercase;
-  }
-  
-  .main-menu-button::after {
+}
+
+.main-menu-button::after {
     content: none !important;
-  }
-  
-  .main-menu-arrow {
+}
+
+.main-menu-arrow {
     font-size: 16px;
     margin-left: 8px;
-  }
-  
-  /* Main menu dropdown (floats on top) */
-  .main-menu-dropdown {
+}
+
+/* Main menu dropdown (floats on top) */
+.main-menu-dropdown {
     display: none;
     position: absolute;
     top: 100%;
@@ -77,69 +77,73 @@
     margin: 0;
     padding: 0;
     z-index: 200;
-    width: 100%;
+    width: 99%;
     max-width: 320px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  }
-  
-  .main-menu-dropdown li {
+}
+
+.main-menu-dropdown li {
     cursor: pointer;
-    white-space: nowrap;
+    white-space: nowrap; /* prevent wrapping */
     color: #000;
     padding: 16px 24px;
     font-size: 0.9375rem;
-    font-weight: 500;
+    font-weight: 700;
     text-transform: uppercase;
     border-bottom: 1px solid #eee;
-  }
-  
-  .main-menu-dropdown li:hover {
+}
+
+.main-menu-dropdown li:hover {
     background: #f0f0f0;
-  }
-  
-  /* Show main menu dropdown on button click handled by JS */
-  
-  /* Submenu container */
-  .submenu-wrapper {
+}
+
+/* Show main menu dropdown on button click handled by JS */
+
+/* Submenu container */
+/* Changed flex-wrap to nowrap to keep submenu columns inline */
+/* Reduced width by removing flex-grow or full width, so dropdowns float independently */
+.submenu-wrapper {
     display: flex;
-    flex-grow: 1;
-    justify-content: space-around;
+    flex-wrap: nowrap; /* prevent wrapping */
+    justify-content: flex-start; /* align left */
     align-items: flex-start;
     background: white;
     padding: 16px;
     overflow: visible; /* allow dropdown overflow */
     position: relative;
     z-index: 10;
-  }
-  
-  /* Each submenu column */
-  .submenu-column {
+    /* Remove flex-grow or wide width */
+    width: auto; 
+}
+
+/* Each submenu column */
+.submenu-column {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-width: 120px;
     padding: 0 12px;
     text-align: center;
-    position: relative; /* anchor submenu dropdown */
+    position: relative; /* important for absolute dropdown positioning */
     cursor: pointer;
-  }
-  
-  /* Submenu title */
-  .submenu-title {
+}
+
+/* Submenu title */
+.submenu-title {
     font-weight: bold;
     color: #333;
     margin-bottom: 4px;
     font-size: 14px;
-  }
-  
-  .submenu-arrow {
+}
+
+.submenu-arrow {
     font-size: 16px;
     color: #666;
     margin-bottom: 8px;
-  }
-  
-  /* Submenu dropdown styling */
-  .submenu-column > ul {
+}
+
+/* Submenu dropdown styling */
+.submenu-column > ul {
     display: none; /* hidden by default */
     position: absolute;
     top: 100%;
@@ -149,32 +153,34 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     padding: 8px 0;
     margin: 0;
-    min-width: 160px;
-    z-index: 1000; /* above most elements */
+    min-width: max-content; /* dynamic width based on content */
+    max-width: 320px; /* optional max width */
+    z-index: 1000; /* above other elements */
     list-style: none;
     text-align: left;
-  }
-  
-  /* Show submenu dropdown only on hover */
-  .submenu-column:hover > ul {
+    white-space: nowrap; /* prevent wrapping */
+}
+
+/* Show submenu dropdown only on hover */
+.submenu-column:hover > ul {
     display: block;
-  }
-  
-  .submenu-column li {
+}
+
+.submenu-column li {
     margin: 4px 0;
-  }
-  
-  .submenu-column a {
+}
+
+.submenu-column a {
     text-decoration: none;
     color: #0066cc;
     font-size: 13px;
-  }
-  
-  .submenu-column a:hover {
+}
+
+.submenu-column a:hover {
     text-decoration: underline;
-  }
-  
-  .submenu-column:hover .dropdown-arrow {
+}
+
+/* Rotate arrow on hover */
+.submenu-column:hover .dropdown-arrow {
     transform: rotate(180deg);
-  }
-  
+}
