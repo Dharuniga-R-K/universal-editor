@@ -107,11 +107,13 @@ export default async function decorate(block) {
           title.href = submenuLinks[submenu] || "#"; // link for the sub-menu title
           title.target = "_blank";  // open in new tab
           title.style.cursor = "pointer";
+          col.append(title);
       
           if (items.length > 0) {
           const arrow = document.createElement("div");
           arrow.className = "submenu-arrow";
           arrow.textContent = "▼";
+          col.append(arrow);
           }
       
           const list = document.createElement("ul");
@@ -125,7 +127,7 @@ export default async function decorate(block) {
             list.appendChild(li);
           });
       
-          col.append(title, arrow, list);
+          col.append(list);
           submenuWrapper.appendChild(col);
         });
       }
