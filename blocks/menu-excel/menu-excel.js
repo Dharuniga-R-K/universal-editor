@@ -7,7 +7,7 @@ export default async function decorate(block) {
     const json = await response.json();
     const data = json.data;
   
-    // Group by "main-menu"
+    // Group data by main-menu
     const grouped = {};
     data.forEach(item => {
       const main = item["main-menu"];
@@ -15,134 +15,111 @@ export default async function decorate(block) {
       grouped[main].push(item);
     });
   
-    // Clear existing content
     block.innerHTML = "";
   
-    // Wrapper div
-    const headerBottom = document.createElement("div");
-    headerBottom.className = "header__bottom";
-  
-    // === LEFT SIDE ===
-    const leftSection = document.createElement("section");
-    leftSection.className = "row region region-header-bottom-left";
-  
-    const navLeft = document.createElement("nav");
-    navLeft.className = "menu__indications menu--indications";
-    navLeft.setAttribute("aria-label", "select the Indication");
-    navLeft.setAttribute("role", "navigation");
-  
-    const titlePrefix = document.createElement("div");
-    titlePrefix.className = "indications-menu-title-prefix";
+    // Main menu block (left column)
+    const mainMenuWrapper = document.createElement("div");
+    mainMenuWrapper.className = "main-menu-wrapper";
   
     const selectLabel = document.createElement("span");
-    selectLabel.className = "indications-menu-title text-small";
-    selectLabel.textContent = "select the Indication";
+    selectLabel.textContent = "SELECT THE INDICATION";
   
-    const subTitleWrapper = document.createElement("span");
-    subTitleWrapper.className = "indications-menu-sub-title text-regular header__headline";
+    const mainMenuButton = document.createElement("div");
+    mainMenuButton.className = "main-menu-button";
   
-    const selectedMainEl = document.createElement("span");
-    selectedMainEl.className = "mobile-link";
-    selectedMainEl.textContent = Object.keys(grouped)[0];
-    selectedMainEl.setAttribute("data-url", "#"); // Will update on click
+    const mainMenus = Object.keys(grouped);
+    let selectedMain = mainMenus[0];
+    mainMenuButton.innerHTML = `<span class="label">${selectedMain}</span> <span class="main-menu-arrow">▶</span>`;
   
-    subTitleWrapper.appendChild(selectedMainEl);
+    const dropdown = document.createElement("ul");
+    dropdown.className = "main-menu-dropdown";
+    dropdown.style.display = "none"; // hidden by default
   
-    const dropdownButton = document.createElement("i");
-    dropdownButton.className = "dropdown-button";
-    dropdownButton.tabIndex = 0;
-  
-    titlePrefix.append(selectLabel, subTitleWrapper, dropdownButton);
-    navLeft.appendChild(titlePrefix);
-  
-    const ulLeft = document.createElement("ul");
-    ulLeft.className = "menu__indications nav clearfix";
-  
-    Object.keys(grouped).forEach(mainMenu => {
+    mainMenus.forEach(menu => {
       const li = document.createElement("li");
-      li.className = "menu__indications-item nav-item";
-  
-      const a = document.createElement("a");
-      a.className = "menu__indications-link nav-link";
-      a.href = "#"; // You can use item.link if needed
-      a.textContent = mainMenu;
-  
-      a.addEventListener("click", (e) => {
-        e.preventDefault();
-        selectedMainEl.textContent = mainMenu;
-        renderRightMenu(mainMenu);
-      });
-  
-      li.appendChild(a);
-      ulLeft.appendChild(li);
+      li.textContent = menu;
+      li.onclick = (e) => {
+        e.stopPropagation();
+        selectedMain = menu;
+        mainMenuButton.querySelector(".label").textContent = menu;
+        dropdown.style.display = "none";
+        mainMenuButton.querySelector(".main-menu-arrow").textContent = "▶";
+        renderSubmenus();
+      };
+      dropdown.appendChild(li);
     });
   
-    navLeft.appendChild(ulLeft);
-    leftSection.appendChild(navLeft);
-    headerBottom.appendChild(leftSection);
+    // Toggle dropdown on button click
+    mainMenuButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isVisible = dropdown.style.display === "block";
+      dropdown.style.display = isVisible ? "none" : "block";
+      
+      // Toggle arrow
+      const arrow = mainMenuButton.querySelector(".main-menu-arrow");
+      arrow.textContent = isVisible ? "▶" : "▼";
+      
+    });
   
-    // === RIGHT SIDE ===
-    const rightSection = document.createElement("section");
-    rightSection.className = "row region region-header-bottom-right";
+    // Keep dropdown open if hovering over it
+    mainMenuWrapper.addEventListener("mouseenter", () => {
+      if (dropdown.style.display === "block") {
+        dropdown.style.display = "block";
+      }
+    });
   
-    const navRight = document.createElement("nav");
-    navRight.className = "menu__mdd-internal navigation menu--mdd-internal";
-    navRight.setAttribute("aria-label", "MDD Menu");
-    navRight.setAttribute("role", "navigation");
+    // Close dropdown on outside click
+    document.addEventListener("click", () => {
+      dropdown.style.display = "none";
+    });
   
-    const ulRight = document.createElement("ul");
-    ulRight.className = "menu__mdd-internal nav clearfix";
-    navRight.appendChild(ulRight);
-    rightSection.appendChild(navRight);
-    headerBottom.appendChild(rightSection);
+    mainMenuWrapper.append(selectLabel, mainMenuButton, dropdown);
+    block.appendChild(mainMenuWrapper);
   
-    // Append the final layout to the block
-    block.appendChild(headerBottom);
+    // Right side: submenu display
+    const submenuWrapper = document.createElement("div");
+    submenuWrapper.className = "submenu-wrapper";
+    block.appendChild(submenuWrapper);
   
-    // === Function to render right-side menu ===
-    function renderRightMenu(mainMenu) {
-      ulRight.innerHTML = "";
-      const subItems = grouped[mainMenu];
+    function renderSubmenus() {
+      submenuWrapper.innerHTML = "";
+      const rows = grouped[selectedMain];
   
-      const subMenuMap = {};
-      subItems.forEach(item => {
-        const sub = item["sub-menu"];
-        if (!subMenuMap[sub]) subMenuMap[sub] = [];
-        subMenuMap[sub].push({ title: item.menu, link: item.link });
+      const submenuMap = {};
+      rows.forEach(row => {
+        const sub = row["sub-menu"];
+        if (!submenuMap[sub]) submenuMap[sub] = [];
+        submenuMap[sub].push({ title: row.menu, link: row.link });
       });
   
-      Object.entries(subMenuMap).forEach(([subMenu, links]) => {
-        const li = document.createElement("li");
-        li.className = "menu__mdd-internal-item menu__mdd-internal-item--with-sub menu__mdd-internal-item--dropdown nav-item dropdown";
+      Object.entries(submenuMap).forEach(([submenu, items]) => {
+        const col = document.createElement("div");
+        col.className = "submenu-column";
   
-        const a = document.createElement("a");
-        a.className = "menu__mdd-internal-link nav-link dropdown-toggle-item";
-        a.href = links[0].link;
-        a.innerHTML = `<span>${subMenu}</span>`;
-        li.appendChild(a);
+        const title = document.createElement("div");
+        title.className = "submenu-title";
+        title.textContent = submenu;
   
-        const ulSub = document.createElement("ul");
-        ulSub.className = "menu__mdd-internal menu__mdd-internal--sub menu__mdd-internal--sub-1 nav clearfix";
+        const arrow = document.createElement("div");
+        arrow.className = "submenu-arrow";
+        arrow.textContent = "▼";
   
-        links.forEach(link => {
-          const liSub = document.createElement("li");
-          liSub.className = "menu__mdd-internal-item menu__mdd-internal-item--sub menu__mdd-internal-item--sub-1 nav-item dropdown";
-  
-          const aSub = document.createElement("a");
-          aSub.className = "menu__mdd-internal-link nav-link dropdown-item";
-          aSub.href = link.link;
-          aSub.textContent = link.title;
-  
-          liSub.appendChild(aSub);
-          ulSub.appendChild(liSub);
+        const list = document.createElement("ul");
+        items.forEach(item => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = item.link;
+          a.textContent = item.title;
+          a.target = "_blank";
+          li.appendChild(a);
+          list.appendChild(li);
         });
   
-        li.appendChild(ulSub);
-        ulRight.appendChild(li);
+        col.append(title, arrow, list);
+        submenuWrapper.appendChild(col);
       });
     }
   
-    // Initial render
-    renderRightMenu(Object.keys(grouped)[0]);
+    renderSubmenus();
   }
   
