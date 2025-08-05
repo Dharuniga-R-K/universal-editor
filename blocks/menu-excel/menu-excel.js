@@ -61,12 +61,6 @@ export default async function decorate(block) {
       
     });
   
-  
-    // Close dropdown on outside click
-    document.addEventListener("click", () => {
-      dropdown.style.display = "none";
-    });
-  
     mainMenuWrapper.append(selectLabel, mainMenuButton, dropdown);
     block.appendChild(mainMenuWrapper);
   
