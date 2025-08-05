@@ -90,7 +90,9 @@ export default async function decorate(block) {
         const sub = row["sub-menu"];
         if (!submenuMap[sub]) submenuMap[sub] = [];
         submenuMap[sub].push({ title: row.menu, link: row.link });
-      });
+      
+      if (!submenuLinks[sub]) submenuLinks[sub] = row.link1 || row.link; // fallback to row.link if link1 not present
+  });
   
       Object.entries(submenuMap).forEach(([submenu, items]) => {
         const col = document.createElement("div");
@@ -99,6 +101,9 @@ export default async function decorate(block) {
         const title = document.createElement("div");
         title.className = "submenu-title";
         title.textContent = submenu;
+        title.href = submenuLinks[submenu] || "#"; // link for the sub-menu title
+        title.target = "_blank";  // open in new tab
+        title.style.cursor = "pointer";
   
         const arrow = document.createElement("div");
         arrow.className = "submenu-arrow";
