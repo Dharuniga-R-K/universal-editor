@@ -156,3 +156,7 @@
     color: #666;
     margin-bottom: 8px;
   }
+
+  .main-menu-button::after {
+    content: none !important;
+  }
