@@ -146,6 +146,11 @@
     background-color: #42771e; /* green underline */
   }
 
+  .submenu-title:hover::after,
+.submenu-title.active::after {
+  background-color: #42771e;
+}
+
 .submenu-arrow {
     font-size: 16px;
     color: #666;
