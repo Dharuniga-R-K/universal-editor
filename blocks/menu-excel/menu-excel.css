@@ -18,7 +18,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    width: 280px;
+    width: 24%;
     padding: 0.5rem 1rem;
     background-color: #07412c;
     font-size: 0.6875rem;
@@ -112,7 +112,7 @@
     position: relative;
     z-index: 10;
     /* Remove flex-grow or wide width */
-    width: auto; 
+    width: 76%; 
 }
 
 /* Each submenu column */
@@ -125,6 +125,7 @@
     text-align: center;
     position: relative; /* important for absolute dropdown positioning */
     cursor: pointer;
+    flex: 1;
 }
 
 /* Submenu title */

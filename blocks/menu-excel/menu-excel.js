@@ -93,7 +93,7 @@ export default async function decorate(block) {
           title.className = "submenu-title";
           title.textContent = submenu;
           title.href = submenuLinks[submenu] || "#"; // link for the sub-menu title
-          title.target = "_blank";  // open in new tab
+          title.target = "_blank";  
           title.style.cursor = "pointer";
           col.append(title);
       
