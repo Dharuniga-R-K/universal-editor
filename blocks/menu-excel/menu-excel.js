@@ -24,7 +24,7 @@ export default async function decorate(block) {
 
   menuDropdown.innerHTML = ''; // clear any existing
 
-  menuData.forEach(item => {
+  (menuData.data || []).forEach(item => {
     const li = document.createElement('li');
     li.textContent = item.label;
     li.dataset.submenu = item.submenu ? JSON.stringify(item.submenu) : null;
