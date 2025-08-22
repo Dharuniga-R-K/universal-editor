@@ -29,7 +29,15 @@ export default async function decorate(block) {
   
     const mainMenus = Object.keys(grouped);
     let selectedMain = mainMenus[0];
-    mainMenuButton.innerHTML = `<span class="label">${selectedMain}</span> <span class="main-menu-arrow">▶</span>`;
+    const label = document.createElement("span");
+    label.className = "label";
+    label.textContent = selectedMain;
+
+    const arrow = document.createElement("span");
+    arrow.className = "main-menu-arrow";
+    arrow.textContent = "▶";
+
+    mainMenuButton.append(label, arrow);
   
     const dropdown = document.createElement("ul");
     dropdown.className = "main-menu-dropdown";
