@@ -1,9 +1,11 @@
 import { renderBlock } from '../../scripts/faintly.js';
 
 export default async function decorate(block) {
-  const rawPath = block.dataset.src;
+  const anchor = block.querySelector('a[href$=".json"]');
+  const rawPath = anchor?.getAttribute('href');
+
   if (!rawPath) {
-    console.warn('Missing data-src for menu block');
+    console.warn('No JSON path found in block.');
     return;
   }
 
