@@ -1,13 +1,11 @@
+<template>
+    <div data-fly-unwrap data-fly-test.bV="test">
+        <div class="banner-text">${text}</div>
+        <img src='${imgsrc}' alt="${imgalt}" class="banner-image">
 
-    <div class="menu-block">
-      <div class="main-menu-wrapper">
-        <span>SELECT THE INDICATION</span>
-        <div class="main-menu-button">
-          <span class="label"></span>
-          <span class="main-menu-arrow">▶</span>
-        </div>
-        <ul class="main-menu-dropdown"></ul>
-      </div>
-      <div class="submenu-wrapper"></div>
     </div>
- 
+    <div data-fly-unwrap data-fly-not="bv">
+        <img src="${imgsrc}" alt="${imgalt}" class="banner-image">
+        <div class="banner-text">${text}</div>
+    </div>
+</template>
