@@ -33,6 +33,11 @@ export default async function decorate(block) {
   
   // Clone template
   const template = document.getElementById('faintly-template--blocks--menu-excel');
+console.log('Template element:', template);
+if (!template) {
+  console.error('Template with id faintly-template--blocks--menu-excel not found in DOM!');
+  return;
+}
   const templateContent = template.content.cloneNode(true);
   
   // Fetch menu data
