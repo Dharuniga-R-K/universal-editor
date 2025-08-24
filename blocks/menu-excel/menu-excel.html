@@ -1,62 +1,12 @@
 <template>
-  <div class="menu-excel block">
-    <!-- Left panel: Main menu selector -->
-    <nav class="main-menu-wrapper" aria-label="Main menu">
-      <span class="select-label">SELECT THE INDICATION</span>
-      <button
-        id="main-menu-button"
-        class="main-menu-button"
-        aria-haspopup="listbox"
-        aria-expanded="${dropdownOpen}"
-        @click="toggleDropdown()"
-        type="button"
-      >
-        <span class="label">${selectedMainMenu}</span>
-        <span class="arrow">${dropdownOpen ? "▼" : "▶"}</span>
-      </button>
-      <ul
-        id="main-menu-dropdown"
-        class="main-menu-dropdown ${dropdownOpen ? 'open' : ''}"
-        role="listbox"
-        
-      >
-        ${mainMenus
-          .filter(menu => menu !== selectedMainMenu)
-          .map(
-            menu => `
-          <li
-            role="option"
-            tabindex="0"
-            @click="selectMenu('${menu}')"
-            @keydown="handleKeyDown(event, '${menu}')"
-          >
-            ${menu}
-          </li>
-        `
-          )
-          .join('')}
-      </ul>
-    </nav>
-
-    <!-- Right panel: submenu columns -->
-    <div class="submenu-wrapper" aria-label="Submenu">
-      ${Object.entries(submenuGrouped).map(([subMenu, items]) => `
-        <div class="submenu-column">
-          <div class="submenu-title">
-            ${subMenu}
-            <span class="dropdown-arrow">▼</span>
-          </div>
-          <ul class="submenu-list">
-            ${items
-              .map(item => `
-                <li>
-                  <a href="${item.link1 || item.link}" target="_blank">${item.menu}</a>
-                </li>
-              `)
-              .join('')}
-          </ul>
-        </div>
-      `).join('')}
-    </div>
+  <div class="main-menu-button" data-fly-id="main-toggle">
+    <span class="label">${selectedMain}</span>
+    <span class="arrow">${dropdownOpen ? '▼' : '▶'}</span>
   </div>
+
+  <ul class="main-menu-dropdown ${dropdownOpen ? 'open' : ''}" data-fly-id="dropdown">
+    ${mainMenus.filter(m => m !== selectedMain).map(menu => `
+      <li data-fly-id="select-${menu}">${menu}</li>
+    `).join('')}
+  </ul>
 </template>
