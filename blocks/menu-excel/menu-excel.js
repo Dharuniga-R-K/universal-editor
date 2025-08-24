@@ -72,4 +72,15 @@ export default async function decorate(block) {
             `).join('');
         });
     });
+
+    // Render initial submenus
+    const submenuWrapper = block.querySelector('.submenu-wrapper');
+    submenuWrapper.innerHTML = submenus.map(submenu => `
+        <div class="submenu-column">
+            <a class="submenu-title" href="${submenu.link}" target="_blank">${submenu.title}</a>
+            <ul>
+                ${submenu.items.map(item => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('')}
+            </ul>
+        </div>
+    `).join('');
 }
