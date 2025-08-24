@@ -39,6 +39,11 @@ export default async function decorate(block) {
     const mainMenuButton = block.querySelector('.main-menu-wrapper');
     const dropdown = block.querySelector('.main-menu-dropdown');
 
+// Render main menu list dynamically
+dropdown.innerHTML = mainMenus.map(menu => `
+  <li data-fly-menu-item="${menu}">${menu}</li>
+`).join('');
+
     mainMenuButton.addEventListener('click', (e) => {
         e.stopPropagation();
         const isVisible = dropdown.style.display === "block";

@@ -3,9 +3,7 @@
         <div class="main-menu-wrapper">
             <span class="label">${selectedMain}</span>
             <span class="main-menu-arrow">▶</span>
-            <ul class="main-menu-dropdown" style="display: none;">
-                ${mainMenus.map(menu => `<li data-fly-menu-item="${menu}">${menu}</li>`).join('')}
-            </ul>
+            <ul class="main-menu-dropdown" style="display: none;"></ul>
         </div>
         <div class="submenu-wrapper">
             ${submenus.map(submenu => `
