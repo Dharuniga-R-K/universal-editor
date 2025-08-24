@@ -1,15 +1,30 @@
-<template id="faintly-template--blocks--menu-excel">
-  <div data-fly-unwrap>
-    <div class="menu-block">
-      <div class="main-menu-wrapper">
-        <span>SELECT THE INDICATION</span>
-        <div class="main-menu-button">
-          <span class="label"></span>
-          <span class="main-menu-arrow">▶</span>
-        </div>
-        <ul class="main-menu-dropdown"></ul>
+<template>
+  <div class="menu-excel block" data-fly-unwrap data-fly-test.menu="fly-menu">
+    <div class="main-menu-wrapper">
+      <span>SELECT THE INDICATION</span>
+      <div class="main-menu-button">
+        <span class="label">${selectedMain}</span>
+        <span class="main-menu-arrow">${dropdownOpen ? "▼" : "▶"}</span>
       </div>
-      <div class="submenu-wrapper"></div>
+      <ul class="main-menu-dropdown ${dropdownOpen ? 'open' : ''}">
+        ${mainMenus.map(menu => `
+          <li data-fly-onclick="() => selectMenu('${menu}')">${menu}</li>
+        `).join('')}
+      </ul>
+    </div>
+
+    <div class="submenu-wrapper">
+      ${Object.entries(grouped[selectedMain] || {}).map(([submenu, items]) => `
+        <div class="submenu-column">
+          <a class="submenu-title" href="${submenuLinks[submenu]}" target="_blank">${submenu}</a>
+          ${items.some(i => i.title?.trim()) ? `<div class="submenu-arrow">▼</div>` : ''}
+          <ul>
+            ${items.map(i => `
+              <li><a href="${i.link}" target="_blank">${i.title}</a></li>
+            `).join('')}
+          </ul>
+        </div>
+      `).join('')}
     </div>
   </div>
 </template>

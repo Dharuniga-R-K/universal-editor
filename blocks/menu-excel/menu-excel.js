@@ -1,58 +1,65 @@
 import { renderBlock } from '../../scripts/faintly.js';
 
 export default async function decorate(block) {
-  const menuJsonPath = block.dataset.menuPath || '/menu.json';
+  const rawPath = block.querySelector('a')?.getAttribute('href');
+  if (!rawPath) return;
 
-  // Fetch menu data
-  let menuData = [];
-  try {
-    const response = await fetch(menuJsonPath);
-    menuData = await response.json();
-  } catch (e) {
-    console.error('Failed to load menu JSON:', e);
-  }
+  const fetchUrl = new URL(rawPath, window.location.origin).href;
+  const response = await fetch(fetchUrl);
+  const json = await response.json();
+  const data = json.data;
 
-  // Render the block with faintly template
-  await renderBlock(block, {
-    test: () => true, // always true to render template as is
-  });
+  const grouped = {};
+  const submenuLinks = {};
 
-  // Now dynamically build and insert menu items into main menu dropdown
-  const menuDropdown = block.querySelector('.main-menu-dropdown');
-  const submenuWrapper = block.querySelector('.submenu-wrapper');
-  const mainMenuLabel = block.querySelector('.main-menu-button .label');
+  data.forEach(row => {
+    const main = row['main-menu'];
+    const sub = row['sub-menu'];
+    if (!grouped[main]) grouped[main] = {};
+    if (!grouped[main][sub]) grouped[main][sub] = [];
 
-  menuDropdown.innerHTML = ''; // clear any existing
-
-  (menuData.data || []).forEach(item => {
-    const li = document.createElement('li');
-    li.textContent = item.label;
-    li.dataset.submenu = item.submenu ? JSON.stringify(item.submenu) : null;
-    menuDropdown.appendChild(li);
-  });
-
-  // Initialize label
-  mainMenuLabel.textContent = 'SELECT THE INDICATION';
-
-  // Add click listeners to menu items
-  menuDropdown.querySelectorAll('li').forEach(li => {
-    li.addEventListener('click', () => {
-      const submenuItems = li.dataset.submenu ? JSON.parse(li.dataset.submenu) : null;
-      mainMenuLabel.textContent = li.textContent;
-      submenuWrapper.innerHTML = ''; // clear previous submenu
-
-      if (submenuItems && submenuItems.length) {
-        const ul = document.createElement('ul');
-        submenuItems.forEach(subItem => {
-          const subLi = document.createElement('li');
-          const a = document.createElement('a');
-          a.href = subItem.url;
-          a.textContent = subItem.label;
-          subLi.appendChild(a);
-          ul.appendChild(subLi);
-        });
-        submenuWrapper.appendChild(ul);
-      }
+    grouped[main][sub].push({
+      title: row.menu,
+      link: row.link,
     });
+
+    submenuLinks[sub] = row.link1 || row.link;
   });
+
+  const mainMenus = Object.keys(grouped);
+  let selectedMain = mainMenus[0];
+  let dropdownOpen = false;
+
+  const selectMenu = (menu) => {
+    selectedMain = menu;
+    dropdownOpen = false;
+    update();
+  };
+
+  const toggleDropdown = () => {
+    dropdownOpen = !dropdownOpen;
+    update();
+  };
+
+  const update = async () => {
+    await renderBlock(block, {
+      selectedMain,
+      dropdownOpen,
+      mainMenus,
+      grouped,
+      submenuLinks,
+      selectMenu,
+      toggleDropdown,
+      menu: selectedMain.toLowerCase().replace(/\s+/g, '-'),
+    });
+  };
+
+  block.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target.classList.contains('main-menu-button') || target.closest('.main-menu-button')) {
+      toggleDropdown();
+    }
+  });
+
+  update();
 }

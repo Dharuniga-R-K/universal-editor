@@ -209,3 +209,7 @@
 .submenu-column:hover .dropdown-arrow {
     transform: rotate(180deg);
 }
+/* Show dropdown only if JS adds the "open" class */
+.main-menu-dropdown.open {
+  display: block;
+}
