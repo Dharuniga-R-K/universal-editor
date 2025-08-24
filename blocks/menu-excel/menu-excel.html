@@ -1,12 +1,13 @@
 <template>
   <div class="main-menu-button" data-fly-id="main-toggle">
-    <span class="label">${selectedMain}</span>
-    <span class="arrow">${dropdownOpen ? '▼' : '▶'}</span>
-  </div>
+  <span class="label">${selectedMain}</span>
+  <span class="arrow">${arrow}</span>
+</div>
 
-  <ul class="main-menu-dropdown ${dropdownOpen ? 'open' : ''}" data-fly-id="dropdown">
-    ${mainMenus.filter(m => m !== selectedMain).map(menu => `
-      <li data-fly-id="select-${menu}">${menu}</li>
-    `).join('')}
-  </ul>
+<ul class="main-menu-dropdown ${dropdownOpen ? 'open' : ''}" data-fly-id="dropdown">
+  ${mainMenus.filter(m => m !== selectedMain).map(menu => `
+    <li data-fly-id="select-${menu}">${menu}</li>
+  `).join('')}
+</ul>
+
 </template>
