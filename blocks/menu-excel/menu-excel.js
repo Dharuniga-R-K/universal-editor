@@ -1,65 +1,34 @@
-import { renderBlock } from '../../scripts/faintly.js';
-
 export default async function decorate(block) {
   const rawPath = block.querySelector('a')?.getAttribute('href');
-  if (!rawPath) return;
+  if (!rawPath) {
+    block.textContent = "No data source found.";
+    return;
+  }
 
-  const fetchUrl = new URL(rawPath, window.location.origin).href;
-  const response = await fetch(fetchUrl);
-  const json = await response.json();
-  const data = json.data;
+  try {
+    const response = await fetch(rawPath);
+    if (!response.ok) throw new Error('Network response not ok');
+    const json = await response.json();
+    const data = json.data || [];
 
-  const grouped = {};
-  const submenuLinks = {};
-
-  data.forEach(row => {
-    const main = row['main-menu'];
-    const sub = row['sub-menu'];
-    if (!grouped[main]) grouped[main] = {};
-    if (!grouped[main][sub]) grouped[main][sub] = [];
-
-    grouped[main][sub].push({
-      title: row.menu,
-      link: row.link,
-    });
-
-    submenuLinks[sub] = row.link1 || row.link;
-  });
-
-  const mainMenus = Object.keys(grouped);
-  let selectedMain = mainMenus[0];
-  let dropdownOpen = true;
-
-  const selectMenu = (menu) => {
-    selectedMain = menu;
-    dropdownOpen = true;
-    update();
-  };
-
-  const toggleDropdown = () => {
-    dropdownOpen = !dropdownOpen;
-    update();
-  };
-
-  const update = async () => {
-    await renderBlock(block, {
-      selectedMain,
-      dropdownOpen,
-      mainMenus,
-      grouped,
-      submenuLinks,
-      selectMenu,
-      toggleDropdown,
-      menu: selectedMain.toLowerCase().replace(/\s+/g, '-'),
-    });
-  };
-
-  block.addEventListener('click', (e) => {
-    const target = e.target;
-    if (target.classList.contains('main-menu-button') || target.closest('.main-menu-button')) {
-      toggleDropdown();
+    if (data.length === 0) {
+      block.textContent = "No menu data available.";
+      return;
     }
-  });
 
-  update();
+    // Just render main menu items as a simple list for testing
+    const ul = document.createElement('ul');
+    data.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item["main-menu"];
+      ul.appendChild(li);
+    });
+
+    block.innerHTML = '';
+    block.appendChild(ul);
+
+  } catch (e) {
+    block.textContent = "Error loading menu data.";
+    console.error(e);
+  }
 }
