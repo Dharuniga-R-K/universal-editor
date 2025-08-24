@@ -1,97 +1,70 @@
-/* Container */
-[data-fly-menu="main"] {
-  display: flex;
-  align-items: stretch;
-  background: linear-gradient(to right, #1d4b38, #2e653f); /* green tone */
-  font-family: sans-serif;
-}
-
-/* Left main selection box */
 .main-menu-wrapper {
-  background-color: #003a2b;
+  position: relative;
+  cursor: pointer;
+  background: #003c2f;
   color: white;
-  padding: 20px;
-  width: 300px;
+  padding: 10px 15px;
+  font-weight: bold;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  flex-shrink: 0;
-  font-size: 16px;
-  font-weight: bold;
-  flex-direction: column;
-  text-align: left;
-  text-transform: uppercase;
+  gap: 8px;
 }
 
-.main-menu-wrapper .label {
-  font-size: 14px;
-  opacity: 0.9;
-  margin-bottom: 5px;
-  text-transform: none;
-  font-weight: normal;
-}
-
-.main-menu-wrapper .main-menu-arrow {
-  font-size: 20px;
-  margin-top: 10px;
-  align-self: flex-end;
-}
-
-/* Dropdown (menu items) */
 .main-menu-dropdown {
-  background-color: white;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  min-width: 200px;
   list-style: none;
   margin: 0;
   padding: 0;
-  position: absolute;
-  z-index: 1000;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  width: 300px;
 }
 
 .main-menu-dropdown li {
-  padding: 12px 16px;
+  padding: 10px;
   cursor: pointer;
-  font-weight: bold;
-  color: #222;
 }
 
 .main-menu-dropdown li:hover {
-  background-color: #f0f0f0;
+  background-color: #eee;
 }
 
-/* Horizontal submenus */
 .submenu-wrapper {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: white;
-  flex: 1;
-  padding: 0 20px;
+  gap: 30px;
+  padding: 20px 0;
 }
 
-.submenu-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  padding: 15px 10px;
-  cursor: pointer;
+.submenu-group {
+  min-width: 200px;
 }
 
 .submenu-title {
   font-weight: bold;
-  color: #333;
-  text-align: center;
   text-decoration: none;
-  font-size: 14px;
+  color: #003c2f;
+  margin-bottom: 10px;
+  display: block;
 }
 
-.submenu-column::after {
-  content: '▼';
-  font-size: 12px;
+.submenu-group ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.submenu-group li {
+  margin: 6px 0;
+}
+
+.submenu-group li a {
+  text-decoration: none;
   color: #333;
-  margin-top: 4px;
+}
+
+.submenu-group li a:hover {
+  text-decoration: underline;
 }

@@ -1,19 +1,10 @@
 <template>
-    <div data-fly-unwrap data-fly-menu="main">
-        <div class="main-menu-wrapper">
-            <span class="label">${selectedMain}</span>
-            <span class="main-menu-arrow">▶</span>
-            <ul class="main-menu-dropdown" style="display: none;"></ul>
-        </div>
-        <div class="submenu-wrapper">
-            ${submenus.map(submenu => `
-                <div class="submenu-column">
-                    <a class="submenu-title" href="${submenu.link}" target="_blank">${submenu.title}</a>
-                    <ul>
-                        ${submenu.items.map(item => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('')}
-                    </ul>
-                </div>
-            `).join('')}
-        </div>
+  <div data-fly-unwrap data-fly-menu="main">
+    <div class="main-menu-wrapper">
+      <span class="label">${selectedMain}</span>
+      <span class="main-menu-arrow">▶</span>
+      <ul class="main-menu-dropdown" style="display: none;"></ul>
     </div>
+    <div class="submenu-wrapper"></div>
+  </div>
 </template>
