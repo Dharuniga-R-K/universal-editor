@@ -24,9 +24,11 @@ export default async function decorate(block) {
 
     async function render() {
       const arrow = dropdownOpen ? '▼' : '▶';
+
       await renderBlock(block, {
         selectedMain,
         mainMenus: Object.keys(grouped),
+        grouped,
         dropdownOpen,
         arrow,
       }, {

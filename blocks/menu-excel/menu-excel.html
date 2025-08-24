@@ -10,4 +10,16 @@
   `).join('')}
 </ul>
 
+<div class="submenu-wrapper">
+  ${grouped[selectedMain]?.map(item => `
+    <div class="submenu-column">
+      <div class="submenu-title">${item['sub-menu']}</div>
+      <ul class="submenu-list">
+        <li><a href="${item.link1 || item.link}" target="_blank">${item.menu}</a></li>
+      </ul>
+    </div>
+  `).join('') || ''}
+</div>
+
+
 </template>

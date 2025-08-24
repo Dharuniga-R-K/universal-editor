@@ -1,145 +1,29 @@
-.menu-excel.block {
-  display: flex;
-  border-top: 3px solid #f9b000;
-  font-family: Arial, sans-serif;
-  overflow-x: visible;
-  position: relative;
-}
-
-.main-menu-wrapper {
-  flex: 0 0 24%;
-  background-color: #07412c;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 0.5rem 1rem;
-  font-size: 0.75rem;
+.main-menu-button {
   cursor: pointer;
-  overflow: visible;
-  z-index: 100;
-}
-
-.main-menu-wrapper button {
-  background: transparent;
-  border: none;
-  color: white;
-  text-align: left;
-  padding: 8px 0;
   font-weight: bold;
-  text-transform: uppercase;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.9rem;
+  margin-bottom: 10px;
 }
 
-.main-menu-wrapper button.active,
-.main-menu-wrapper button:hover {
-  background-color: #0a5b3f;
-}
-
-.main-menu-wrapper button .arrow {
-  transition: transform 0.3s ease;
-  font-size: 1.2rem;
-}
-
-.main-menu-wrapper button.active .arrow {
-  transform: rotate(90deg);
-}
-
-.submenu-wrapper {
-  flex: 1;
-  background: white;
-  display: flex;
-  flex-wrap: nowrap;
-  padding: 16px;
-  overflow: visible;
-  position: relative;
-}
-
-.submenu-column {
-  flex: 1;
-  min-width: 120px;
-  margin-right: 1rem;
-  cursor: pointer;
-  position: relative;
-  text-align: center;
-  padding-bottom: 6px;
-}
-
-.submenu-column:hover::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background-color: #42771e;
-}
-
-.submenu-title {
-  font-weight: bold;
-  color: #42771e;
-  margin-bottom: 8px;
-  font-size: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-}
-
-.submenu-title .dropdown-arrow {
-  transition: transform 0.3s ease;
-  font-size: 1.2rem;
-  color: #666;
-}
-
-.submenu-column:hover .dropdown-arrow {
-  transform: rotate(180deg);
-}
-
-.submenu-list {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  padding: 8px 1.5rem;
-  margin: 0;
-  min-width: max-content;
-  max-width: 320px;
-  z-index: 1000;
-  list-style: none;
-  white-space: nowrap;
-  text-align: left;
-}
-
-.submenu-column:hover > .submenu-list {
-  display: block;
-}
-
-.submenu-list li {
-  margin: 4px 0;
-  padding-bottom: 8px;
-  font-weight: 400;
-}
-
-.submenu-list a {
-  text-decoration: none;
-  font-size: 0.9375rem;
-  color: #414042;
-  font-family: Arial, sans-serif;
-}
-
-.submenu-list a:hover {
-  color: #42711e;
-}
 .main-menu-dropdown {
   display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .main-menu-dropdown.open {
   display: block;
+}
+
+.submenu-wrapper {
+  margin-top: 20px;
+}
+
+.submenu-column {
+  margin-bottom: 10px;
+}
+
+.submenu-title {
+  font-weight: bold;
+  margin-bottom: 5px;
 }
