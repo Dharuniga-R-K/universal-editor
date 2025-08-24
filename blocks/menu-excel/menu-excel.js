@@ -28,11 +28,11 @@ export default async function decorate(block) {
 
   const mainMenus = Object.keys(grouped);
   let selectedMain = mainMenus[0];
-  let dropdownOpen = false;
+  let dropdownOpen = true;
 
   const selectMenu = (menu) => {
     selectedMain = menu;
-    dropdownOpen = false;
+    dropdownOpen = true;
     update();
   };
 
