@@ -136,3 +136,10 @@
 .submenu-list a:hover {
   color: #42711e;
 }
+.main-menu-dropdown {
+  display: none;
+}
+
+.main-menu-dropdown.open {
+  display: block;
+}
