@@ -20,10 +20,12 @@ export default async function decorate(block) {
 
     const mainMenus = Object.keys(grouped);
     let selectedMain = mainMenus[0];
-    const submenus = Object.entries(grouped[selectedMain]).map(([submenu, items]) => ({
-        title: submenu,
-        link: items[0].link1 || items[0].link,
-        items: items.map(item => ({ title: item.menu, link: item.link }))
+
+    // Initialize submenus based on the selected main menu
+    const submenus = grouped[selectedMain].map(item => ({
+        title: item["sub-menu"],
+        link: item.link1 || item.link, // Fallback to link1 if available
+        items: [{ title: item.menu, link: item.link }]
     }));
 
     await renderBlock(block, {
@@ -52,10 +54,10 @@ export default async function decorate(block) {
             mainMenuButton.querySelector('.main-menu-arrow').textContent = "▶";
 
             // Update submenus based on selected main menu
-            const newSubmenus = Object.entries(grouped[selectedMain]).map(([submenu, items]) => ({
-                title: submenu,
-                link: items[0].link1 || items[0].link,
-                items: items.map(item => ({ title: item.menu, link: item.link }))
+            const newSubmenus = grouped[selectedMain].map(item => ({
+                title: item["sub-menu"],
+                link: item.link1 || item.link,
+                items: [{ title: item.menu, link: item.link }]
             }));
 
             // Render new submenus
