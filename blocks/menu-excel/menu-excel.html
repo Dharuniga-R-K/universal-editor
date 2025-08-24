@@ -1,11 +1,17 @@
 <div class="menu-excel block">
-  <!-- Main menu left -->
-  <nav class="main-menu-wrapper" aria-label="Main menu">
-    <!-- buttons will be injected here -->
-  </nav>
+  <!-- Main menu wrapper -->
+  <div class="main-menu-wrapper" aria-label="Main menu">
+    <button id="main-menu-button" type="button" aria-haspopup="listbox" aria-expanded="false">
+      <!-- Selected main-menu name goes here -->
+      <span class="label"></span> <span class="arrow">▶</span>
+    </button>
+    <ul id="main-menu-dropdown" class="main-menu-dropdown" role="listbox" tabindex="-1" style="display:none;">
+      <!-- Dropdown list items go here -->
+    </ul>
+  </div>
 
-  <!-- Submenu right -->
+  <!-- Submenu wrapper -->
   <div class="submenu-wrapper" aria-label="Submenu">
-    <!-- submenu columns will be injected here -->
+    <!-- Submenu columns rendered here -->
   </div>
 </div>

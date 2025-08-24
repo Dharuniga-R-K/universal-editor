@@ -45,27 +45,62 @@ export default async function decorate(block) {
     let selectedMainMenu = Object.keys(grouped)[0];
 
     function renderMainMenu() {
-      mainMenuWrapper.innerHTML = '';
-      Object.keys(grouped).forEach(mainMenu => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.textContent = mainMenu;
-        btn.classList.toggle('active', mainMenu === selectedMainMenu);
+  const mainMenuButton = block.querySelector('#main-menu-button');
+  const dropdown = block.querySelector('#main-menu-dropdown');
 
-        const arrow = document.createElement('span');
-        arrow.className = 'arrow';
-        arrow.innerHTML = '&#9656;'; // ► arrow symbol
-        btn.appendChild(arrow);
+  const mainMenus = Object.keys(grouped);
+  if (mainMenus.length === 0) return;
 
-        btn.addEventListener('click', () => {
-          selectedMainMenu = mainMenu;
-          renderMainMenu();
-          renderSubMenu();
-        });
+  // Set the button label to the selected main menu
+  mainMenuButton.querySelector('.label').textContent = selectedMainMenu;
+  mainMenuButton.setAttribute('aria-expanded', 'false');
 
-        mainMenuWrapper.appendChild(btn);
-      });
-    }
+  // Clear previous dropdown items
+  dropdown.innerHTML = '';
+
+  // Populate dropdown with all main menus EXCEPT the selected one
+  mainMenus.forEach(menu => {
+    if (menu === selectedMainMenu) return; // skip selected menu
+
+    const li = document.createElement('li');
+    li.setAttribute('role', 'option');
+    li.textContent = menu;
+    li.tabIndex = 0;
+
+    li.addEventListener('click', () => {
+      selectedMainMenu = menu;
+      renderMainMenu();
+      renderSubMenu();
+      dropdown.style.display = 'none';
+      mainMenuButton.setAttribute('aria-expanded', 'false');
+    });
+
+    li.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        li.click();
+      }
+    });
+
+    dropdown.appendChild(li);
+  });
+
+  // Toggle dropdown on button click
+  mainMenuButton.onclick = (e) => {
+    e.stopPropagation();
+    const isOpen = dropdown.style.display === 'block';
+    dropdown.style.display = isOpen ? 'none' : 'block';
+    mainMenuButton.setAttribute('aria-expanded', !isOpen);
+    mainMenuButton.querySelector('.arrow').textContent = isOpen ? '▶' : '▼';
+  };
+
+  // Close dropdown on clicking outside
+  document.body.addEventListener('click', () => {
+    dropdown.style.display = 'none';
+    mainMenuButton.setAttribute('aria-expanded', 'false');
+    mainMenuButton.querySelector('.arrow').textContent = '▶';
+  });
+}
 
     function renderSubMenu() {
       submenuWrapper.innerHTML = '';
