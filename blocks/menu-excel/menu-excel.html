@@ -1,25 +1,21 @@
 <template>
-  <div class="main-menu-button" data-fly-id="main-toggle">
-  <span class="label">${selectedMain}</span>
-  <span class="arrow">${arrow}</span>
-</div>
-
-<ul class="main-menu-dropdown ${dropdownOpen ? 'open' : ''}" data-fly-id="dropdown">
-  ${mainMenus.filter(m => m !== selectedMain).map(menu => `
-    <li data-fly-id="select-${menu}">${menu}</li>
-  `).join('')}
-</ul>
-
-<div class="submenu-wrapper">
-  ${grouped[selectedMain]?.map(item => `
-    <div class="submenu-column">
-      <div class="submenu-title">${item['sub-menu']}</div>
-      <ul class="submenu-list">
-        <li><a href="${item.link1 || item.link}" target="_blank">${item.menu}</a></li>
-      </ul>
+    <div data-fly-unwrap data-fly-menu="main">
+        <div class="main-menu-wrapper">
+            <span class="label">${selectedMain}</span>
+            <span class="main-menu-arrow">▶</span>
+            <ul class="main-menu-dropdown" style="display: none;">
+                ${mainMenus.map(menu => `<li data-fly-menu-item="${menu}">${menu}</li>`).join('')}
+            </ul>
+        </div>
+        <div class="submenu-wrapper">
+            ${submenus.map(submenu => `
+                <div class="submenu-column">
+                    <a class="submenu-title" href="${submenu.link}" target="_blank">${submenu.title}</a>
+                    <ul>
+                        ${submenu.items.map(item => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('')}
+                    </ul>
+                </div>
+            `).join('')}
+        </div>
     </div>
-  `).join('') || ''}
-</div>
-
-
 </template>
