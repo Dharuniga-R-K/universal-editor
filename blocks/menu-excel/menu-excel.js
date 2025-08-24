@@ -28,8 +28,9 @@ export default async function decorate(block) {
         items: [{ title: item.menu, link: item.link }]
     }));
 
+    // Render the block with the correct values
     await renderBlock(block, {
-        mainMenus,
+        mainMenus: mainMenus, // Ensure this is passed correctly
         selectedMain,
         submenus,
     });
