@@ -1,3 +1,7 @@
+.menu-container {
+  display: flex; /* Use flexbox for layout */
+}
+
 .main-menu-wrapper {
   position: relative;
   cursor: pointer;
@@ -6,8 +10,9 @@
   padding: 10px 15px;
   font-weight: bold;
   display: flex;
-  align-items: center;
+  flex-direction: column; /* Stack items vertically */
   gap: 8px;
+  width: 200px; /* Set a fixed width for the main menu */
 }
 
 .main-menu-dropdown {
@@ -34,8 +39,10 @@
 
 .submenu-wrapper {
   display: flex;
+  flex-direction: column; /* Stack submenu groups vertically */
   gap: 30px;
   padding: 20px 0;
+  flex-grow: 1; /* Allow the submenu wrapper to take remaining space */
 }
 
 .submenu-group {
