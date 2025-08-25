@@ -1,52 +1,59 @@
 .menu-container {
-  display: flex; /* Use flexbox for layout */
+  display: flex;
+  width: 100%;
+  background: #f5f5f5;
 }
 
+/* Left Panel */
 .main-menu-wrapper {
   position: relative;
-  cursor: pointer;
   background: #003c2f;
   color: white;
-  padding: 10px 15px;
+  padding: 20px;
+  width: 250px;
+  box-sizing: border-box;
   font-weight: bold;
-  display: flex;
-  flex-direction: column; /* Stack items vertically */
-  gap: 8px;
-  width: 200px; /* Set a fixed width for the main menu */
+  cursor: pointer;
 }
 
+/* Main menu dropdown */
 .main-menu-dropdown {
   position: absolute;
   top: 100%;
   left: 0;
   background: white;
   border: 1px solid #ccc;
-  z-index: 1000;
-  min-width: 200px;
+  color: black;
+  min-width: 100%;
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  z-index: 10;
 }
 
 .main-menu-dropdown li {
-  padding: 10px;
+  padding: 10px 15px;
   cursor: pointer;
 }
 
 .main-menu-dropdown li:hover {
-  background-color: #eee;
+  background: #eee;
 }
 
+/* Right Panel (Submenus) */
 .submenu-wrapper {
-  display: flex; /* Use flexbox to align submenu groups horizontally */
-  flex-direction: column; /* Stack submenu groups vertically */
-  gap: 30px; /* Space between submenu groups */
-  padding: 20px 0;
-  flex-grow: 1; /* Allow the submenu wrapper to take remaining space */
+  flex-grow: 1;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  box-sizing: border-box;
+  background: #fff;
 }
 
 .submenu-group {
-  min-width: 200px; /* Set a minimum width for each submenu group */
+  min-width: 200px;
+  position: relative;
 }
 
 .submenu-title {
@@ -57,21 +64,33 @@
   display: block;
 }
 
-.submenu-group ul {
+/* Submenu dropdowns */
+.submenu-dropdown {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 10px 0 0;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  z-index: 5;
 }
 
-.submenu-group li {
-  margin: 6px 0;
+.submenu-group:hover .submenu-dropdown {
+  display: block;
 }
 
-.submenu-group li a {
+.submenu-dropdown li {
+  padding: 8px 12px;
+}
+
+.submenu-dropdown li a {
   text-decoration: none;
   color: #333;
 }
 
-.submenu-group li a:hover {
+.submenu-dropdown li a:hover {
   text-decoration: underline;
 }
