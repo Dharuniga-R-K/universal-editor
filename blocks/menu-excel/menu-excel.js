@@ -67,13 +67,17 @@ export default async function decorate(block) {
   renderSubmenus(grouped[selectedMain]);
 
   function renderSubmenus(submenuGroup) {
-    submenuWrapper.innerHTML = Object.entries(submenuGroup).map(([subTitle, items]) => `
-      <div class="submenu-group">
-        <a class="submenu-title" href="${items[0].link}" target="_blank">${subTitle}</a>
-        <ul>
-          ${items.map(item => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('')}
-        </ul>
-      </div>
-    `).join('');
+   submenuWrapper.innerHTML = submenus.map(submenu => `
+  <div class="submenu-group">
+    <div class="submenu-toggle">
+      <span class="submenu-title">${submenu.title} <span class="submenu-arrow">▼</span></span>
+      <ul class="submenu-dropdown">
+        ${submenu.items.map(item => `
+          <li><a href="${item.link}" target="_blank">${item.title}</a></li>
+        `).join('')}
+      </ul>
+    </div>
+  </div>
+`).join('');
   }
 }
