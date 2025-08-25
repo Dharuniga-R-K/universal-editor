@@ -4,29 +4,13 @@
       <span class="label">${selectedMain}</span>
       <span class="main-menu-arrow">▶</span>
       <ul class="main-menu-dropdown" style="display: none;">
-        ${mainMenus
-          .map(menu => `<li data-fly-menu-item="${menu}">${menu}</li>`)
-          .join('')}
+        <li data-fly-menu-item="Agitation associated with dementia due to Alzheimer's disease">Agitation associated with dementia due to Alzheimer's disease</li>
+        <li data-fly-menu-item="Another Main Menu Item">Another Main Menu Item</li>
+        <!-- Additional main menu items can be added here -->
       </ul>
     </div>
     <div class="submenu-wrapper">
-      ${Object.entries(submenus)
-        .map(
-          ([title, items]) => `
-        <div class="submenu-group">
-          <a class="submenu-title" href="${items[0].link}" target="_blank">${title}</a>
-          <ul class="submenu-dropdown">
-            ${items
-              .map(
-                item =>
-                  `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`
-              )
-              .join('')}
-          </ul>
-        </div>
-      `
-        )
-        .join('')}
+      <!-- Submenu groups will be populated here -->
     </div>
   </div>
 </template>
