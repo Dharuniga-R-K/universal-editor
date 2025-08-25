@@ -75,5 +75,27 @@ export default async function decorate(block) {
         </ul>
       </div>
     `).join('');
+    submenuWrapper.querySelectorAll('.submenu-group').forEach(group => {
+      const title = group.querySelector('.submenu-title');
+      const dropdown = group.querySelector('.submenu-dropdown');
+
+      title.addEventListener('mouseenter', () => {
+        dropdown.style.display = 'block';
+      });
+
+      title.addEventListener('mouseleave', () => {
+        dropdown.style.display = 'none';
+      });
+
+      // Optional: Keep the dropdown open if the mouse is over the dropdown
+      dropdown.addEventListener('mouseenter', () => {
+        dropdown.style.display = 'block';
+      });
+
+      dropdown.addEventListener('mouseleave', () => {
+        dropdown.style.display = 'none';
+      });
+    });
+  
   }
 }
