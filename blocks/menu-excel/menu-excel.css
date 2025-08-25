@@ -2,6 +2,15 @@
   display: flex; /* Use flexbox for layout */
 }
 
+.menu-excel.block {
+    display: flex;
+    flex-wrap: nowrap;
+    border-top: 3px solid #f9b000;
+    font-family: Arial, sans-serif;
+    overflow-x: visible; /* allow horizontal overflow */
+    position: relative;
+}
+
 .main-menu-wrapper {
   position: relative;
   cursor: pointer;
