@@ -74,9 +74,9 @@ export default async function decorate(block) {
       <div class="submenu-column">
         <a class="submenu-title" href="${items[0].link}" target="_blank">
           ${subTitle}
-          ${hasDropdown ? '<span class="dropdown-arrow">▼</span>' : ''}
         </a>
         ${hasDropdown ? `
+          <span class="dropdown-arrow">▼</span>
           <ul class="submenu-dropdown">
             ${items.map(item => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('')}
           </ul>
