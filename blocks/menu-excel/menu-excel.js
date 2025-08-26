@@ -68,7 +68,7 @@ export default async function decorate(block) {
 
   function renderSubmenus(submenuGroup) {
   submenuWrapper.innerHTML = Object.entries(submenuGroup).map(([subTitle, items]) => {
-    const hasDropdown = items.title != '';
+    const hasDropdown = items[0].title != '';
 
     return `
       <div class="submenu-column">
