@@ -75,7 +75,7 @@ export default async function decorate(block) {
 
     return `
       <div class="submenu-column">
-        <a class="submenu-title" href="${items[0].link1}" target="_blank">
+        <a class="submenu-title" href="${items.link1}" target="_blank">
           ${subTitle}
         </a>
         ${hasDropdown ? `
