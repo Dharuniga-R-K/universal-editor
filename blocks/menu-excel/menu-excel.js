@@ -11,24 +11,17 @@ export default async function decorate(block) {
 
   const grouped = {};
   data.forEach(item => {
-  const main = item["main-menu"];
-  const sub = item["sub-menu"];
+    const main = item["main-menu"];
+    const sub = item["sub-menu"];
+    const menuItem = { title: item.menu, link: item.link};
 
-  if (!grouped[main]) grouped[main] = {};
-
-  if (!grouped[main][sub]) {
-    grouped[main][sub] = {
-      link1: item.link1,
-      items: [],
-    };
-  }
-
-  grouped[main][sub].items.push({
-    title: item.menu,
-    link: item.link,
+    if (!grouped[main]) grouped[main] = {};
+    if (!grouped[main][sub]){
+       grouped[main][sub] = [];
+       grouped[main][sub].link1 = item.link1;
+    }
+    grouped[main][sub].push(menuItem);
   });
-});
-
 
   const mainMenus = Object.keys(grouped);
   let selectedMain = mainMenus[0];
