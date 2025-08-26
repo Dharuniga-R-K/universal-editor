@@ -9,33 +9,27 @@ export default async function decorate(block) {
   const json = await response.json();
   const data = json.data;
 
-  // Group data by main-menu
   const grouped = {};
   data.forEach(item => {
     const main = item["main-menu"];
-    if (!grouped[main]) grouped[main] = {};
-    
     const sub = item["sub-menu"];
+    const menuItem = { title: item.menu, link: item.link };
+
+    if (!grouped[main]) grouped[main] = {};
     if (!grouped[main][sub]) grouped[main][sub] = [];
-    
-    grouped[main][sub].push({
-      title: item.menu,
-      link: item.link,
-    });
+    grouped[main][sub].push(menuItem);
   });
 
   const mainMenus = Object.keys(grouped);
   let selectedMain = mainMenus[0];
 
-  // Render block initially
   await renderBlock(block, {
     mainMenus,
     selectedMain,
-    submenus: grouped[selectedMain],
   });
 
-  const mainMenuButton = block.querySelector('.main-menu-wrapper');
-  const dropdown = block.querySelector('.main-menu-dropdown');
+  const mainMenuWrapper = block.querySelector('.main-menu-wrapper');
+  const dropdown = mainMenuWrapper.querySelector('.main-menu-dropdown');
   const submenuWrapper = block.querySelector('.submenu-wrapper');
 
   // Populate main menu items
@@ -43,62 +37,44 @@ export default async function decorate(block) {
     <li data-fly-menu-item="${menu}">${menu}</li>
   `).join('');
 
-  // Dropdown toggle for main menu
-  mainMenuButton.addEventListener('click', (e) => {
+  // Toggle main menu dropdown
+  mainMenuWrapper.addEventListener('click', (e) => {
     e.stopPropagation();
-    const isVisible = dropdown.style.display === "block";
-    dropdown.style.display = isVisible ? "none" : "block";
-    mainMenuButton.querySelector('.main-menu-arrow').textContent = isVisible ? "▶" : "▼";
+    const isVisible = dropdown.style.display === 'block';
+    dropdown.style.display = isVisible ? 'none' : 'block';
+    mainMenuWrapper.querySelector('.main-menu-arrow').textContent = isVisible ? '▶' : '▼';
   });
 
-  // Handle main menu item click
-  dropdown.querySelectorAll('[data-fly-menu-item]').forEach(menuItem => {
-    menuItem.addEventListener('click', (e) => {
+  // Close dropdown on outside click
+  document.addEventListener('click', () => {
+    dropdown.style.display = 'none';
+    mainMenuWrapper.querySelector('.main-menu-arrow').textContent = '▶';
+  });
+
+  // Main menu selection logic
+  dropdown.querySelectorAll('li[data-fly-menu-item]').forEach(li => {
+    li.addEventListener('click', (e) => {
       e.stopPropagation();
-      selectedMain = e.target.innerText;
-      mainMenuButton.querySelector('.label').textContent = selectedMain;
-      dropdown.style.display = "none";
-      mainMenuButton.querySelector('.main-menu-arrow').textContent = "▶";
+      selectedMain = li.textContent;
+      mainMenuWrapper.querySelector('.label').textContent = selectedMain;
       renderSubmenus(grouped[selectedMain]);
+      dropdown.style.display = 'none';
+      mainMenuWrapper.querySelector('.main-menu-arrow').textContent = '▶';
     });
   });
 
-  // Initial submenu render
+  // Initial render
   renderSubmenus(grouped[selectedMain]);
 
   function renderSubmenus(submenuGroup) {
     submenuWrapper.innerHTML = Object.entries(submenuGroup).map(([subTitle, items]) => `
-      <div class="submenu-group">
+      <div class="submenu-column">
         <a class="submenu-title" href="${items[0].link}" target="_blank">${subTitle}</a>
-        <ul class="submenu-dropdown" style="display: none;">
+        <span class="submenu-arrow dropdown-arrow">▼</span>
+        <ul>
           ${items.map(item => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('')}
         </ul>
       </div>
     `).join('');
-
-    // Add hover event to show/hide submenu dropdown
-    submenuWrapper.querySelectorAll('.submenu-group').forEach(group => {
-      const title = group.querySelector('.submenu-title');
-      const dropdown = group.querySelector('.submenu-dropdown');
-
-      // Show dropdown on hover
-      title.addEventListener('mouseenter', () => {
-        dropdown.style.display = 'block';
-      });
-
-      // Hide dropdown when not hovering
-      title.addEventListener('mouseleave', () => {
-        dropdown.style.display = 'none';
-      });
-
-      // Optional: Keep the dropdown open if the mouse is over the dropdown
-      dropdown.addEventListener('mouseenter', () => {
-        dropdown.style.display = 'block';
-      });
-
-      dropdown.addEventListener('mouseleave', () => {
-        dropdown.style.display = 'none';
-      });
-    });
   }
 }
