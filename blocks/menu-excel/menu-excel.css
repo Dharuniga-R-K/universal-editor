@@ -48,7 +48,7 @@
 
 .submenu-wrapper {
   display: flex; /* Use flexbox to align submenu groups horizontally */
-  flex-direction: column; /* Stack submenu groups vertically */
+  flex-direction: row; /* Stack submenu groups horizontaly */
   gap: 30px; /* Space between submenu groups */
   padding: 20px 0;
   flex-grow: 1; /* Allow the submenu wrapper to take remaining space */
