@@ -214,3 +214,7 @@
   text-align: center;
   transition: transform 0.3s ease;
 }
+.submenu-dropdown{  
+    right: 0px;
+
+}
