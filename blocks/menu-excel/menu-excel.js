@@ -1,89 +1,97 @@
 import { renderBlock } from '../../scripts/faintly.js';
 
 export default async function decorate(block) {
-  const rawPath = block.querySelector('a')?.getAttribute('href');
+  const rawPath = block.querySelector("a")?.getAttribute("href");
   if (!rawPath) return;
-  
-  const data = await (await fetch(new URL(rawPath, window.location.origin))).json().then(r => r.data);
-  const grouped = {};
 
+  const fetchUrl = new URL(rawPath, window.location.origin).href;
+  const response = await fetch(fetchUrl);
+  const json = await response.json();
+  const data = json.data;
+
+  const grouped = {};
   data.forEach(item => {
-    const main = item['main-menu'], sub = item['sub-menu'];
+    const main = item["main-menu"];
+    const sub = item["sub-menu"];
+    const menuItem = { title: item.menu, link: item.link};
+
     if (!grouped[main]) grouped[main] = {};
-    if (!grouped[main][sub]) {
-      grouped[main][sub] = [];
-      grouped[main][sub].link1 = item.link1;
+    if (!grouped[main][sub]){
+       grouped[main][sub] = [];
+       grouped[main][sub].link1 = item.link1;
     }
-    grouped[main][sub].push({ title: item.menu, link: item.link });
+    grouped[main][sub].push(menuItem);
   });
 
-  const mainMenus = Object.keys(grouped), submenuWrapper = block.querySelector('.submenu-wrapper');
+  const mainMenus = Object.keys(grouped);
   let selectedMain = mainMenus[0];
 
-  async function renderMain() {
-    await renderBlock(block, { mainMenus, selectedMain });
-    bindInteractions();
-  }
+  await renderBlock(block, {
+    mainMenus,
+    selectedMain,
+  });
 
-  function bindInteractions() {
-    const menuWrapper = block.querySelector('.main-menu-wrapper');
-    const dropdown = menuWrapper.querySelector('.main-menu-dropdown');
+  const mainMenuWrapper = block.querySelector('.main-menu-wrapper');
+  const dropdown = mainMenuWrapper.querySelector('.main-menu-dropdown');
+  const submenuWrapper = block.querySelector('.submenu-wrapper');
 
-    // Toggle dropdown
-    menuWrapper.addEventListener('click', e => {
+  const liTemplate = dropdown.querySelector('li[data-fly-menu-item]');
+dropdown.innerHTML = ''; // Clear existing template
+
+mainMenus.forEach(menu => {
+  const li = liTemplate.cloneNode(true);
+  li.textContent = menu;
+  li.setAttribute('data-fly-menu-item', menu);
+  li.style.display = ''; // Make it visible
+  dropdown.appendChild(li);
+});
+  // Toggle main menu dropdown
+  mainMenuWrapper.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = dropdown.style.display === 'block';
+    dropdown.style.display = isVisible ? 'none' : 'block';
+    mainMenuWrapper.querySelector('.main-menu-arrow').textContent = isVisible ? '▶' : '▼';
+  });
+
+  // Close dropdown on outside click
+  document.addEventListener('click', () => {
+    dropdown.style.display = 'none';
+    mainMenuWrapper.querySelector('.main-menu-arrow').textContent = '▶';
+  });
+
+  // Main menu selection logic
+  dropdown.querySelectorAll('li[data-fly-menu-item]').forEach(li => {
+    li.addEventListener('click', (e) => {
       e.stopPropagation();
-      const open = dropdown.style.display === 'block';
-      dropdown.style.display = open ? 'none' : 'block';
-      menuWrapper.querySelector('.main-menu-arrow').textContent = open ? '▶' : '▼';
-    });
-
-    // Close dropdown on outside click
-    document.body.addEventListener('click', () => {
+      selectedMain = li.textContent;
+      mainMenuWrapper.querySelector('.label').textContent = selectedMain;
+      renderSubmenus(grouped[selectedMain]);
       dropdown.style.display = 'none';
-      menuWrapper.querySelector('.main-menu-arrow').textContent = '▶';
+      mainMenuWrapper.querySelector('.main-menu-arrow').textContent = '▶';
     });
+  });
 
-    // Main menu selection
-    dropdown.querySelectorAll('li[data-fly-menu-item]').forEach(li => {
-      li.onclick = e => {
-        e.stopPropagation();
-        selectedMain = li.textContent;
-        renderMain();
-        renderSubmenus();
-        dropdown.style.display = 'none';
-      };
-    });
-  }
+  // Initial render
+  renderSubmenus(grouped[selectedMain]);
 
-  function renderSubmenus() {
-    submenuWrapper.innerHTML = ''; // clear existing
-    const template = block.querySelector('.submenu-column.template');
+  function renderSubmenus(submenuGroup) {
+  submenuWrapper.innerHTML = Object.entries(submenuGroup).map(([subTitle, items]) => {
+    const hasDropdown = items[0].title != '';
 
-    const subGroup = grouped[selectedMain];
-    Object.entries(subGroup).forEach(([title, items]) => {
-      const clone = template.cloneNode(true);
-      clone.classList.remove('template');
-      clone.style.display = 'flex';
+    return `
+      <div class="submenu-column">
+        <a class="submenu-title" href="${items.link1}" target="_blank">
+          ${subTitle}
+        </a>
+        ${hasDropdown ? `
+          <span class="dropdown-arrow">▼</span>
+          <ul class="submenu-dropdown">
+            ${items.map(item => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('')}
+          </ul>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+}
 
-      const titleLink = clone.querySelector('.submenu-title');
-      titleLink.textContent = title;
-      titleLink.href = items.link1;
-
-      const arrow = clone.querySelector('.dropdown-arrow');
-      const ul = clone.querySelector('.submenu-dropdown');
-
-      const hasDropdown = items.length > 1;
-      if (hasDropdown) {
-        ul.innerHTML = items.map(it => `<li><a href="${it.link}" target="_blank">${it.title}</a></li>`).join('');
-      } else {
-        arrow.remove();
-        ul.remove();
-      }
-
-      submenuWrapper.appendChild(clone);
-    });
-  }
-
-  await renderMain();
-  renderSubmenus();
 }
