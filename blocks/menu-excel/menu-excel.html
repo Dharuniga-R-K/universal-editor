@@ -2,11 +2,15 @@
   <div class="menu-excel block">
     <div class="main-menu-wrapper">
       <span class="indications-menu-title text-small">select the Indication</span>
-      <span class="label">${selectedMain}</span>
+      <span class="label">Loading...</span> <!-- this will be updated via JS -->
       <span class="main-menu-arrow">▶</span>
-      <ul class="main-menu-dropdown"></ul>
+      <ul class="main-menu-dropdown">
+        <!-- These <li> items will be cloned/updated from the template in JS -->
+        <li data-fly-menu-item="" style="display: none;"></li> <!-- Template li -->
+      </ul>
     </div>
     <div class="submenu-wrapper">
+      <!-- Submenus populated by JS later -->
     </div>
   </div>
 </template>
