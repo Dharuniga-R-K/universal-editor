@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: baseline;
     width: 24%;
     padding: 0.5rem 1rem;
     background-color: #07412c;
@@ -217,4 +217,16 @@
 .submenu-dropdown{  
     right: 0px;
 
+}
+.main-menu-wrapper .indications-menu-title {
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+.main-menu-wrapper .label {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.1;
 }
