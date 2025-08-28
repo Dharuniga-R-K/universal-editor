@@ -1,84 +1,97 @@
 import { renderBlock } from '../../scripts/faintly.js';
 
 export default async function decorate(block) {
-  const raw = block.querySelector('a')?.getAttribute('href');
-  if (!raw) return;
+  const rawPath = block.querySelector("a")?.getAttribute("href");
+  if (!rawPath) return;
 
-  const data = await fetch(new URL(raw, window.location.origin)).then((r) => r.json()).then((j) => j.data);
+  const fetchUrl = new URL(rawPath, window.location.origin).href;
+  const response = await fetch(fetchUrl);
+  const json = await response.json();
+  const data = json.data;
+
   const grouped = {};
-
   data.forEach(item => {
-    const main = item['main-menu'], sub = item['sub-menu'];
+    const main = item["main-menu"];
+    const sub = item["sub-menu"];
+    const menuItem = { title: item.menu, link: item.link};
+
     if (!grouped[main]) grouped[main] = {};
-    if (!grouped[main][sub]) {
-      grouped[main][sub] = [];
-      grouped[main][sub].link1 = item.link1;
+    if (!grouped[main][sub]){
+       grouped[main][sub] = [];
+       grouped[main][sub].link1 = item.link1;
     }
-    grouped[main][sub].push({ title: item.menu, link: item.link });
+    grouped[main][sub].push(menuItem);
   });
 
   const mainMenus = Object.keys(grouped);
   let selectedMain = mainMenus[0];
 
-  async function onRender() {
-    await renderBlock(block, { mainMenus, selectedMain });
-    bindMenuEvents();
-    renderSubmenus();
-  }
+  await renderBlock(block, {
+    mainMenus,
+    selectedMain,
+  });
 
-  function bindMenuEvents() {
-    const menuWrap = block.querySelector('.main-menu-wrapper');
-    const dropdown = menuWrap.querySelector('.main-menu-dropdown');
+  const mainMenuWrapper = block.querySelector('.main-menu-wrapper');
+  const dropdown = mainMenuWrapper.querySelector('.main-menu-dropdown');
+  const submenuWrapper = block.querySelector('.submenu-wrapper');
 
-    menuWrap.onclick = e => {
+  const liTemplate = dropdown.querySelector('li[data-fly-menu-item]');
+dropdown.innerHTML = ''; // Clear existing template
+
+mainMenus.forEach(menu => {
+  const li = liTemplate.cloneNode(true);
+  li.textContent = menu;
+  li.setAttribute('data-fly-menu-item', menu);
+  li.style.display = ''; // Make it visible
+  dropdown.appendChild(li);
+});
+  // Toggle main menu dropdown
+  mainMenuWrapper.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = dropdown.style.display === 'block';
+    dropdown.style.display = isVisible ? 'none' : 'block';
+    mainMenuWrapper.querySelector('.main-menu-arrow').textContent = isVisible ? '▶' : '▼';
+  });
+
+  // Close dropdown on outside click
+  document.addEventListener('click', () => {
+    dropdown.style.display = 'none';
+    mainMenuWrapper.querySelector('.main-menu-arrow').textContent = '▶';
+  });
+
+  // Main menu selection logic
+  dropdown.querySelectorAll('li[data-fly-menu-item]').forEach(li => {
+    li.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isOpen = dropdown.style.display === 'block';
-      dropdown.style.display = isOpen ? 'none' : 'block';
-      menuWrap.querySelector('.main-menu-arrow').textContent = isOpen ? '▶' : '▼';
-    };
-
-    document.body.onclick = () => {
+      selectedMain = li.textContent;
+      mainMenuWrapper.querySelector('.label').textContent = selectedMain;
+      renderSubmenus(grouped[selectedMain]);
       dropdown.style.display = 'none';
-      menuWrap.querySelector('.main-menu-arrow').textContent = '▶';
-    };
-
-    dropdown.querySelectorAll('li[data-fly-menu-item]').forEach(li => {
-      li.onclick = e => {
-        e.stopPropagation();
-        selectedMain = li.textContent;
-        onRender();
-      };
+     // mainMenuWrapper.querySelector('.main-menu-arrow').textContent = '▶';
     });
-  }
+  });
 
-  function renderSubmenus() {
-    const wrapper = block.querySelector('.submenu-wrapper');
-    wrapper.innerHTML = '';
-    const tpl = wrapper.querySelector('.submenu-column.template');
+  // Initial render
+  renderSubmenus(grouped[selectedMain]);
 
-    Object.entries(grouped[selectedMain]).forEach(([title, items]) => {
-      const clone = tpl.cloneNode(true);
-      clone.classList.remove('template');
-      clone.style.display = '';
+  function renderSubmenus(submenuGroup) {
+  submenuWrapper.innerHTML = Object.entries(submenuGroup).map(([subTitle, items]) => {
+    const hasDropdown = items[0].title != '';
 
-      const titleLink = clone.querySelector('.submenu-title');
-      titleLink.textContent = title;
-      titleLink.href = items.link1;
+    return `
+      <div class="submenu-column">
+        <a class="submenu-title" href="${items.link1}" target="_blank">
+          ${subTitle}
+        </a>
+        ${hasDropdown ? `
+          <span class="dropdown-arrow">▼</span>
+          <ul class="submenu-dropdown">
+            ${items.map(item => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('')}
+          </ul>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+}
 
-      const arrow = clone.querySelector('.dropdown-arrow');
-      const ul = clone.querySelector('.submenu-dropdown');
-
-      const subItems = items.slice();
-      if (subItems.length > 1) {
-        ul.innerHTML = subItems.map(i => `<li><a href="${i.link}" target="_blank">${i.title}</a></li>`).join('');
-      } else {
-        arrow.remove();
-        ul.remove();
-      }
-
-      wrapper.appendChild(clone);
-    });
-  }
-
-  await onRender();
 }
