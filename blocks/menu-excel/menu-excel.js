@@ -66,8 +66,7 @@ mainMenus.forEach(menu => {
       selectedMain = li.textContent;
       mainMenuWrapper.querySelector('.label').textContent = selectedMain;
       renderSubmenus(grouped[selectedMain]);
-      dropdown.style.display = 'none';
-     // mainMenuWrapper.querySelector('.main-menu-arrow').textContent = '▶';
+      
     });
   });
 
