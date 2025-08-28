@@ -1,18 +1,18 @@
 // src/templates.js
-var dp = new DOMParser();
+const dp = new DOMParser();
 async function resolveTemplate(context) {
   context.template = context.template || {};
   context.template.path = context.template.path || `${context.codeBasePath}/blocks/${context.blockName}/${context.blockName}.html`;
-  const templateId = `faintly-template-${context.template.path}#${context.template.name || ""}`.toLowerCase().replace(/[^0-9a-z]/gi, "-");
+  const templateId = `faintly-template-${context.template.path}#${context.template.name || ''}`.toLowerCase().replace(/[^0-9a-z]/gi, '-');
   let template = document.getElementById(templateId);
   if (!template) {
     const resp = await fetch(context.template.path);
     if (!resp.ok) throw new Error(`Failed to fetch template from ${context.template.path} for block ${context.blockName}.`);
     const markup = await resp.text();
-    const templateDom = dp.parseFromString(markup, "text/html");
-    templateDom.querySelectorAll("template").forEach((t) => {
-      const name = t.getAttribute("data-fly-name") || "";
-      t.id = `faintly-template-${context.template.path}#${name}`.toLowerCase().replace(/[^0-9a-z]/gi, "-");
+    const templateDom = dp.parseFromString(markup, 'text/html');
+    templateDom.querySelectorAll('template').forEach((t) => {
+      const name = t.getAttribute('data-fly-name') || '';
+      t.id = `faintly-template-${context.template.path}#${name}`.toLowerCase().replace(/[^0-9a-z]/gi, '-');
       document.body.append(t);
     });
   }
@@ -25,13 +25,13 @@ async function resolveTemplate(context) {
 async function resolveExpression(expression, context) {
   let resolved = context;
   let previousResolvedValue;
-  const parts = expression.split(".");
+  const parts = expression.split('.');
   for (let i = 0; i < parts.length; i += 1) {
-    if (typeof resolved === "undefined") break;
+    if (typeof resolved === 'undefined') break;
     const part = parts[i];
     previousResolvedValue = resolved;
     resolved = resolved[part];
-    if (typeof resolved === "function") {
+    if (typeof resolved === 'function') {
       const functionParams = [{ ...context }];
       resolved = await resolved.apply(previousResolvedValue, functionParams);
     }
@@ -63,10 +63,10 @@ async function processTextExpressions(node, context) {
 
 // src/directives.js
 async function processAttributesDirective(el, context) {
-  if (!el.hasAttribute("data-fly-attributes")) return;
-  const attrsExpression = el.getAttribute("data-fly-attributes");
+  if (!el.hasAttribute('data-fly-attributes')) return;
+  const attrsExpression = el.getAttribute('data-fly-attributes');
   const attrsData = await resolveExpression(attrsExpression, context);
-  el.removeAttribute("data-fly-attributes");
+  el.removeAttribute('data-fly-attributes');
   if (attrsData) {
     Object.entries(attrsData).forEach(([k, v]) => {
       if (v === void 0) {
@@ -79,21 +79,21 @@ async function processAttributesDirective(el, context) {
 }
 async function processAttributes(el, context) {
   await processAttributesDirective(el, context);
-  const attrPromises = el.getAttributeNames().filter((attrName) => !attrName.startsWith("data-fly-")).map(async (attrName) => {
+  const attrPromises = el.getAttributeNames().filter((attrName) => !attrName.startsWith('data-fly-')).map(async (attrName) => {
     const { updated, updatedText } = await resolveExpressions(el.getAttribute(attrName), context);
     if (updated) el.setAttribute(attrName, updatedText);
   });
   await Promise.all(attrPromises);
 }
 async function processTest(el, context) {
-  const testAttrName = el.getAttributeNames().find((attrName) => attrName.startsWith("data-fly-test") || attrName.startsWith("data-fly-not"));
+  const testAttrName = el.getAttributeNames().find((attrName) => attrName.startsWith('data-fly-test') || attrName.startsWith('data-fly-not'));
   if (!testAttrName) return true;
-  const nameParts = testAttrName.split(".");
-  const contextName = nameParts[1] || "";
+  const nameParts = testAttrName.split('.');
+  const contextName = nameParts[1] || '';
   const testExpression = el.getAttribute(testAttrName);
   const testData = await resolveExpression(testExpression, context);
   el.removeAttribute(testAttrName);
-  const testResult = testAttrName.startsWith("data-fly-not") ? !testData : !!testData;
+  const testResult = testAttrName.startsWith('data-fly-not') ? !testData : !!testData;
   if (contextName) context[contextName.toLowerCase()] = testResult;
   if (!testResult) {
     el.remove();
@@ -101,10 +101,10 @@ async function processTest(el, context) {
   return testResult;
 }
 async function processContent(el, context) {
-  if (!el.hasAttribute("data-fly-content")) return false;
-  const contentExpression = el.getAttribute("data-fly-content");
+  if (!el.hasAttribute('data-fly-content')) return false;
+  const contentExpression = el.getAttribute('data-fly-content');
   const content = await resolveExpression(contentExpression, context);
-  el.removeAttribute("data-fly-content");
+  el.removeAttribute('data-fly-content');
   if (content !== void 0) {
     if (content instanceof Node) {
       el.replaceChildren(content);
@@ -115,15 +115,15 @@ async function processContent(el, context) {
       el.replaceChildren(textNode);
     }
   } else {
-    el.textContent = "";
+    el.textContent = '';
   }
   return true;
 }
 async function processRepeat(el, context) {
-  const repeatAttrName = el.getAttributeNames().find((attrName) => attrName.startsWith("data-fly-repeat"));
+  const repeatAttrName = el.getAttributeNames().find((attrName) => attrName.startsWith('data-fly-repeat'));
   if (!repeatAttrName) return false;
-  const nameParts = repeatAttrName.split(".");
-  const contextName = nameParts[1] || "item";
+  const nameParts = repeatAttrName.split('.');
+  const contextName = nameParts[1] || 'item';
   const repeatExpression = el.getAttribute(repeatAttrName);
   const arr = await resolveExpression(repeatExpression, context);
   if (!arr || Object.keys(arr).length === 0) {
@@ -150,14 +150,14 @@ async function processRepeat(el, context) {
   return true;
 }
 async function processInclude(el, context) {
-  if (!el.hasAttribute("data-fly-include")) return false;
-  const includeValue = el.getAttribute("data-fly-include");
-  el.removeAttribute("data-fly-include");
+  if (!el.hasAttribute('data-fly-include')) return false;
+  const includeValue = el.getAttribute('data-fly-include');
+  el.removeAttribute('data-fly-include');
   const { updatedText } = await resolveExpressions(includeValue, context);
-  let templatePath = context.template ? context.template.path : "";
+  let templatePath = context.template ? context.template.path : '';
   let templateName = updatedText;
-  if (templateName.startsWith("/")) {
-    const [path, name] = templateName.split("#");
+  if (templateName.startsWith('/')) {
+    const [path, name] = templateName.split('#');
     templatePath = path;
     templateName = name;
   }
@@ -165,24 +165,24 @@ async function processInclude(el, context) {
     ...context,
     template: {
       name: templateName,
-      path: templatePath
-    }
+      path: templatePath,
+    },
   };
   await renderElement(el, includeContext);
   return true;
 }
 async function resolveUnwrap(el, context) {
-  if (!el.hasAttribute("data-fly-unwrap")) return;
-  const unwrapExpression = el.getAttribute("data-fly-unwrap");
+  if (!el.hasAttribute('data-fly-unwrap')) return;
+  const unwrapExpression = el.getAttribute('data-fly-unwrap');
   if (unwrapExpression) {
     const unwrapVal = !!await resolveExpression(unwrapExpression, context);
     if (!unwrapVal) {
-      el.removeAttribute("data-fly-unwrap");
+      el.removeAttribute('data-fly-unwrap');
     }
   }
 }
 function processUnwraps(el) {
-  el.querySelectorAll("[data-fly-unwrap]").forEach((unwrapEl) => {
+  el.querySelectorAll('[data-fly-unwrap]').forEach((unwrapEl) => {
     unwrapEl.before(...unwrapEl.childNodes);
     unwrapEl.remove();
   });
@@ -226,10 +226,10 @@ async function renderElement(el, context) {
 async function renderBlock(block, context = {}) {
   context.block = block;
   context.blockName = block.dataset.blockName;
-  context.codeBasePath = context.codeBasePath || (window.hlx ? window.hlx.codeBasePath : "");
+  context.codeBasePath = context.codeBasePath || (window.hlx ? window.hlx.codeBasePath : '');
   await renderElement(block, context);
 }
 export {
   renderBlock,
-  renderElement
+  renderElement,
 };
