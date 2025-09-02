@@ -35,16 +35,16 @@ export default async function decorate(block) {
   const dropdown = mainMenuWrapper.querySelector('.main-menu-dropdown');
   const submenuWrapper = block.querySelector('.submenu-wrapper');
 
-  const liTemplate = dropdown.querySelector('li[data-fly-menu-item]');
-  dropdown.innerHTML = ''; // Clear existing template
+  //const liTemplate = dropdown.querySelector('li[data-fly-menu-item]');
+  //dropdown.innerHTML = ''; // Clear existing template
 
-  mainMenus.forEach((menu) => {
-    const li = liTemplate.cloneNode(true);
-    li.textContent = menu;
-    li.setAttribute('data-fly-menu-item', menu);
-    li.style.display = ''; // Make it visible
-    dropdown.appendChild(li);
-  });
+  // mainMenus.forEach((menu) => {
+  //   const li = liTemplate.cloneNode(true);
+  //   li.textContent = menu;
+  //   li.setAttribute('data-fly-menu-item', menu);
+  //   li.style.display = ''; // Make it visible
+  //   dropdown.appendChild(li);
+  // });
   // Toggle main menu dropdown
   mainMenuWrapper.addEventListener('click', (e) => {
     e.stopPropagation();
