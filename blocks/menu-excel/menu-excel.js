@@ -23,11 +23,11 @@ export default async function decorate(block) {
     grouped[main][sub].push(menuItem);
   });
 
-  const mainMenus = Object.keys(grouped);
-  let selectedMain = mainMenus[0];
+ // const mainMenus = Object.keys(grouped);
+  let selectedMain = Object.keys(grouped)[0];
 
   await renderBlock(block, {
-    mainMenus,
+    grouped,
     selectedMain,
   });
 
