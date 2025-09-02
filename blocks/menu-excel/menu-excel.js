@@ -60,14 +60,14 @@ export default async function decorate(block) {
   });
 
   // Main menu selection logic
-  dropdown.querySelectorAll('li[data-fly-menu-item]').forEach((li) => {
-    li.addEventListener('click', (e) => {
-      e.stopPropagation();
-      selectedMain = li.textContent;
-      mainMenuWrapper.querySelector('.label').textContent = selectedMain;
-      renderSubmenus(grouped[selectedMain]);
-    });
-  });
+  // dropdown.querySelectorAll('li[data-fly-menu-item]').forEach((li) => {
+  //   li.addEventListener('click', (e) => {
+  //     e.stopPropagation();
+  //     selectedMain = li.textContent;
+  //     mainMenuWrapper.querySelector('.label').textContent = selectedMain;
+  //     renderSubmenus(grouped[selectedMain]);
+  //   });
+  // });
 
   // Initial render
   renderSubmenus(grouped[selectedMain]);
