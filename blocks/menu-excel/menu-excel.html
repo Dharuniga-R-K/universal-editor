@@ -8,9 +8,9 @@
         <li data-fly-repeat="groupedArray">${item.itemkey}</li>
       </ul>
     </div>
-    <div class="submenu-wrapper" data-fly-repeat.menu="groupedArray">
+    <div class="submenu-wrapper" data-fly-repeat="groupedArray" data-fly-scope="item">
     <a>
-      ${menu.itemkey}
+      ${item.itemkey}
     </a>
     </div>
   </div>
