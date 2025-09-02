@@ -9,9 +9,26 @@
       </ul>
     </div>
     <div class="submenu-wrapper" data-fly-repeat="groupedArray" data-fly-scope="item">
-    <a>
-      ${item.itemkey}
-    </a>
+      <div class="submenu-group">
+        <h3>${item.itemkey}</h3>
+
+        <!-- Repeat over itemvalue (object entries) -->
+        <div
+          class="submenu-column"
+          data-fly-repeat="Object.entries(item.itemvalue)"
+          data-fly-scope="sub"
+        >
+          <a class="submenu-title" href="${sub[1].link1}" target="_blank">
+            ${sub[0]}
+          </a>
+
+          <!--<ul class="submenu-dropdown">
+            <li data-fly-repeat="sub[1]" data-fly-scope="entry">
+              <a href="${entry.link}" target="_blank">${entry.title}</a>
+            </li> 
+          </ul>-->
+        </div>
+      </div>
     </div>
   </div>
 </template>
