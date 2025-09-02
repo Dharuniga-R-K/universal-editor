@@ -25,7 +25,19 @@ export default async function decorate(block) {
 
 //  const mainMenus = Object.keys(grouped);
   let selectedMain = Object.keys(grouped)[0];
-  const groupedArray = Object.entries(grouped).map(([key, value]) => ({ itemkey: key, itemvalue: value }));
+  const groupedArray = Object.entries(grouped).map(([itemkey, itemvalue]) => {
+  // Convert itemvalue (object) into array of { subkey, subvalue }
+  const submenuArray = Object.entries(itemvalue).map(([subkey, subvalue]) => ({
+    subkey,
+    subvalue
+  }));
+
+  return {
+    itemkey,
+    submenuArray,
+  };
+});
+
 
 
   await renderBlock(block, {

@@ -12,23 +12,19 @@
       <div class="submenu-group">
         <h3>${item.itemkey}</h3>
 
-        <!-- Repeat over itemvalue (object entries) -->
-        <div
-          class="submenu-column"
-          data-fly-repeat="item.itemvalue"
-          data-fly-scope="sub"
-        >
-          <a class="submenu-title" href="${sub[1].link1}" target="_blank">
-            ${sub.title}
+        <div class="submenu-column" data-fly-repeat="item.submenuArray" data-fly-scope="sub">
+          <a class="submenu-title" href="${sub.subvalue.link1}" target="_blank">
+            ${sub.subkey}
           </a>
 
-          <!--<ul class="submenu-dropdown">
-            <li data-fly-repeat="sub[1]" data-fly-scope="entry">
+          <ul class="submenu-dropdown">
+            <li data-fly-repeat="sub.subvalue" data-fly-scope="entry">
               <a href="${entry.link}" target="_blank">${entry.title}</a>
-            </li> 
-          </ul>-->
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
+
 </template>
