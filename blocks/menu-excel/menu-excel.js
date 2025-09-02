@@ -73,7 +73,7 @@ export default async function decorate(block) {
   // });
 
   // Initial render
-  renderSubmenus(grouped[selectedMain]);
+ // renderSubmenus(grouped[selectedMain]);
 
   function renderSubmenus(submenuGroup) {
     submenuWrapper.innerHTML = Object.entries(submenuGroup).map(([subTitle, items]) => {
