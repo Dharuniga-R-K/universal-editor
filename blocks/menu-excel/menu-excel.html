@@ -8,7 +8,10 @@
         <li data-fly-repeat="groupedArray">${item.itemkey}</li>
       </ul>
     </div>
-    <div class="submenu-wrapper">
+    <div class="submenu-wrapper" data-fly-repeat.menu="grouped">
+      <div class="submenu-column" data-fly-repeat.menuItem="menu">
+        <a>${menuItem}</a>
+      </div>
       <!-- Submenus populated by JS later -->
     </div>
   </div>
