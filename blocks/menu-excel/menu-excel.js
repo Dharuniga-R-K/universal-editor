@@ -25,8 +25,10 @@ export default async function decorate(block) {
 
 //  const mainMenus = Object.keys(grouped);
   let selectedMain = Object.keys(grouped)[0];
+  const groupedEntries = Object.entries(grouped);
 
   await renderBlock(block, {
+    groupedEntries,
     grouped,
     selectedMain,
   });
