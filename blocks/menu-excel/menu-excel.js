@@ -25,19 +25,14 @@ export default async function decorate(block) {
 
 //  const mainMenus = Object.keys(grouped);
   let selectedMain = Object.keys(grouped)[0];
-  const groupedArray = Object.entries(grouped).map(([itemkey, itemvalue]) => {
-  // Convert itemvalue (object) into array of { subkey, subvalue }
-  const submenuArray = Object.entries(itemvalue).map(([subkey, subvalue]) => ({
-  subkey,
-  link: subvalue[0]?.link || '', // Use first item's link as main
-  items: subvalue // all inner dropdown items
+  const groupedArray = Object.entries(grouped).map(([itemkey, submenus]) => ({
+  itemkey,
+  submenuArray: Object.entries(submenus).map(([subkey, subvalue]) => ({
+    subkey,
+    link1: subvalue.link1,  // submenu group link
+    items: subvalue.items   // menu items array
+  })),
 }));
-
-  return {
-    itemkey,
-    submenuArray,
-  };
-});
 
 
 

@@ -9,16 +9,16 @@
       </ul>
     </div>
     <div class="submenu-wrapper" data-fly-repeat="groupedArray" data-fly-scope="item">
-      <div class="submenu-group"">
+      <div class="submenu-group">
         <h3>${item.itemkey}</h3>
 
         <div class="submenu-column" data-fly-repeat="item.submenuArray" data-fly-scope="sub">
-  <a class="submenu-title" href="${sub.subvalue[0].link}" target="_blank">
+  <a class="submenu-title" href=${sub.link1} target="_blank">
     ${sub.subkey}
   </a>
-  <ul class="submenu-dropdown" data-fly-repeat="sub.subvalue" data-fly-scope="subitem">
+  <ul class="submenu-dropdown" data-fly-repeat="sub.items" data-fly-scope="menu">
     <li>
-      <a href="${subitem.link}" target="_blank">${subitem.title}</a>
+      <a href=${menu.link} target="_blank">${menu.title}</a>
     </li>
   </ul>
 </div>
