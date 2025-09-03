@@ -17,29 +17,15 @@ export default async function decorate(block) {
 
     if (!grouped[main]) grouped[main] = {};
     if (!grouped[main][sub]) {
-  grouped[main][sub] = {
-    link1: item.link1,
-    items: []
-  };
-}
-grouped[main][sub].items.push(menuItem);
+      grouped[main][sub] = [];
+      grouped[main][sub].link1 = item.link1;
+    }
+    grouped[main][sub].push(menuItem);
   });
 
 //  const mainMenus = Object.keys(grouped);
   let selectedMain = Object.keys(grouped)[0];
-  const groupedArray = Object.entries(grouped).map(([itemkey, itemvalue]) => {
-  const submenuArray = Object.entries(itemvalue).map(([subkey, subvalue]) => ({
-    subkey,
-    link1: subvalue.link1,
-    items: subvalue.items,
-  }));
-
-  return {
-    itemkey,
-    submenuArray,
-  };
-});
-
+  const groupedArray = Object.entries(grouped).map(([key, value]) => ({ itemkey: key, itemvalue: value }));
 
   await renderBlock(block, {
     groupedArray,
