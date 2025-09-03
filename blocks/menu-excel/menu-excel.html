@@ -11,7 +11,7 @@
     <div class="submenu-wrapper" data-fly-repeat="groupedArray" data-fly-scope="item">
         <ul class="submenu-column" >
           <li class="submenu-title" data-fly-repeat="item.submenuArray" data-fly-scope="sub">
-            ${sub.subkey}
+            ${sub.subkey ? sub.subkey : 'No Subkey Available'}
           </li>
           <ul class="submenu-dropdown">
             <li data-fly-repeat="sub.subvalue" data-fly-scope="entry">
