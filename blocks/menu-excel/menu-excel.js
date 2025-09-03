@@ -17,10 +17,12 @@ export default async function decorate(block) {
 
     if (!grouped[main]) grouped[main] = {};
     if (!grouped[main][sub]) {
-      grouped[main][sub] = [];
-      grouped[main][sub].link1 = item.link1;
-    }
-    grouped[main][sub].push(menuItem);
+  grouped[main][sub] = {
+    link1: item.link1,
+    items: []
+  };
+}
+grouped[main][sub].items.push(menuItem);
   });
 
 //  const mainMenus = Object.keys(grouped);
@@ -28,16 +30,17 @@ export default async function decorate(block) {
   const groupedArray = Object.entries(grouped).map(([itemkey, itemvalue]) => {
   itemkey,
   submenuArray = Object.entries(itemvalue).map(([subkey, subvalue]) => ({
-  subkey,
-  link1: subvalue.link1, // Use first item's link as main
-  items: subvalue // all inner dropdown items
-}));
+    subkey,
+    link1: subvalue.link1, // Use first item's link as main
+    items: subvalue // all inner dropdown items
+  }));
 
   return {
     itemkey,
     submenuArray,
   };
 });
+
 
 
 
