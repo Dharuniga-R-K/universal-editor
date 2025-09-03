@@ -37,7 +37,12 @@ export default async function decorate(block) {
     submenuArray,
   };
 });
-
+groupedArray.forEach((group) => {
+  console.log('Main menu:', group.itemkey);
+  group.submenuArray.forEach((sub) => {
+    console.log('  Submenu:', sub.subkey);
+  });
+});
 
 
   await renderBlock(block, {
