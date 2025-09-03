@@ -28,9 +28,10 @@ export default async function decorate(block) {
   const groupedArray = Object.entries(grouped).map(([itemkey, itemvalue]) => {
   // Convert itemvalue (object) into array of { subkey, subvalue }
   const submenuArray = Object.entries(itemvalue).map(([subkey, subvalue]) => ({
-    subkey,
-    subvalue
-  }));
+  subkey,
+  link: subvalue[0]?.link || '', // Use first item's link as main
+  items: subvalue // all inner dropdown items
+}));
 
   return {
     itemkey,
