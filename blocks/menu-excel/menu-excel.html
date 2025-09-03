@@ -11,18 +11,15 @@
     </div>
 
     <!-- Repeat over main menus -->
-    <div class="submenu-wrapper" data-fly-repeat="groupedArray" data-fly-scope="menu">
+    <div class="submenu-wrapper" data-fly-repeat="groupedArray">
       <section class="main-menu-group">
-        <h2 class="main-menu-title">${menu.itemkey}</h2>
-
-        <!-- Repeat over submenus inside each main menu -->
-        <div data-fly-repeat="menu.itemvalue" data-fly-scope="sub" class="submenu-column">
-          <a class="submenu-title" href="${sub.link1}" target="_blank">${sub.key.trim()}</a>
-
+        <h2 class="main-menu-title" data-fly-text="itemkey">${itemkey}</h2>
+        <!-- Loop over submenus in itemvalue -->
+        <div data-fly-repeat="itemvalue" class="submenu-column">
+          <a class="submenu-title" href="${link1}" target="_blank" data-fly-text="$key">${/* submenu title */}</a>
           <ul class="submenu-dropdown">
-            <!-- Repeat submenu items -->
-            <li data-fly-repeat="sub.itemvalue" data-fly-scope="item">
-              <a href="${item.link}" target="_blank">${item.title}</a>
+            <li data-fly-repeat="$value">
+              <a href="${link}" target="_blank" data-fly-text="title">${title}</a>
             </li>
           </ul>
         </div>
