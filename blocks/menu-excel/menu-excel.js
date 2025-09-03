@@ -28,11 +28,10 @@ grouped[main][sub].items.push(menuItem);
 //  const mainMenus = Object.keys(grouped);
   let selectedMain = Object.keys(grouped)[0];
   const groupedArray = Object.entries(grouped).map(([itemkey, itemvalue]) => {
-  itemkey,
-  submenuArray = Object.entries(itemvalue).map(([subkey, subvalue]) => ({
+  const submenuArray = Object.entries(itemvalue).map(([subkey, subvalue]) => ({
     subkey,
-    link1: subvalue.link1, // Use first item's link as main
-    items: subvalue // all inner dropdown items
+    link1: subvalue.link1,
+    items: subvalue.items,
   }));
 
   return {
@@ -40,8 +39,6 @@ grouped[main][sub].items.push(menuItem);
     submenuArray,
   };
 });
-
-
 
 
   await renderBlock(block, {
