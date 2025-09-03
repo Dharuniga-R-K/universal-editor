@@ -2,20 +2,31 @@
   <div class="menu-excel block">
     <div class="main-menu-wrapper">
       <span class="indications-menu-title text-small">select the Indication</span>
-      <span class="label">${selectedMain}</span> <!-- this will be updated via JS -->
+      <span class="label">${selectedMain}</span> <!-- updated via JS -->
       <span class="main-menu-arrow">▶</span>
       <ul class="main-menu-dropdown">
+        <!-- Repeat main menus -->
         <li data-fly-repeat="groupedArray">${item.itemkey}</li>
       </ul>
     </div>
-    <div class="submenu-wrapper" data-fly-repeat.menu="groupedArray">
-    <a>
-      ${menu.itemvalue}
-      ${menu.itemkey}
-    </a>
-    </div>
-      </div>
+
+    <!-- Repeat over main menus -->
+    <div class="submenu-wrapper" data-fly-repeat="groupedArray" data-fly-scope="menu">
+      <section class="main-menu-group">
+        <h2 class="main-menu-title">${menu.itemkey}</h2>
+
+        <!-- Repeat over submenus inside each main menu -->
+        <div data-fly-repeat="menu.itemvalue" data-fly-scope="sub" class="submenu-column">
+          <a class="submenu-title" href="${sub.link1}" target="_blank">${sub.key.trim()}</a>
+
+          <ul class="submenu-dropdown">
+            <!-- Repeat submenu items -->
+            <li data-fly-repeat="sub.itemvalue" data-fly-scope="item">
+              <a href="${item.link}" target="_blank">${item.title}</a>
+            </li>
+          </ul>
+        </div>
+      </section>
     </div>
   </div>
-
 </template>
