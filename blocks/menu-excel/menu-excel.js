@@ -37,7 +37,7 @@ function attachEventListeners(block, groupedArray, grouped, selectedMain) {
       // Re-render with new selection
       await renderBlock(block, {
         groupedArray,
-        grouped,
+        textcomp,
         selectedMain: newSelectedMain,
         isSelectedMain: (context) => context.sub.itemkey === newSelectedMain,
       });
@@ -51,7 +51,8 @@ function attachEventListeners(block, groupedArray, grouped, selectedMain) {
 
 export default async function decorate(block) {
   const rawPath = block.querySelector('a')?.getAttribute('href');
-  const text = block.querySelector('p').textContent.trim();
+  const text = block.querySelectorAll('p');
+  let textcomp = text[1].innerHTML;
   if (!rawPath) return;
 
   const fetchUrl = new URL(rawPath, window.location.origin).href;
@@ -94,7 +95,7 @@ export default async function decorate(block) {
   // Initial render
   await renderBlock(block, {
     groupedArray,
-    grouped,
+    textcomp,
     selectedMain,
     isSelectedMain: (context) => context.sub.itemkey === selectedMain,
   });
