@@ -51,6 +51,7 @@ function attachEventListeners(block, groupedArray, grouped, selectedMain) {
 
 export default async function decorate(block) {
   const rawPath = block.querySelector('a')?.getAttribute('href');
+  const text = block.querySelector('p').textContent.trim();
   if (!rawPath) return;
 
   const fetchUrl = new URL(rawPath, window.location.origin).href;
