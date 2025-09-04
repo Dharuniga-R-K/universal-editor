@@ -22,11 +22,8 @@ export default async function decorate(block) {
     }
     grouped[main][sub].push(menuItem);
   });
-
-//  const mainMenus = Object.keys(grouped);
   let selectedMain = Object.keys(grouped)[0];
-  const groupedArray = Object.entries(grouped).map(([itemkey, itemvalue]) => {
-  // Convert itemvalue (object) into array of { subkey, subvalue }
+  const groupedArray = Object.entries(grouped).map(([itemkey, itemvalue]) => { 
   const submenuArray = Object.entries(itemvalue).map(([subkey, subvalue]) => ({
     subkey,
     subvalue,
@@ -45,28 +42,17 @@ groupedArray.forEach((group) => {
   });
 });
 
-
   await renderBlock(block, {
     groupedArray,
     grouped,
     selectedMain,
+    isSelectedMain: (context) => context.sub.itemkey === context.selectedMain,
   });
 
   const mainMenuWrapper = block.querySelector('.main-menu-wrapper');
   const dropdown = mainMenuWrapper.querySelector('.main-menu-dropdown');
-  const submenuWrapper = block.querySelector('.submenu-wrapper');
+//  const submenuWrapper = block.querySelector('.submenu-wrapper');
 
-  //const liTemplate = dropdown.querySelector('li[data-fly-menu-item]');
-  //dropdown.innerHTML = ''; // Clear existing template
-
-  // mainMenus.forEach((menu) => {
-  //   const li = liTemplate.cloneNode(true);
-  //   li.textContent = menu;
-  //   li.setAttribute('data-fly-menu-item', menu);
-  //   li.style.display = ''; // Make it visible
-  //   dropdown.appendChild(li);
-  // });
-  // Toggle main menu dropdown
   mainMenuWrapper.addEventListener('click', (e) => {
     e.stopPropagation();
     const isVisible = dropdown.style.display === 'block';
@@ -81,35 +67,35 @@ groupedArray.forEach((group) => {
   });
 
   // Main menu selection logic
-  // dropdown.querySelectorAll('li[data-fly-menu-item]').forEach((li) => {
-  //   li.addEventListener('click', (e) => {
-  //     e.stopPropagation();
-  //     selectedMain = li.textContent;
-  //     mainMenuWrapper.querySelector('.label').textContent = selectedMain;
-  //     renderSubmenus(grouped[selectedMain]);
-  //   });
-  // });
+  dropdown.querySelectorAll('li[data-fly-menu-item]').forEach((li) => {
+    li.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectedMain = li.textContent;
+      mainMenuWrapper.querySelector('.label').textContent = selectedMain;
+      //renderSubmenus(grouped[selectedMain]);
+    });
+  });
 
   // Initial render
  // renderSubmenus(grouped[selectedMain]);
 
-  function renderSubmenus(submenuGroup) {
-    submenuWrapper.innerHTML = Object.entries(submenuGroup).map(([subTitle, items]) => {
-      const hasDropdown = items[0].title != '';
+  // function renderSubmenus(submenuGroup) {
+  //   submenuWrapper.innerHTML = Object.entries(submenuGroup).map(([subTitle, items]) => {
+  //     const hasDropdown = items[0].title != '';
 
-      return `
-      <div class="submenu-column">
-        <a class="submenu-title" href="${items.link1}" target="_blank">
-          ${subTitle}
-        </a>
-        ${hasDropdown ? `
-          <span class="dropdown-arrow">▼</span>
-          <ul class="submenu-dropdown">
-            ${items.map((item) => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('')}
-          </ul>
-        ` : ''}
-      </div>
-    `;
-    }).join('');
-  }
+  //     return `
+  //     <div class="submenu-column">
+  //       <a class="submenu-title" href="${items.link1}" target="_blank">
+  //         ${subTitle}
+  //       </a>
+  //       ${hasDropdown ? `
+  //         <span class="dropdown-arrow">▼</span>
+  //         <ul class="submenu-dropdown">
+  //           ${items.map((item) => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('')}
+  //         </ul>
+  //       ` : ''}
+  //     </div>
+  //   `;
+  //   }).join('');
+  // }
 }
