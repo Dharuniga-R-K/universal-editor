@@ -1,58 +1,16 @@
 import { renderBlock } from '../../scripts/faintly.js';
 
-export default async function decorate(block) {
-  const rawPath = block.querySelector('a')?.getAttribute('href');
-  if (!rawPath) return;
-
-  const fetchUrl = new URL(rawPath, window.location.origin).href;
-  const response = await fetch(fetchUrl);
-  const json = await response.json();
-  const { data } = json;
-
-  const grouped = {};
-  data.forEach((item) => {
-    const main = item['main-menu'];
-    const sub = item['sub-menu'];
-    const menuItem = { title: item.menu, link: item.link };
-
-    if (!grouped[main]) grouped[main] = {};
-    if (!grouped[main][sub]) {
-      grouped[main][sub] = [];
-      grouped[main][sub].link1 = item.link1;
-    }
-    grouped[main][sub].push(menuItem);
-  });
-  let selectedMain = Object.keys(grouped)[0];
-  const groupedArray = Object.entries(grouped).map(([itemkey, itemvalue]) => { 
-  const submenuArray = Object.entries(itemvalue).map(([subkey, subvalue]) => ({
-    subkey,
-    subvalue,
-    link1: subvalue.link1, 
-  }));
-
-  return {
-    itemkey,
-    submenuArray,
-  };
-});
-groupedArray.forEach((group) => {
-  console.log('Main menu:', group.itemkey);
-  group.submenuArray.forEach((sub) => {
-    console.log('  Submenu:', sub.subkey);
-  });
-});
-
-  await renderBlock(block, {
-    groupedArray,
-    grouped,
-    selectedMain,
-    isSelectedMain: (context) => context.sub.itemkey === context.selectedMain,
-  });
-
+function attachEventListeners(block, groupedArray, grouped, selectedMain) {
   const mainMenuWrapper = block.querySelector('.main-menu-wrapper');
   const dropdown = mainMenuWrapper.querySelector('.main-menu-dropdown');
-//  const submenuWrapper = block.querySelector('.submenu-wrapper');
 
+  block.querySelectorAll('.submenu-wrapper').forEach((wrapper) => {
+  const hasSubmenu = wrapper.querySelector('.submenu-column');
+  if (!hasSubmenu) {
+    wrapper.style.display = 'none';
+  }
+});
+  // Toggle dropdown
   mainMenuWrapper.addEventListener('click', (e) => {
     e.stopPropagation();
     const isVisible = dropdown.style.display === 'block';
@@ -66,36 +24,80 @@ groupedArray.forEach((group) => {
     mainMenuWrapper.querySelector('.main-menu-arrow').textContent = '▶';
   });
 
-  // Main menu selection logic
+  // Handle main menu selection
   dropdown.querySelectorAll('li[data-fly-menu-item]').forEach((li) => {
-    li.addEventListener('click', (e) => {
+    li.addEventListener('click', async (e) => {
       e.stopPropagation();
-      selectedMain = li.textContent;
-      mainMenuWrapper.querySelector('.label').textContent = selectedMain;
-      //renderSubmenus(grouped[selectedMain]);
+      const newSelectedMain = li.textContent;
+  
+
+      // Update label immediately
+      mainMenuWrapper.querySelector('.label').textContent = newSelectedMain;
+
+      // Re-render with new selection
+      await renderBlock(block, {
+        groupedArray,
+        grouped,
+        selectedMain: newSelectedMain,
+        isSelectedMain: (context) => context.sub.itemkey === newSelectedMain,
+      });
+
+
+      // Reattach event listeners after render
+      attachEventListeners(block, groupedArray, grouped, newSelectedMain);
     });
+  });
+}
+
+export default async function decorate(block) {
+  const rawPath = block.querySelector('a')?.getAttribute('href');
+  if (!rawPath) return;
+
+  const fetchUrl = new URL(rawPath, window.location.origin).href;
+  const response = await fetch(fetchUrl);
+  const json = await response.json();
+  const { data } = json;
+
+  // Group data
+  const grouped = {};
+  data.forEach((item) => {
+    const main = item['main-menu'];
+    const sub = item['sub-menu'];
+    const menuItem = { title: item.menu, link: item.link };
+
+    if (!grouped[main]) grouped[main] = {};
+    if (!grouped[main][sub]) {
+      grouped[main][sub] = [];
+      grouped[main][sub].link1 = item.link1;
+    }
+    grouped[main][sub].push(menuItem);
+  });
+
+  // Default selection
+  let selectedMain = Object.keys(grouped)[0];
+
+  // Convert grouped data to array
+  const groupedArray = Object.entries(grouped).map(([itemkey, itemvalue]) => {
+    const submenuArray = Object.entries(itemvalue).map(([subkey, subvalue]) => ({
+      subkey,
+      subvalue,
+      link1: subvalue.link1,
+    }));
+
+    return {
+      itemkey,
+      submenuArray,
+    };
   });
 
   // Initial render
- // renderSubmenus(grouped[selectedMain]);
+  await renderBlock(block, {
+    groupedArray,
+    grouped,
+    selectedMain,
+    isSelectedMain: (context) => context.sub.itemkey === selectedMain,
+  });
 
-  // function renderSubmenus(submenuGroup) {
-  //   submenuWrapper.innerHTML = Object.entries(submenuGroup).map(([subTitle, items]) => {
-  //     const hasDropdown = items[0].title != '';
-
-  //     return `
-  //     <div class="submenu-column">
-  //       <a class="submenu-title" href="${items.link1}" target="_blank">
-  //         ${subTitle}
-  //       </a>
-  //       ${hasDropdown ? `
-  //         <span class="dropdown-arrow">▼</span>
-  //         <ul class="submenu-dropdown">
-  //           ${items.map((item) => `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`).join('')}
-  //         </ul>
-  //       ` : ''}
-  //     </div>
-  //   `;
-  //   }).join('');
-  // }
+  // Attach listeners
+  attachEventListeners(block, groupedArray, grouped, selectedMain);
 }

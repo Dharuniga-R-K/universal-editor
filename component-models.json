@@ -224,6 +224,13 @@
         "value": "",
         "label": "documentPath",
         "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "textComp",
+        "value": "",
+        "label": "textcomp",
+        "valueType": "string"
       }
     ]
   },
@@ -295,6 +302,25 @@
         "label": "Message",
         "valueType": "string",
         "value": ""
+      }
+    ]
+  },
+  {
+    "id": "menu-excel",
+    "fields": [
+      {
+        "component": "text",
+        "name": "path",
+        "value": "",
+        "label": "documentPath",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "textComp",
+        "value": "",
+        "label": "textcomp",
+        "valueType": "string"
       }
     ]
   }
