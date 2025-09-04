@@ -29,7 +29,8 @@ export default async function decorate(block) {
   // Convert itemvalue (object) into array of { subkey, subvalue }
   const submenuArray = Object.entries(itemvalue).map(([subkey, subvalue]) => ({
     subkey,
-    subvalue
+    subvalue,
+    link1: subvalue.link1, 
   }));
 
   return {

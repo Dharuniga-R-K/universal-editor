@@ -8,11 +8,15 @@
         <li data-fly-repeat="groupedArray">${item.itemkey}</li>
       </ul>
     </div>
-    <div class="submenu-wrapper" data-fly-repeat.sub="groupedArray" >
-        <ul class="submenu-column" >
-          <li class="submenu-title" data-fly-repeat.xyz="sub.submenuArray">
-            ${xyz.subkey}
+    <div class="submenu-wrapper" data-fly-repeat.sub="groupedArray">
+        <ul class="submenu-column template" >
+          <li class="submenu-title" data-fly-repeat.it="sub.submenuArray">
+           <a href ="${it.link1}" target="_blank">${it.subkey}</a> 
+           <span class="dropdown-arrow">▼</span>
           </li>
+        </ul>
+        <ul class="submenu-dropdown">
+          <li></li>
         </ul>
     </div>
   </div>
