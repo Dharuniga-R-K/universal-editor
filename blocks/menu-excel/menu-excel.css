@@ -1,204 +1,223 @@
 /* Base layout */
 .menu-excel.block {
-  display: flex;
-  flex-wrap: nowrap;
-  border-top: 3px solid #f9b000;
-  font-family: Arial, sans-serif;
-  overflow-x: visible;
-  position: relative;
+	display: flex;
+	flex-wrap: nowrap;
+	border-top: 3px solid #f9b000;
+	font-family: Arial, sans-serif;
+	overflow-x: visible;
+	position: relative;
 }
 
 .menu-excel {
-  min-height: 72px;
+	min-height: 72px;
 }
 
 /* Left green main menu */
 .main-menu-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: baseline;
-  width: 24%;
-  padding: 0.5rem 1rem;
-  background-color: #07412c;
-  font-size: 0.6875rem;
-  line-height: 1.4;
-  font-weight: 400;
-  color: #fff;
-  position: relative;
-  cursor: pointer;
-  min-height: 72px;
-  overflow: visible;
-  z-index: 100;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: baseline;
+	width: 24%;
+	padding: 0.5rem 1rem;
+	background-color: #07412c;
+	font-size: 0.6875rem;
+	line-height: 1.4;
+	font-weight: 400;
+	color: #fff;
+	position: relative;
+	cursor: pointer;
+	min-height: 72px;
+	overflow: visible;
+	z-index: 100;
 }
 
 .main-menu-wrapper span {
-  font-size: 13px;
-  line-height: 1.1;
-  text-transform: uppercase;
+	font-size: 13px;
+	line-height: 1.1;
+	text-transform: uppercase;
 }
 
 .main-menu-arrow {
-  font-size: 16px;
-  margin-left: 8px;
-  position: absolute;
-  right: 35px;
+	font-size: 16px;
+	margin-left: 8px;
+	position: absolute;
+	right: 35px;
 }
 
 /* Dropdown for main menu (shown by JS) */
 .main-menu-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: white;
-  color: black;
-  border: 2px solid #144633;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  z-index: 200;
-  width: 99%;
-  max-width: 320px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background: white;
+	color: black;
+	border: 2px solid #144633;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	z-index: 200;
+	width: 99%;
+	max-width: 320px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .main-menu-dropdown li {
-  cursor: pointer;
-  white-space: wrap;
-  color: #000;
-  padding: 16px 24px;
-  font-size: 0.9375rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  border-bottom: 1px solid #eee;
+	cursor: pointer;
+	white-space: wrap;
+	color: #000;
+	padding: 16px 24px;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	border-bottom: 1px solid #eee;
 }
 
 .main-menu-dropdown li:hover {
-  background: #f0f0f0;
+	background: #f0f0f0;
 }
 
 /* Submenu wrapper */
 .submenu-wrapper {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  background: white;
-  padding: 16px;
-  overflow: visible;
-  position: relative;
-  z-index: 10;
-  width: 76%;
-  gap: 24px;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	background: white;
+	padding: 16px;
+	overflow: visible;
+	position: relative;
+	z-index: 10;
+	width: 76%;
+	gap: 24px;
 }
 
 .submenu-wrapper:empty {
-  display: none !important;
+	display: none !important;
 }
 
 /* Submenu column */
 .submenu-column {
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  padding-bottom: 6px;
-  text-align: center;
-  position: relative;
-  cursor: pointer;
-  flex: 1;
-  width: 140px;
+	display: flex;
+	align-items: center;
+	padding: 0 12px;
+	padding-bottom: 6px;
+	text-align: center;
+	position: relative;
+	cursor: pointer;
+	flex: 1;
+	width: 76%;
 }
 
 .submenu-column:hover::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 4px;
-  width: 100%;
-  background-color: #42771e;
+
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 4px;
+	width: 100%;
+	background-color: #42771e;
 }
 
 /* Title + arrow */
 .submenu-title {
-  font-weight: bold;
-  color: #414042;
-  font-size: 14px;
-  position: relative;
-  padding-bottom: 10px;
-  display: inline-block;
+	font-weight: bold;
+	color: #414042;
+	font-size: 14px;
+	position: relative;
+	padding-bottom: 10px;
+	display: inline-block;
+	width: 100%
 }
 
 .submenu-title a {
-  color: #414042;
-  font-weight: bold;
-  font-size: 14px;
-  text-decoration: none;
-  text-align: center;
-  display: inline-block;
-  pointer-events: none; /* Prevent click on title link */
+	color: #414042;
+	font-weight: bold;
+	font-size: 14px;
+	text-decoration: none;
+	text-align: center;
+	display: inline-block;
 }
 
 .dropdown-arrow {
-  font-size: 14px;
-  color: #666;
-  margin-top: 4px;
-  display: block;
-  text-align: center;
-  transition: transform 0.3s ease;
+	font-size: 14px;
+	color: #666;
+	margin-top: 4px;
+	display: block;
+	text-align: center;
+	transition: transform 0.3s ease;
 }
 
 /* Submenu dropdown */
 .submenu-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: white;
-  box-shadow: -30px 26px 29px -31px rgba(0, 0, 0, 0.75);
-  padding: 1rem 1.875rem;
-  min-width: max-content;
-  max-width: 320px;
-  z-index: 1000;
-  list-style: none;
-  text-align: left;
-  white-space: nowrap;
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	background: white;
+	box-shadow: -30px 26px 29px -31px rgba(0, 0, 0, 0.75);
+	padding: 1rem 1.875rem;
+	min-width: max-content;
+	max-width: 320px;
+	z-index: 1000;
+	list-style: none;
+	text-align: left;
+	white-space: nowrap;
 }
 
 /* Show submenu dropdown ONLY when hovering over title/arrow */
 .submenu-title:hover .submenu-dropdown {
-  display: block;
+	display: block;
+
 }
 
 /* Dropdown items */
 .submenu-dropdown a {
-  text-decoration: none;
-  font-size: 0.9375rem;
-  color: #414042;
-  font-family: "HCo Whitney SSm", sans-serif;
-  display: block;
-  padding: 8px 0;
+	text-decoration: none;
+	font-size: 0.9375rem;
+	color: #414042;
+	font-family: "HCo Whitney SSm", sans-serif;
+	display: block;
+	padding: 8px 0;
 }
 
 .submenu-dropdown a:hover {
-  color: #42711e;
+	color: #42711e;
 }
 
 /* Indication title */
 .main-menu-wrapper .indications-menu-title {
-  font-size: 0.6875rem;
-  line-height: 1.4;
-  font-weight: 400;
-  padding-left: 1rem;
+	font-size: 0.6875rem;
+	line-height: 1.4;
+	font-weight: 400;
+	padding-left: 1rem;
 }
 
 .main-menu-wrapper .label {
-  display: block;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.1;
-  padding: 0.5rem 3.125rem 0.5rem 0.9375rem;
-  text-transform: uppercase;
+	display: block;
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.1;
+	padding: 0.5rem 3.125rem 0.5rem 0.9375rem;
+	text-transform: uppercase;
+}
+
+.submenu-underline {
+	content: '';
+	display: block;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 4px;
+	width: 100%;
+	background-color: #42771e;
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+	z-index: 1100;
+}
+
+.submenu-title:hover .submenu-underline {
+	opacity: 1;
 }

@@ -1,29 +1,30 @@
 <template>
-        <div class="main-menu-wrapper">
-            <span class="indications-menu-title text-small">${textcomp}</span>
-            <span class="label">${selectedMain}</span>
-            <!-- this will be updated via JS -->
-            <span class="main-menu-arrow">▶</span>
-            <ul class="main-menu-dropdown">
-                <li data-fly-repeat="groupedArray" data-fly-menu-item>${item.itemkey}</li>
-            </ul>
-        </div>
-        
-        <div class="submenu-wrapper" data-fly-repeat.sub="groupedArray">
-            <div class="submenu-column" data-fly-test.selected="isSelectedMain">
-                <div class="submenu-title" data-fly-repeat.it="sub.submenuArray">
-                    <a href="${it.link1}" target="_blank">${it.subkey}</a>
-                    <span class="dropdown-arrow">▼</span>
-                    <div class="submenu-dropdown">
-                        <div data-fly-repeat.in="it.subvalue">
-                            <a data-fly-test="in.title" href="${in.link}" target="_blank">${in.title}</a>
-                        </div>
+    <div class="main-menu-wrapper">
+        <span class="indications-menu-title text-small">${textcomp}</span>
+        <span class="label">${selectedMain}</span>
+        <!-- this will be updated via JS -->
+        <span class="main-menu-arrow">▶</span>
+        <ul class="main-menu-dropdown">
+            <li data-fly-repeat="groupedArray" data-fly-menu-item>${item.itemkey}</li>
+        </ul>
+    </div>
+
+    <div class="submenu-wrapper" data-fly-repeat.sub="groupedArray">
+        <div class="submenu-column" data-fly-test.selected="isSelectedMain">
+            <div class="submenu-title" data-fly-repeat.it="sub.submenuArray">
+                <a href="${it.link1}" target="_blank">${it.subkey}</a>
+                <span class="dropdown-arrow">▼</span>
+                <span class="submenu-underline"></span>
+                <div class="submenu-dropdown">
+                    <div data-fly-repeat.in="it.subvalue">
+                        <a data-fly-test="in.title" href="${in.link}" target="_blank">${in.title}</a>
                     </div>
-                    </a>
                 </div>
+                </a>
             </div>
         </div>
     </div>
-    
+    </div>
+
 
 </template>
