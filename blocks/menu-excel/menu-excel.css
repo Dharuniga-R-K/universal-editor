@@ -225,11 +225,19 @@
 .main-menu-arrow::before {
   display: inline-block;
   font-size: 14px;
-  font-family: Arial, sans-serif; /* or a reliable fallback */
-  content: '\25B6'; /* ▶ default */
+  font-family: Arial, sans-serif; 
+  content: '\25B6'; /* ▶ arrow */
   transition: transform 0.2s ease;
 }
 
 .main-menu-arrow.expanded::before {
   content: '\25BC'; /* ▼ down arrow */
+}
+
+.dropdown-arrow::before {
+  display: inline-block;
+  font-size: 14px;
+  font-family: Arial, sans-serif; 
+  content: '\25BC'; /* ▶ arrow */
+  transition: transform 0.2s ease;
 }
