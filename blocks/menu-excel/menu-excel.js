@@ -12,19 +12,29 @@ function attachEventListeners(block, groupedArray, grouped, selectedMain, textco
             wrapper.style.display = 'none';
         }
     });
-    // Toggle dropdown
-    mainMenuWrapper.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isVisible = dropdown.style.display === 'block';
-        dropdown.style.display = isVisible ? 'none' : 'block';
-        mainMenuWrapper.querySelector('.main-menu-arrow').textContent = isVisible ? '▶' : '▼';
-    });
+    // // Toggle dropdown
+    // mainMenuWrapper.addEventListener('click', (e) => {
+    //     e.stopPropagation();
+    //     const isVisible = dropdown.style.display === 'block';
+    //     dropdown.style.display = isVisible ? 'none' : 'block';
+    //     mainMenuWrapper.querySelector('.main-menu-arrow').textContent = isVisible ? '▶' : '▼';
+    // });
 
-    // Close dropdown on outside click
-    document.addEventListener('click', () => {
-        dropdown.style.display = 'none';
-        mainMenuWrapper.querySelector('.main-menu-arrow').textContent = '▶';
-    });
+    // // Close dropdown on outside click
+    // document.addEventListener('click', () => {
+    //     dropdown.style.display = 'none';
+    //     mainMenuWrapper.querySelector('.main-menu-arrow').textContent = '▶';
+    // });
+
+    mainMenuWrapper.addEventListener('click', (e) => {
+  e.stopPropagation();
+
+  const isVisible = dropdown.style.display === 'block';
+  dropdown.style.display = isVisible ? 'none' : 'block';
+
+  const arrow = mainMenuWrapper.querySelector('.main-menu-arrow');
+  arrow.classList.toggle('expanded', !isVisible); // Add 'expanded' when visible
+});
 
     // Handle main menu selection
     dropdown.querySelectorAll('li[data-fly-menu-item]').forEach((li) => {

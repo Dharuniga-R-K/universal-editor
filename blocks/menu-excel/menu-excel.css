@@ -221,3 +221,15 @@
 .submenu-title:hover .submenu-underline {
 	opacity: 1;
 }
+
+.main-menu-arrow::before {
+  display: inline-block;
+  font-size: 14px;
+  font-family: Arial, sans-serif; /* or a reliable fallback */
+  content: '\25B6'; /* ▶ default */
+  transition: transform 0.2s ease;
+}
+
+.main-menu-arrow.expanded::before {
+  content: '\25BC'; /* ▼ down arrow */
+}
